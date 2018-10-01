@@ -1,6 +1,6 @@
 from musictools.modules import _musictools
 from musictools.modules import _music_lib
-from musictools.modules import _musictools
+from musictools.modules import _musictools_tools
 import re
 from sys import argv
 
