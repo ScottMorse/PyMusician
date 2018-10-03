@@ -1,17 +1,18 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 def readme():
-    with open('README.rst') as f:
+    with open('README.md') as f:
         return f.read()
 
-setup(name="musictools",
+setup(name="pymusician",
       version="0.1",
       description="A python package for music composition and analysis.",
-      url="https://github.com/ScottMorse/Py-Music-Tools",
+      url="https://github.com/ScottMorse/PyMusician",
       author="Scott Morse",
       author_email="scottmorsedev@gmail.com",
       lisence="GPL",
-      packages=['musictools'],
+      packages=["pymusician"],
+      include_package_data=True,
       install_requires=[
           'numpy',
       ],

@@ -1,14 +1,13 @@
-import musictools._musictools
-import musictools._music_lib
-import musictools._musictools_tools
+from pymusician import _pymusician
+from pymusician import constants
+from pymusician import utils
 import re
-from sys import argv
 
 VERSION: "0.1"
 
 A4 = 440
 
-class Note(_musictools._Note):
+class Note(_pymusician._Note):
 
     def __init__(self,*args):
         super().__init__(*args)
@@ -19,11 +18,11 @@ class Note(_musictools._Note):
     
     @property
     def letter(self):
-        return _music_lib.NOTE_VALUES[self.name[0]][0]
+        return constants.NOTE_VALUES[self.name[0]][0]
     
     @property
     def pitch(self):
-        return _musictools_tools.pitch_from_name(self.name)
+        return utils.pitch_from_name(self.name)
     
     @property
     def octave(self):
@@ -37,7 +36,7 @@ class Note(_musictools._Note):
 
     @property
     def rhythm(self):
-        return _musictools_tools.rhythm_dict(self._rhythm)
+        return utils.rhythm_dict(self._rhythm)
 
     @rhythm.setter
     def rhythm(self,flags):
@@ -45,7 +44,7 @@ class Note(_musictools._Note):
     
     @property
     def pitch_offset(self):
-        return self.pitch - _music_lib.NOTE_VALUES[self.name[0]][1]
+        return self.pitch - constants.NOTE_VALUES[self.name[0]][1]
     
     @property
     def hard_pitch(self):
@@ -61,19 +60,19 @@ class Note(_musictools._Note):
         return A4 * 2**(offset / 12)
 
     def enharmonic(self,prefer=None,gross=False):
-        return _musictools_tools.enharmonic(self,prefer,gross)
+        return utils.enharmonic(self,prefer,gross)
     
     @staticmethod
     def from_values(letter,pitch):
-        return Note(_musictools_tools.note_name_from_values(letter,pitch))
+        return Note(utils.note_name_from_values(letter,pitch))
     
     @staticmethod
     def from_hard_pitch(hard_pitch,prefer=None):
-        return Note(*_musictools_tools.note_names_from_hard_pitch(hard_pitch,prefer))
+        return Note(*utils.note_names_from_hard_pitch(hard_pitch,prefer))
 
     @staticmethod
     def from_frequency(Hz,prefer=None):
-        return Note(*_musictools_tools.note_names_from_frequency(Hz,prefer))
+        return Note(*utils.note_names_from_frequency(Hz,prefer))
 
     def __repr__(self):
         rep = f'<Note {self.name}{str(self.octave if self.octave != None else "")}'\
@@ -81,19 +80,19 @@ class Note(_musictools._Note):
         return rep
 
     def __add__(self,intvl_obj):
-        return _musictools_tools.note_plus_intvl(self,intvl_obj)
+        return utils.note_plus_intvl(self,intvl_obj)
 
     def __sub__(self,intvl_obj):
-        return _musictools_tools.note_minus_intvl(self,intvl_obj)
+        return utils.note_minus_intvl(self,intvl_obj)
 
-class Interval(_musictools._Interval):
+class Interval(_pymusician._Interval):
 
     def __init__(self,*args):
         super().__init__(*args)
     
     @property
     def diff(self):
-        return _musictools_tools.intvl_diff(self._flags,self._displace)
+        return utils.intvl_diff(self._flags,self._displace)
     
     @property
     def letter_diff(self):
@@ -101,11 +100,11 @@ class Interval(_musictools._Interval):
 
     @property
     def name(self):
-        return _musictools_tools.intvl_namer(self)
+        return utils.intvl_namer(self)
     
     @staticmethod
     def from_notes(note_obj1,note_obj2):
-        return _musictools_tools.intvl_from_notes(note_obj1,note_obj2)
+        return utils.intvl_from_notes(note_obj1,note_obj2)
 
     def __repr__(self):
         return f'<Interval {self.name}>'
@@ -121,7 +120,7 @@ class Mode:
                 self._root = Note(root)
             except:
                 raise ValueError("Mode root should be a Note object or note name (str).")
-        if mode not in _music_lib.MODES:
+        if mode not in constants.MODES:
             raise KeyError("Mode not found.  View the modes json to see/add modes.")
         self._mode = mode
 
@@ -139,7 +138,7 @@ class Mode:
     
     @property
     def spelling(self):
-        return _musictools_tools.mode_speller(self.root,self.mode)
+        return utils.mode_speller(self.root,self.mode)
 
     def __iter__(self):
         return iter(self.spelling)
@@ -151,8 +150,12 @@ class Chord:
 
     def __init__(self,symbol):
         self._symbol = symbol
-        self._data = _musictools_tools.parse_symbol(symbol)
+        self._data = utils.parse_symbol(symbol)
     
+    @property
+    def symbol(self):
+        return self._symbol
+
     @property
     def root(self):
         return Note(self._data["root"])
@@ -172,7 +175,6 @@ class Chord:
             spelling.append(self.root + Interval(intvl))
         return spelling
 
-if __name__ == "__main__":
-    if len(argv) > 1:
-        if re.match(r"(-(-)?)?v(er(sion)?)?",argv[1],re.IGNORECASE):
-            print(f"Music Tools {VERSION} by Scott Morse")
+    @property
+    def __repr__(self):
+        return f"<Chord {self.symbol}>"

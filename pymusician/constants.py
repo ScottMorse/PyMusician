@@ -1,4 +1,7 @@
 import json
+import os
+
+BASE_DIR = os.path.dirname(__file__)
 
 NOTE_REGEX = r'^[A-Ga-g]([#]*$|[b]*$)'
 
@@ -34,7 +37,9 @@ INTVLS = {
 
 INTVL_NAMES = ("unison","2nd","3rd","4th","5th","6th","7th")
 
-with open("musictools/site-packages/modes.json") as j:
+BASE_DIR = os.path.dirname(__file__)
+FILE_PATH = os.path.join(BASE_DIR,"data/modes.json")
+with open(FILE_PATH) as j:
     loaded = json.load(j)
 
 MODES = loaded[0]

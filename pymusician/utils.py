@@ -1,12 +1,12 @@
-from musictools.modules import _music_lib
+from pymusician import constants
 from numpy import log2
 import re
-import musictools
+import pymusician
 
 ###NOTE CLASS FUNCTIONS
 
 def pitch_from_name(name):
-    pitch = _music_lib.NOTE_VALUES[name[0]][1]
+    pitch = constants.NOTE_VALUES[name[0]][1]
     if len(name) > 1:
         if name[1] == "#":
             pitch += len(name) - 1
@@ -35,7 +35,7 @@ def rhythm_dict(flags):
                 dots += 1
             if char == "t":
                 triplet = True
-        val = _music_lib.RHYTHM_VALUES[num]
+        val = constants.RHYTHM_VALUES[num]
 
         if dots:
             original_value = val
@@ -47,7 +47,7 @@ def rhythm_dict(flags):
 
     else:
         num = int(flags[0])
-        val = _music_lib.RHYTHM_VALUES[num]
+        val = constants.RHYTHM_VALUES[num]
 
     return {
         'value': val, 'dots':dots,
@@ -62,14 +62,14 @@ def enharmonic(note_obj,prefer=None,gross=False):
     if not isinstance(gross, bool):
         raise ValueError("2nd arg for enharmonic should be Boolean.")
 
-    if gross and note_obj.name in _music_lib.GROSS_ROOTS:
-        new_name = _music_lib.GROSS_ROOTS[note_obj.name]
+    if gross and note_obj.name in constants.GROSS_ROOTS:
+        new_name = constants.GROSS_ROOTS[note_obj.name]
         if "#" in new_name and prefer == 'b':
             return note_obj
         elif 'b' in new_name and prefer == '#':
             return note_obj
         else:
-            new_note = musictools.Note(new_name)
+            new_note = pymusician.Note(new_name)
     elif len(note_obj.name) == 1:
         return note_obj
     elif len(note_obj.name) == 2:
@@ -85,11 +85,11 @@ def enharmonic(note_obj,prefer=None,gross=False):
             new_letter = note_obj.letter - 1
             if new_letter < 0:
                 new_letter += 7
-        new_note = musictools.Note.from_values(new_letter,note_obj.pitch)
+        new_note = pymusician.Note.from_values(new_letter,note_obj.pitch)
     else:
         new_note = note_obj
         new_letter = note_obj.letter
-        limit = 2 if note_obj.pitch in _music_lib.NON_NATURAL else 1
+        limit = 2 if note_obj.pitch in constants.NON_NATURAL else 1
         while len(new_note.name) > limit:
             if "#" in note_obj.name:
                 new_letter += 1
@@ -99,11 +99,11 @@ def enharmonic(note_obj,prefer=None,gross=False):
                 new_letter -= 1
                 if new_letter < 0:
                     new_letter += 7
-            new_note = musictools.Note.from_values(new_letter,note_obj.pitch)
+            new_note = pymusician.Note.from_values(new_letter,note_obj.pitch)
         if "#" in new_note.name and prefer == "b":
-            new_note = musictools.Note.from_values(new_letter + 1, note_obj.pitch)
+            new_note = pymusician.Note.from_values(new_letter + 1, note_obj.pitch)
         elif "b" in new_note.name and prefer == "#":
-            new_note = musictools.Note.from_values(new_letter - 1, note_obj.pitch)
+            new_note = pymusician.Note.from_values(new_letter - 1, note_obj.pitch)
     if note_obj.octave:
         new_note.octave = note_obj.octave
     if note_obj.rhythm:
@@ -115,8 +115,8 @@ def note_name_from_values(letter,pitch):
         raise ValueError("Letter argument should be an integer between 0 and 6, 0 for C, 1 for B, etc.")
     if pitch not in range(12):
         raise ValueError("Pitch argument should be an integer between 0 and 11, 0 for C natural (or equivalent), 1 for C#/Db, etc.")
-    letter_str = _music_lib.NOTES[letter]
-    expected_pitch = _music_lib.NOTE_VALUES[letter_str][1]
+    letter_str = constants.NOTES[letter]
+    expected_pitch = constants.NOTE_VALUES[letter_str][1]
     pitch_offset = pitch - expected_pitch
     if pitch_offset > 5:
         pitch_offset -= 12
@@ -136,7 +136,7 @@ def note_names_from_hard_pitch(hard_pitch,prefer=None):
     octave = hard_pitch // 12
     pitch = hard_pitch % 12
     index = 0
-    note_dict = _music_lib.NOTE_VALUES
+    note_dict = constants.NOTE_VALUES
     for note_key in note_dict:
         if pitch == note_dict[note_key][1]:
             return (note_key,octave)
@@ -144,7 +144,7 @@ def note_names_from_hard_pitch(hard_pitch,prefer=None):
             if prefer == "b":
                 if index == 6:
                     index = -1
-                return (_music_lib.NOTES[index + 1] + "b",octave)
+                return (constants.NOTES[index + 1] + "b",octave)
             return (note_key + "#",octave)
         index += 1
 
@@ -155,7 +155,7 @@ def note_names_from_frequency(Hz,prefer=None):
         raise ValueError("Please provide a positive number for the Hz value.")
     if prefer not in ("#","b",None):
         raise ValueError("'prefer' parameter should be set to '#' or 'b'.")
-    return note_names_from_hard_pitch(int(round(12 * (log2(Hz) - log2(musictools.A4))) + 57),prefer=prefer)
+    return note_names_from_hard_pitch(int(round(12 * (log2(Hz) - log2(pymusician.A4))) + 57),prefer=prefer)
 
 ###INTERVAL CLASS FUNCTIONS
 
@@ -164,7 +164,7 @@ def intvl_diff(flags,_displace):
     adder_dots = len(flags) - 2
     intvl_type = flags[-1]
 
-    base_diff = _music_lib.INTVLS[intvl_type]
+    base_diff = constants.INTVLS[intvl_type]
     if isinstance(base_diff,tuple):
         if intvl_quality == "M":
             diff = base_diff[1]
@@ -196,7 +196,7 @@ def intvl_namer(intvl):
         else:
             base = str(int(intvl._flags[-1]) + 7) + "th"
     else:
-        base = _music_lib.INTVL_NAMES[int(intvl._flags[-1]) - 1]
+        base = constants.INTVL_NAMES[int(intvl._flags[-1]) - 1]
     if intvl._flags[0] == "M":
         quality = "Major"
     elif intvl._flags[0] == "m":
@@ -217,7 +217,7 @@ def intvl_namer(intvl):
     return name
 
 def intvl_from_notes(note_obj1,note_obj2):
-    if not isinstance(note_obj1, musictools.Note) or not isinstance(note_obj2, musictools.Note):
+    if not isinstance(note_obj1, pymusician.Note) or not isinstance(note_obj2, pymusician.Note):
         raise ValueError("Invalid Note object passed.")
     displace = 0
     pitch_diff = note_obj2.pitch - note_obj1.pitch
@@ -244,7 +244,7 @@ def intvl_from_notes(note_obj1,note_obj2):
     
     base_flag = str(letter_diff + 1)
     
-    expected_pitch = _music_lib.INTVLS[base_flag]
+    expected_pitch = constants.INTVLS[base_flag]
 
     if isinstance(expected_pitch, tuple):
         if pitch_diff == expected_pitch[0]:
@@ -290,12 +290,12 @@ def intvl_from_notes(note_obj1,note_obj2):
                 quality = "D"
             flags = quality + "." * adder_dots + base_flag
     
-    intvl = musictools.Interval(flags,displace)
+    intvl = pymusician.Interval(flags,displace)
     intvl.direction = direction
     return intvl
 
 def note_plus_intvl(note_obj,intvl_obj):
-    if not isinstance(intvl_obj,musictools.Interval):
+    if not isinstance(intvl_obj,pymusician.Interval):
         raise ValueError("Intervals can only be added to Note objects.")
 
     letter = note_obj.letter + intvl_obj.letter_diff
@@ -304,7 +304,7 @@ def note_plus_intvl(note_obj,intvl_obj):
         letter -= 7
     if note_obj.octave != None:
         hard_pitch = note_obj.hard_pitch + intvl_obj.diff
-        new_note = musictools.Note.from_values(letter,hard_pitch % 12)
+        new_note = pymusician.Note.from_values(letter,hard_pitch % 12)
         new_note.octave = hard_pitch // 12
     else:
         pitch = note_obj.pitch + intvl_obj.diff
@@ -312,7 +312,7 @@ def note_plus_intvl(note_obj,intvl_obj):
             pitch -= intvl_obj._displace * 12
         if pitch > 11:
             pitch -= 12
-        new_note = musictools.Note.from_values(letter,pitch)
+        new_note = pymusician.Note.from_values(letter,pitch)
 
     if note_obj.rhythm:
         new_note._rhythm = note_obj.rhythm["flags"]
@@ -320,7 +320,7 @@ def note_plus_intvl(note_obj,intvl_obj):
     return new_note
 
 def note_minus_intvl(note_obj,intvl_obj):
-    if not isinstance(intvl_obj,musictools.Interval):
+    if not isinstance(intvl_obj,pymusician.Interval):
             raise ValueError("Intervals can only be added to Note objects.")
 
     letter = note_obj.letter - intvl_obj.letter_diff
@@ -329,7 +329,7 @@ def note_minus_intvl(note_obj,intvl_obj):
         letter += 7
     if note_obj.octave != 0:
         hard_pitch = note_obj.hard_pitch - intvl_obj.diff
-        new_note = musictools.Note.from_values(letter,abs(hard_pitch % 12))
+        new_note = pymusician.Note.from_values(letter,abs(hard_pitch % 12))
         new_note.octave = hard_pitch // 12
     else:
         pitch = note_obj.pitch - intvl_obj.diff
@@ -337,7 +337,7 @@ def note_minus_intvl(note_obj,intvl_obj):
             pitch -= intvl_obj._displace * 12
         if pitch < 0:
             pitch += 12
-        new_note = musictools.Note.from_values(letter,pitch)
+        new_note = pymusician.Note.from_values(letter,pitch)
 
     if note_obj.rhythm:
         new_note._rhythm = note_obj.rhythm["flags"]
@@ -350,15 +350,15 @@ def mode_speller(root,mode):
 
     spelling = [root]
 
-    if type(_music_lib.MODES[mode]) is str:
-        parent_name = _music_lib.MODES[mode][:len(_music_lib.MODES[mode])-1]
-        offset = int(_music_lib.MODES[mode][-1]) - 1
-    elif type(_music_lib.MODES[mode]) is list:
+    if type(constants.MODES[mode]) is str:
+        parent_name = constants.MODES[mode][:len(constants.MODES[mode])-1]
+        offset = int(constants.MODES[mode][-1]) - 1
+    elif type(constants.MODES[mode]) is list:
         parent_name = mode
         offset = 0
     else:
         raise ValueError("Invalid Mode pattern. (Check modes json)")
-    parent = _music_lib.MODES[parent_name]
+    parent = constants.MODES[parent_name]
     for item in parent:
         if type(item) is not int:
             raise ValueError("Invalid Mode pattern. (Check modes json)")
@@ -369,15 +369,15 @@ def mode_speller(root,mode):
     n = 1
     flats = False if "b" not in root.name else True
     sharps = False if "#" not in root.name else True
-    if parent_name in _music_lib.MODE_LETTER_SPELLINGS:
+    if parent_name in constants.MODE_LETTER_SPELLINGS:
         for step in parent:
             if index == len(parent):
                 index -= len(parent)
             if n == len(parent):
                 break
             next_pitch += parent[index]
-            if parent_name in _music_lib.MODE_LETTER_SPELLINGS:
-                next_letter += _music_lib.MODE_LETTER_SPELLINGS[parent_name][index]
+            if parent_name in constants.MODE_LETTER_SPELLINGS:
+                next_letter += constants.MODE_LETTER_SPELLINGS[parent_name][index]
             else:
                 next_letter += 1
             if next_pitch < 0:
@@ -388,10 +388,10 @@ def mode_speller(root,mode):
                 next_letter += 7
             elif next_letter > 6:
                 next_letter -= 7
-            if parent_name in _music_lib.MODE_LETTER_SPELLINGS:
-                next_note = musictools.Note.from_values(next_letter,next_pitch)
+            if parent_name in constants.MODE_LETTER_SPELLINGS:
+                next_note = pymusician.Note.from_values(next_letter,next_pitch)
             else:
-                next_note = musictools.Note.from_values(next_letter,next_pitch)
+                next_note = pymusician.Note.from_values(next_letter,next_pitch)
                 if len(next_note.name) > 2:
                     next_note = next_note.enharmonic()
                 if next_note.name in ("B#","Cb","E#","Fb"):
@@ -427,7 +427,7 @@ def mode_speller(root,mode):
                 next_letter += 7
             elif next_letter > 6:
                 next_letter -= 7
-            next_note = musictools.Note.from_values(next_letter,next_pitch)
+            next_note = pymusician.Note.from_values(next_letter,next_pitch)
             if len(next_note.name) > 2:
                 next_note = next_note.enharmonic()
             if next_note.name in ("B#","Cb","E#","Fb"):
@@ -456,7 +456,7 @@ def parse_symbol(symbol):
 
     symbol = symbol.replace(" ","")
 
-    root = re.match(_music_lib.NOTE_REGEX_NONEND,symbol)
+    root = re.match(constants.NOTE_REGEX_NONEND,symbol)
     if not root:
         raise ValueError("No valid root note.")
 
@@ -472,27 +472,27 @@ def parse_symbol(symbol):
 
     intervals = ""
 
-    if re.match(_music_lib.HALF_REGEX,symbol):
+    if re.match(constants.HALF_REGEX,symbol):
         quality = "Half diminished"
         intervals += "m3 d5 m7"
     
-    elif re.search(_music_lib.AUG_REGEX,symbol):
+    elif re.search(constants.AUG_REGEX,symbol):
         quality = "Augmented"
         intervals += "M3 A5"
 
-    elif re.search(_music_lib.SUS_REGEX,symbol):
+    elif re.search(constants.SUS_REGEX,symbol):
         quality = "Augmented"
         intervals += "P4 P5"
 
-    elif re.match(_music_lib.DIM_REGEX,symbol):
+    elif re.match(constants.DIM_REGEX,symbol):
         quality = "Diminished"
         intervals += "m3 d5"
     
-    elif re.match(_music_lib.MINOR_REGEX,symbol) and not re.match(_music_lib.MAJOR_REGEX,symbol):
+    elif re.match(constants.MINOR_REGEX,symbol) and not re.match(constants.MAJOR_REGEX,symbol):
         quality = "Minor"
         intervals += "m3 P5"
 
-    elif re.match(_music_lib.POWER_REGEX,symbol):
+    elif re.match(constants.POWER_REGEX,symbol):
         quality = "5"
         intervals += "P5"
 
@@ -502,64 +502,64 @@ def parse_symbol(symbol):
     
     data["quality"] = quality
 
-    #qual = re.match(_music_lib.ALL_QUAL_REGEX,symbol)
+    #qual = re.match(constants.ALL_QUAL_REGEX,symbol)
     #if qual:
     #    symbol = symbol.replace(qual.group(),"")
 
-    if re.search(_music_lib.MAJ_9_REGEX,symbol):
+    if re.search(constants.MAJ_9_REGEX,symbol):
         intervals += " M7 M2"
 
-    elif re.search(_music_lib.SIX_NINE_REGEX,symbol):
+    elif re.search(constants.SIX_NINE_REGEX,symbol):
         intervals += " M6 M2"
 
-    elif re.search(_music_lib.FLAT_6_REGEX,symbol):
+    elif re.search(constants.FLAT_6_REGEX,symbol):
         intervals = intervals.replace("M6","")
         intervals += " m6"
 
-    elif re.search(_music_lib.SIX_REGEX,symbol):
+    elif re.search(constants.SIX_REGEX,symbol):
         intervals += " M6"
 
-    elif re.search(_music_lib.PLAIN_9_REGEX,symbol):
+    elif re.search(constants.PLAIN_9_REGEX,symbol):
         intervals += " m7 M2"
 
-    elif re.search(_music_lib.PLAIN_11_REGEX,symbol):
+    elif re.search(constants.PLAIN_11_REGEX,symbol):
         intervals = intervals.replace("M3","")
         intervals += " m7 M2 P4"
 
-    elif re.search(_music_lib.MAJ_13_REGEX,symbol):
+    elif re.search(constants.MAJ_13_REGEX,symbol):
         intervals += " M7 M2 M6"
 
-    elif re.search(_music_lib.PLAIN_13_REGEX,symbol):
+    elif re.search(constants.PLAIN_13_REGEX,symbol):
         intervals += " m7 M2 M6"
 
-    if re.search(_music_lib.FLAT_2_REGEX,symbol):
+    if re.search(constants.FLAT_2_REGEX,symbol):
         intervals = intervals.replace("M2","")
         intervals += " m2"
 
-    elif re.search(_music_lib.TWO_REGEX,symbol):
+    elif re.search(constants.TWO_REGEX,symbol):
         intervals += " M2"
     
-    if re.search(_music_lib.SHARP_9_REGEX,symbol):
+    if re.search(constants.SHARP_9_REGEX,symbol):
         intervals += " m3"
     
-    if re.search(_music_lib.ADD_4_REGEX,symbol):
+    if re.search(constants.ADD_4_REGEX,symbol):
         intervals += " P4"
     
-    if re.search(_music_lib.SHARP_11_REGEX,symbol):
+    if re.search(constants.SHARP_11_REGEX,symbol):
         intervals += " A4"
     
-    if re.search(_music_lib.FLAT_5_REGEX,symbol):
+    if re.search(constants.FLAT_5_REGEX,symbol):
         intervals = intervals.replace("P5","")
         intervals += " d5"
     
-    if re.search(_music_lib.SHARP_5_REGEX,symbol):
+    if re.search(constants.SHARP_5_REGEX,symbol):
         intervals = intervals.replace("P5","")
         intervals += " A5"
     
-    if re.search(_music_lib.MAJ_7_REGEX,symbol):
+    if re.search(constants.MAJ_7_REGEX,symbol):
         intervals += " M7"
 
-    elif re.search(_music_lib.PLAIN_7_REGEX,symbol):
+    elif re.search(constants.PLAIN_7_REGEX,symbol):
         if quality == "Diminished":
             intervals += " d7"
         else:
