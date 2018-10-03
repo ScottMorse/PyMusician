@@ -3,7 +3,7 @@ from pymusician import constants
 from pymusician import utils
 import re
 
-VERSION: "0.1"
+VERSION: "1.0.0-beta"
 
 A4 = 440
 

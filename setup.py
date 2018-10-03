@@ -5,7 +5,7 @@ def readme():
         return f.read()
 
 setup(name="pymusician",
-      version="0.1",
+      version="1.0.0-beta",
       description="A python package for music composition and analysis.",
       url="https://github.com/ScottMorse/PyMusician",
       author="Scott Morse",

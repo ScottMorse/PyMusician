@@ -3,7 +3,7 @@ from pymusician import constants
 from pymusician import utils
 import re
 
-VERSION: "0.1"
+VERSION: "1.0-0-beta"
 
 A4 = 440
 
@@ -178,3 +178,5 @@ class Chord:
     @property
     def __repr__(self):
         return f"<Chord {self.symbol}>"
+
+print(Note("C",4).hard_pitch)
