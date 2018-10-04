@@ -104,6 +104,8 @@ class Interval(_pymusician._Interval):
     
     @staticmethod
     def from_notes(note_obj1,note_obj2):
+        if type(note_obj1) is not Note or type(note_obj2) is not Note:
+            raise ValueError("Invalid Note object passed.")
         return utils.intvl_from_notes(note_obj1,note_obj2)
 
     def __repr__(self):
@@ -179,3 +181,7 @@ class Chord:
     def __repr__(self):
         return f"<Chord {self.symbol}>"
 
+Bb = Note("Bb")
+F = Note("F")
+
+print(Interval.from_notes(Bb,F))

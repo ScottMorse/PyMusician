@@ -163,6 +163,9 @@ def intvl_diff(flags,_displace):
     intvl_quality = flags[0]
     adder_dots = len(flags) - 2
     intvl_type = flags[-1]
+    if intvl_type == '8':
+        intvl_type = '1'
+        _displace += 1
 
     base_diff = constants.INTVLS[intvl_type]
     if isinstance(base_diff,tuple):
@@ -217,8 +220,6 @@ def intvl_namer(intvl):
     return name
 
 def intvl_from_notes(note_obj1,note_obj2):
-    if not isinstance(note_obj1, pymusician.Note) or not isinstance(note_obj2, pymusician.Note):
-        raise ValueError("Invalid Note object passed.")
     displace = 0
     pitch_diff = note_obj2.pitch - note_obj1.pitch
     letter_diff = note_obj2.letter - note_obj1.letter

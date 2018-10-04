@@ -113,7 +113,7 @@ D.pitch # 2
 D.letter # 1
 
 ```
-## ***Pitch/Letter Reference:***
+## **Pitch/Letter Reference:**
 Here is a list of note names with their respective pitch and letter values.
 ```
 |-----------------------|
@@ -379,8 +379,12 @@ Ass = Note("A##")
 B = Ass.enharmonic() # reduces A double sharp to B natural
 Cb = Ass.enharmonic().enharmonic(None,True) #returns B, then Cb
 B = Ass.enharmonic().enharmonic("#",True) #returns B instead of Cb, preference of '#' negating the possibility of a flat
+
 ```
 In general, you will probably most often use this function with no arguments simply to convert simple sharp/flat notes and reduce multi-sharp/flats.
+
+## \_\_add_\_ & \_\_sub_\_
+The Note class has adding and subtracting methods, which are actually used in tandum with the Interval class. Adding or subtracting an Interval object to a Note object returns a new Note object at that interval distance higher or lower.  Read more in the documentation for the Interval class.
 
 ## **Static Methods**
 The main purpose of the Note class's static methods is to allow the possibility to create instances of Note objects in different ways.
@@ -437,9 +441,85 @@ Gs4 = Note.from_frequency(415) # G sharp octave 3, frequency is close enough
 Ab4 = Note.from_frequency(415,'b') # Ab octave 3, frequency is close enough
 
 A3 = Note.from_hard_pitch(220) # A octave 3
-
 ```
 
-That is it for the Note class.  It is chock full of data since it sets the fundamental structure for the rest of PyMusician.
+*For now, this concludes the Note class.  It is chock full of data, since it sets the fundamental structure for the rest of PyMusician.*
 
 # **The Interval Class**
+
+Instances from the Interval class represent a pure interval value representing a distance between notes based on common practice nomenclature.
+
+## Creating a basic Interval
+
+The Interval constructor takes two arguments, the first being a string of flags to represent the basic interval, and the second being an optional value to displace an interval by a number of octaves (integer).
+
+The flags are meant to be intuitive to those familiar with common interval names.  The flags should be a single string with two characters, the first representing the interval quality, and the second representing the interval size.  
+
+The quality flag should be 'M' for major, 'm' for minor, 'P' for perfect, 'A' for augmented, and 'D' for diminished.  (Lowercase forgiven for 'P','A', or 'D')
+
+The second flag should be the interval size, '1' for unison, '2' for second, etc. up to 7th.  Using '8' will work for a single octave, but in general, use the 'displace' parameter for intervals greater than an octave (read on).
+
+This will look like 'm2' for a Minor 2nd, 'M3' for a Major 3rd, 'P4' (or 'p4' is forgiven) for Perfect 4th, 'A4' for Augmented Fourth, 'D5' (or 'd5') for Diminished 5th, etc.
+
+```python
+from pymusician import Interval
+
+half_step = Interval('m2')
+
+whole_step = Interval('M2')
+
+minor_third = Interval('m3')
+
+major_third = Interval('M3')
+
+aug_third = Interval('A3') # successfully returns enharmonic equivalent to perfect 4th
+
+per_fourth = Interval('P4')
+```
+In the rare case that an interval needs to be doubly/triply (or more) augmented or diminished, add '.' ' s after the 'A' or 'D' flag.
+```python
+from pymusician import Interval
+
+doubly_augmented_fourth = Interval('A.4')
+triply_diminished_fifth = Interval('D..5')
+```
+
+Here are examples that use the 'displace' optional parameter (default 0) to increase the number of octaves added to the interval.
+
+```python
+from pymusician import Interval
+
+perfect_octave1 = Interval('P8')
+perfect_octave2 = Interval('P1',1) #this represents the same interval
+
+minor_9th = Interval('m2',1)
+
+major_13th = Interval('M6',1)
+
+dim7_and_two_octaves = Interval('D7',2)
+```
+
+## Why have these objects?
+
+The most useful purpose for regular Interval objects like these is to combine in with the Note class's magic methods.
+
+## Note +/- Interval (\_\_add\_\_ & \_\_sub\_\_)
+These are methods that comes from the Note class.  Simply add an Interval object to a Note object (Note object must come first), and receive a Note object at that distance higher, or subtract to descend by the Interval.
+
+```python
+from pymusician import Note, Interval
+
+C4 = Note("A",4)
+
+maj_2nd = Interval("M2")
+
+D4 = C4 + maj2nd #creates Note("D",4)
+
+octave = Interval("P8")
+
+D5 = D4 + octave #creates Note("D",5)
+
+C3 = C4 - octave #creates Note("C",3)
+
+
+```
