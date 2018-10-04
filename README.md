@@ -461,6 +461,8 @@ The second flag should be the interval size, '1' for unison, '2' for second, etc
 
 This will look like 'm2' for a Minor 2nd, 'M3' for a Major 3rd, 'P4' (or 'p4' is forgiven) for Perfect 4th, 'A4' for Augmented Fourth, 'D5' (or 'd5') for Diminished 5th, etc.
 
+Invalid names of intervals will raise ValueError's.  This would include perfect 3rds, major 4ths, etc. Any interval can be augmented or diminished, so no errors will be raised for these.
+
 ```python
 from pymusician import Interval
 
@@ -499,7 +501,7 @@ major_13th = Interval('M6',1)
 dim7_and_two_octaves = Interval('D7',2)
 ```
 
-## Why have these objects?
+## **Why have these objects?**
 
 The most useful purpose for regular Interval objects like these is to combine in with the Note class's magic methods.
 
@@ -513,13 +515,55 @@ C4 = Note("A",4)
 
 maj_2nd = Interval("M2")
 
-D4 = C4 + maj2nd #creates Note("D",4)
+maj_14th = Interval("M7",1)
 
 octave = Interval("P8")
+
+D4 = C4 + maj2nd #creates Note("D",4)
 
 D5 = D4 + octave #creates Note("D",5)
 
 C3 = C4 - octave #creates Note("C",3)
 
-
+B5 = C4 + maj_14th #creates Note("B",5)
 ```
+
+## **Interval properties**
+
+## self<span></span>.diff
+
+The diff property returns an integer representing how many half steps long the distance of the interval is.  It would be 0 for perfect unison ('p1'), 1 for minor 2nd, etc.
+
+## self<span></span>.letter_diff
+
+The letter_diff property returns an integer representing how many letters change by an interval.  For example, all 2nds change the letter of a note by 1, regardless of quality, all 3rds change the letter of a note by 2, and so on.
+
+## self<span></span>.name
+
+This returns a more visually appealing name for the interval.  This would be a string such as "Major 2nd" for an 'M2' interval, "Major 13th" for a major 6th displaced by one octave, and "Perfect 4th plus 2 octaves" for a perfect fourth displaced by two octaves.
+
+## **Static methods**
+## Interval.from_notes(note_obj1,note_obj2)
+
+This is a way to receive an Interval object from the distance between two Note objects.  If both Note objects have octave values, it will return an interval specific to their octave and pitch distance.  If one or neither have octave values, it will treat the first note as ascending to the second.
+
+```python
+from pymusician import Note, Interval
+
+C4 = Note("C",4)
+A4 = Note("A",4)
+
+maj_6th = Interval.from_notes(C4,A4) # returns Interval('M6')
+
+C2 = Note("C",2)
+
+two_octaves = Interval.from_notes(C2,C4) # returns Interval('P1',2)
+
+Bb = Note("Bb")
+F = Note("F")
+
+per_5th = Interval.from_notes(Bb,F) # returns Interval('P5')
+
+per_4th = Interval.from_notes(F,Bb) # returns Interval('P4')
+```
+
