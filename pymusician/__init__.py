@@ -179,4 +179,3 @@ class Chord:
     def __repr__(self):
         return f"<Chord {self.symbol}>"
 
-print(Note("C",4).hard_pitch)
