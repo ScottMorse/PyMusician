@@ -536,6 +536,8 @@ def parse_symbol(symbol):
     
     if re.search(constants.SHARP_9_REGEX,symbol):
         intervals += " m3"
+        if("13" in symbol and not "b13" in symbol):
+            intervals += ' M6'
     
     if re.search(constants.ADD_4_REGEX,symbol):
         intervals += " P4"
@@ -559,6 +561,14 @@ def parse_symbol(symbol):
             intervals += " d7"
         else:
             intervals += " m7"
+
+    if "13" in symbol and not "b13" in symbol and 'M6' not in intervals:
+        intervals += ' M6'
+
+    if "11" in symbol and not "#11" in symbol and 'P4' not in intervals:
+        intervals = intervals.replace("M3","P4")
+        intervals = intervals.replace("m3","P4")
+
 
 
     if not intervals:
