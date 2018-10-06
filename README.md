@@ -452,7 +452,7 @@ Ab4 = Note.from_frequency(415,'b') # Ab octave 3, frequency is close enough
 A3 = Note.from_hard_pitch(220) # A octave 3
 ```
 
-*For now, this concludes the Note class.  This class sets the foundation for the rest of PyMusician.*
+*This class sets the foundation for the rest of PyMusician.*
 
 # **The Interval Class**
 
@@ -576,7 +576,7 @@ per_5th = Interval.from_notes(Bb,F) # returns Interval('P5')
 per_4th = Interval.from_notes(F,Bb) # returns Interval('P4')
 ```
 
-*For now, this concludes the Interval class.  There is certainly more to come with this class, especially in interval analysis.*
+*There is certainly more to come with this class, especially in interval analysis.*
 
 # **The Mode Class**
 
@@ -659,7 +659,7 @@ for note in d_harm_min:
 ## *Custom Modes*
 As of the moment, there is not support for custom modes within the Python, but the package's modes are found in a file called modes.json in the package's folder **/pymusician/data/modes.json**.
 
-For now, if you want to add or edit your modes, open this json, and add your mode's name as a key to the first object with an array of the steps of the mode as its value.  Make sure to include the step that returns to the root at the end. Like this:
+For now, if you want to add or edit your modes, open this json, and add your mode's name as a key to thes first object with an array of the steps of the mode as its value.  Make sure to include the step that returns to the root at the end. Like this:
 
 ```json
 [
