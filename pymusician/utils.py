@@ -513,6 +513,9 @@ def parse_symbol(symbol):
 
     elif re.search(constants.SIX_REGEX,symbol):
         intervals += " M6"
+    
+    elif re.search(constants.TWO_REGEX,symbol):
+        intervals += " M2"
 
     elif re.search(constants.PLAIN_9_REGEX,symbol):
         intervals += " m7 M2"
@@ -530,9 +533,6 @@ def parse_symbol(symbol):
     if re.search(constants.FLAT_2_REGEX,symbol):
         intervals = intervals.replace("M2","")
         intervals += " m2"
-
-    elif re.search(constants.TWO_REGEX,symbol):
-        intervals += " M2"
     
     if re.search(constants.SHARP_9_REGEX,symbol):
         intervals += " m3"
