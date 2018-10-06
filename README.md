@@ -13,7 +13,7 @@ This is a python package for representing musical structures.  The features of t
 
 # Getting started
 ## Prerequisites
-You need an installation of Python 3.6 or higher.  PyMusician uses NumPy, but if your python library doesn't have it, the package will download it automatically.  To make use of this package, you should have a strong grasp of Python's object-oriented programming and a strong grasp on common Western music theory.
+You need an installation of Python 3.6 or higher.  To make use of this package, you should have a strong grasp of Python's object-oriented programming and a strong grasp on common Western music theory.
 ## Installation
 PyMusician is now part of the PyPI community of python packages.  It's name is 'pymusician' for installation/importing.  It's easy to install
 PyMusician with a simple pip command from your terminal:
