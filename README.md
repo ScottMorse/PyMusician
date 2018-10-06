@@ -1,7 +1,14 @@
 # PyMusician by Scott Morse
 ## Version 1.0.0-beta
 
-A python package for representing musical structures.  The features of the musictools module have less to do with audio file production/management, and more with analysis and composition.  However, the concepts represented here could be combined with other music/audio related code to make sophisticated musical projects.  The goal of Music Tools is to be versatile and intuitive to a musician-programmer with practice, representing musical concepts in a way musicians will find familiar, and leaving room to use the information in any way the user wishes, rather than creating any interfaces for programs such as sheet music notation directly.
+Quick reference:
+* Classes: <a href="#the-note-class">Note</a>, <a href="#the-interval-class">Interval</a>,<a href="#the-mode-class">Mode</a>,<a href="#the-chord-class">Chord</a>
+* <a href="#pitchletter-reference">Note pitch/letter values</a>
+* <a href="#rhythm">Note rhythm flags</a>
+* <a href="#creating-a-basic-interval">Interval flags</a>
+* <a href="#supported-mode-names">Mode names</a>
+
+This is a python package for representing musical structures.  The features of the musictools module have less to do with audio file production/management, and more with analysis and composition.  However, the concepts represented here could be combined with other music/audio related code to make sophisticated musical projects.  The goal of Music Tools is to be versatile and intuitive to a musician-programmer with practice, representing musical concepts in a way musicians will find familiar, and leaving room to use the information in any way the user wishes, rather than creating any interfaces for programs such as sheet music notation directly.
 
 
 # Getting started
@@ -738,5 +745,6 @@ for note in G13:
     print(note.name)
 ```
 
-*For now this concludes PyMusician's main tools. This project is in its early stages, and much more is to come with rhythm, composition, and analysis.  Along with new features and tools will come updates and improvements **to** its current ones. Thank you for reading.*
+*For now this concludes PyMusician's main tools. This project is in its early stages, and much more is to come with rhythm, composition, and analysis.  Along with new features and tools will come updates and improvements to its current ones. Thank you for reading.*
+
 *-Scott Morse*
