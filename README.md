@@ -70,7 +70,7 @@ Gssss.name # 'G####'
 
 ## **Pitch and Letter Values:**
 
-<a href="#pitchletter-reference">(pitch/letter value reference)</a>
+<a href="#pitchletter-reference">Pitch/letter value reference</a>
 
 Two basic attributes of a Note that are given to it are it's 'pitch' and 'letter'.  Both are integers, and both have nothing to do with specificity of octave (a separate property called hard_pitch deals with a value given on octave, read on).
 
@@ -172,7 +172,7 @@ Bn1 = Note("B",-1)
 
 ## Hard Pitch
 
-If a Note object's octave value has been set, then the object has a property at `self.hard_pitch` that represents a concrete pitch value for the note represented by an integer.  **C0** is used as the basis, having a `hard_pitch` of 0, and `hard_pitch` values rise or fall by the half step from there.
+If a Note object's <a href="#octave">octave</a> value has been set, then the object has a property at `self.hard_pitch` that represents a concrete pitch value for the note represented by an integer.  **C0** is used as the basis, having a `hard_pitch` of 0, and `hard_pitch` values rise or fall by the half step from there.
 
 If no `octave` has been set, returns None.
 
@@ -279,6 +279,7 @@ C.rhythm['value']
 # returns 85.3333.... for the length of a quarter triplet
 
 C.rhythm = "3."
+C.rhythm['value']
 # returns 192 for the length of a dotted quarter
 
 ```
@@ -398,7 +399,7 @@ The main purpose of the Note class's static methods is to allow the possibility 
 
 ## Note.from_values(letter,pitch)
 
-This method allows for the creation of a Note object from the * <a href="#pitchletter-reference">letter and pitch values</a> (both integers) that are normally assigned a note object in normal construction. 
+This method allows for the creation of a Note object from the <a href="#pitchletter-reference">letter and pitch values</a> (both integers) that are normally assigned a note object in normal construction. 
 
 Keep in mind that this method only returns a simple object with no octave or rhythm, though these values can be set to an object after its creation.
 
@@ -511,10 +512,10 @@ dim7_and_two_octaves = Interval('D7',2)
 
 ## **Why have these objects?**
 
-The most useful purpose for regular Interval objects like these is to combine in with the Note class's magic methods.
+The most useful purpose for regular Interval objects like these is to combine in with the <a href="#the-note-class">Note</a> class's magic methods.
 
 ## Note +/- Interval (\_\_add\_\_ & \_\_sub\_\_)
-These are methods that comes from the Note class.  Simply add an Interval object to a Note object (Note object must come first), and receive a Note object at that distance higher, or subtract to descend by the Interval.
+These are methods that original in the Note class.  Simply add an Interval object to a Note object (Note object must come first), and receive a Note object at that distance higher, or subtract to descend by the Interval.
 
 ```python
 from pymusician import Note, Interval
@@ -747,6 +748,6 @@ for note in G13:
     print(note.name)
 ```
 
-*For now this concludes PyMusician's main tools. This project is in its early stages, and much more is to come with rhythm, composition, and analysis.  Along with new features and tools will come updates and improvements to its current ones. Thank you for reading.*
+*For now, this concludes PyMusician's main tools. This project is in its early stages, and much more is to come, especially in rhythm, composition, and analysis.  Along with new features and tools will come updates and improvements to its current ones. Thank you for reading.*
 
 *-Scott Morse*
