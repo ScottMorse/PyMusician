@@ -3,8 +3,8 @@
 
 Quick reference:
 * Classes: <a href="#the-note-class">Note</a>, <a href="#the-interval-class">Interval</a>,<a href="#the-mode-class">Mode</a>,<a href="#the-chord-class">Chord</a>
-* <a href="#pitchletter-reference">Note pitch/letter values</a>
-* <a href="#rhythm">Note rhythm flags</a>
+* <a href="#pitchletter-reference">Pitch/letter values</a>
+* <a href="#rhythm">Rhythm flags</a>
 * <a href="#creating-a-basic-interval">Interval flags</a>
 * <a href="#supported-mode-names">Mode names</a>
 
@@ -33,7 +33,7 @@ If you have not used PyMusician before, it is important to read and learn about 
 import pymusician
 pymusician.A4 = 442
 ```
-This will globally affect the rest of the code, by affecting any situation where frequency is calculated, such as the frequency property of a Note object.  This is the only value in the main that has global consequences within the functions of pymusician.
+This will globally affect the rest of the code, by affecting any situation where frequency is calculated, such as the <a href="#frequency">frequency property</a> of a Note object.  This is the only value in the main that has global consequences within the functions of pymusician.
 ```python
 import pymusician
 pymusician.Note("A",4).frequency #440
@@ -70,7 +70,7 @@ Gssss.name # 'G####'
 
 ## **Pitch and Letter Values:**
 
-(after this information is a list of pitch and letter values for reference)
+<a href="#pitchletter-reference">(pitch/letter value reference)</a>
 
 Two basic attributes of a Note that are given to it are it's 'pitch' and 'letter'.  Both are integers, and both have nothing to do with specificity of octave (a separate property called hard_pitch deals with a value given on octave, read on).
 
@@ -320,7 +320,7 @@ Ebb.pitch_offset # -2
 
 ## Frequency
 
-This property returns a float of the standard frequency for a note in Hz.  This will return None if there is no octave set for an object, because there is no specific pitch for a note without it.  If the global constant pymusician.A4 is reassigned a new number (see General Notes at top of this readme), the basis for every frequency will be affected.
+This property returns a float of the standard frequency for a note in Hz.  This will return None if there is no octave set for an object, because there is no specific pitch for a note without it.  If the global constant <a href="#a4">A4</a> is reassigned a new number (see General Notes at top of this readme), the basis for every frequency will be affected.
 
 ```python
 import pymusician
@@ -389,14 +389,16 @@ B = Ass.enharmonic().enharmonic("#",True) #returns B instead of Cb, preference o
 In general, you will probably most often use this function with no arguments simply to convert simple sharp/flat notes and reduce multi-sharp/flats.
 
 ## \_\_add_\_ & \_\_sub_\_
-The Note class has adding and subtracting methods, which are used in tandum with the Interval class. Adding or subtracting an Interval object to a Note object returns a new Note object at that interval distance higher or lower.  Read more in the documentation for the Interval class.
+<a href="#note---interval-__add__--__sub__">Adding and subtracting Interval objects</a>
+
+The Note class has adding and subtracting methods, which are used in tandum with the Interval class. Adding or subtracting an Interval object to a Note object returns a new Note object at that interval distance higher or lower.  Read more in the documentation for the <a href="#the-interval-class">Interval class</a>.
 
 ## **Static Methods**
 The main purpose of the Note class's static methods is to allow the possibility to create instances of Note objects in different ways.
 
 ## Note.from_values(letter,pitch)
 
-This method allows for the creation of a Note object from the letter and pitch values (both integers) that are normally assigned a note object in normal construction. (Read the previous section entitled **Pitch and Letter Values** to understand what these integers are)
+This method allows for the creation of a Note object from the * <a href="#pitchletter-reference">letter and pitch values</a> (both integers) that are normally assigned a note object in normal construction. 
 
 Keep in mind that this method only returns a simple object with no octave or rhythm, though these values can be set to an object after its creation.
 
@@ -432,7 +434,7 @@ Db0 = Note.from_hard_pitch(1,'b') #prefer set to 'b' returns Db instead of C sha
 
 ```
 ## Note.from_frequency(frequency,prefer=None)
-This is a very similar method to `Note.from_hard_pitch`, except taking a Hz value for the note.  The global constant A4 also will affect this method in the same way it affects any other frequency-related data.  
+This is a very similar method to <a href="#notefrom_hard_pitchhard_pitchprefernone">`Note.from_hard_pitch`</a>, except taking a Hz value for the note.  The global constant <a href="#a4">A4</a> also will affect this method in the same way it affects any other <a href="#frequency">frequency</a>-related data.  
 
 Since frequency values are usually not whole numbers, this method will round the given Hz to the closest accurate note frequency.  This may prove useful if this code is used alongside audio analysis.
 
@@ -580,7 +582,7 @@ per_4th = Interval.from_notes(F,Bb) # returns Interval('P4')
 The Mode class is a very intuitive and simple class for a musician to deal with.
 
 ## Creating a Mode
-To create a new Mode instance, all one needs is the root and mode name.  The root note can either be a string note name, or a Note object.  Read below to find a reference of Mode names.
+To create a new Mode instance, all one needs is the root and mode name.  The root note can either be a string note name, or a <a href="#the-note-class">Note</a> object.  Read below to find a reference of Mode names.
 
 ```python
 from pymusician import Note, Mode
@@ -596,7 +598,7 @@ amin = Mode("A","minor")
 ## **Mode properties**
 
 ### Root
-`self.root` simply returns the Note object for root of the mode.  Even if a string was passed originally for the root note, the property will be a Note instance.
+`self.root` simply returns the <a href="#the-note-class">Note</a> object for root of the mode.  Even if a string was passed originally for the root note, the property will be a Note instance.
 
 ### Mode
 `self.mode` is simply the mode name, like "major", "minor."
@@ -721,16 +723,16 @@ Keep in mind that there are many chord symbol practices, and though several opti
 `self.symbol` refers to the original symbol string used when making the chord.
 
 ### Root
-`self.root` is a Note object of the root of the chord.
+`self.root` is a <a href="#the-note-class">Note</a> object of the root of the chord.
 
 ### Quality
 `self.quality` is a triadic or base quality given to the chord as a string, such as "Major", "Minor", "Augmented", "Diminished", "5"(for 'power chords'), etc.
 
 ### Intervals
-After the chord's root, quality, and extensions are parsed in initialization, `self.intervals` is a string of interval flags (such as used in the Interval class) separated by spaces, such as "M3 P5" for a major triad.
+After the chord's root, quality, and extensions are parsed in initialization, `self.intervals` is a string of interval flags (such as used in the <a href="#the-interval-class">Interval</a> class) separated by spaces, such as "M3 P5" for a major triad.
 
 ### **Spelling**
-`self.spelling`, like the Mode property, is a list spelling Note instances that make up the chord, including the root.  Also, like in a Mode instance, iterating over the Chord object itself is the same as iterating over its spelling property.
+`self.spelling`, like the <a href="#spelling">Mode</a> property, is a list spelling Note instances that make up the chord, including the root.  Also, like in a Mode instance, iterating over the Chord object itself is the same as iterating over its spelling property.
 
 ```python
 from pymusician import Note, Chord
