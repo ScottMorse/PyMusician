@@ -26,7 +26,7 @@ RHYTHM_VALUES = [
 GROSS_ROOTS = {"B":"Cb","C":"B#","E":"Fb","F":"E#"}
 NON_NATURAL = (1,3,6,8,10)
 
-INT_FLAG_REGEX = r'^[Mm][2367]$|[ADad][.]*[1-7]$|^[Pp][145]$'
+INT_FLAG_REGEX = r'^[Mm][2367]$|[ADad][.]*[1-8]$|^[Pp][1458]$'
 
 INTVLS = {
     "1": 0, "2": (1,2),
@@ -35,7 +35,7 @@ INTVLS = {
     "7": (10,11)
 }
 
-INTVL_NAMES = ("unison","2nd","3rd","4th","5th","6th","7th")
+INTVL_NAMES = ("unison","2nd","3rd","4th","5th","6th","7th","octave")
 
 BASE_DIR = os.path.dirname(__file__)
 FILE_PATH = os.path.join(BASE_DIR,"data/modes.json")

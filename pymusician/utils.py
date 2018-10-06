@@ -230,12 +230,8 @@ def intvl_from_notes(note_obj1,note_obj2):
     if letter_diff < 0:
         letter_diff += 7
 
-    direction = "ascending"
-
     if note_obj1.octave != None and note_obj2.octave != None:
         pitch_diff = abs(note_obj1.hard_pitch - note_obj2.hard_pitch)
-        if note_obj1.hard_pitch > note_obj2.hard_pitch:
-            direction = "descending"
         displace = pitch_diff // 12
         pitch_diff %= 12
         if note_obj1.hard_pitch > note_obj2.hard_pitch:
@@ -280,7 +276,6 @@ def intvl_from_notes(note_obj1,note_obj2):
                 quality = "A"
             if letter_diff == 0 and note_obj1.pitch_offset > note_obj2.pitch_offset:
                 quality = "D"
-                direction = "descending"
             flags = quality + "." * adder_dots + base_flag
         else:
             adder_dots = pitch_diff - (expected_pitch - 1)
@@ -292,7 +287,6 @@ def intvl_from_notes(note_obj1,note_obj2):
             flags = quality + "." * adder_dots + base_flag
     
     intvl = pymusician.Interval(flags,displace)
-    intvl.direction = direction
     return intvl
 
 def note_plus_intvl(note_obj,intvl_obj):

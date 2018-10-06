@@ -3,7 +3,7 @@ from pymusician import constants
 from pymusician import utils
 import re
 
-VERSION: "1.0-0-beta"
+VERSION = "1.0-0-beta"
 
 A4 = 440
 
@@ -44,7 +44,10 @@ class Note(_pymusician._Note):
     
     @property
     def pitch_offset(self):
-        return self.pitch - constants.NOTE_VALUES[self.name[0]][1]
+        pitch_offset = len(self.name) - 1
+        if "b" in self.name:
+            pitch_offset *= -1
+        return pitch_offset
     
     @property
     def hard_pitch(self):
@@ -116,7 +119,7 @@ class Mode:
     def __init__(self,root,mode):
 
         if type(root) is Note:
-            self._root = root
+            self._root = root.capitalize()
         else:
             try:
                 self._root = Note(root)
@@ -177,11 +180,9 @@ class Chord:
             spelling.append(self.root + Interval(intvl))
         return spelling
 
-    @property
+    def __iter__(self):
+        return iter(self.spelling)
+
     def __repr__(self):
         return f"<Chord {self.symbol}>"
 
-Bb = Note("Bb")
-F = Note("F")
-
-print(Interval.from_notes(Bb,F))
