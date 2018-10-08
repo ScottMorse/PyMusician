@@ -297,12 +297,12 @@ C.rhythm.value # 128
 C.rhythm = "3t"
 C.rhythm.value # returns 85.3333... for the length of a quarter triplet
 C.rhythm.triplet # True
-C.rhtyhm.dots # 0
+C.rhythm.dots # 0
 
 C.rhythm = "3."
-C.rhythm.value # returns 192 for the length of a dotted quarter
+C.rhythm.value # returns 192.0 for the length of a dotted quarter
 C.rhythm.dots # 1
-C.rhythm.triplet # True
+C.rhythm.triplet # False
 
 ```
 ## **Other Note class properties and methods**
@@ -471,7 +471,7 @@ Gs4 = Note.from_frequency(415) # G sharp octave 3, frequency is close enough
 
 Ab4 = Note.from_frequency(415,'b') # Ab octave 3, frequency is close enough
 
-A3 = Note.from_hard_pitch(220) # A octave 3
+A3 = Note.from_frequency(220) # A octave 3
 ```
 
 *This class sets the foundation for the rest of PyMusician.*
@@ -542,7 +542,7 @@ These are methods that original in the Note class.  Simply add an Interval objec
 ```python
 from pymusician import Note, Interval
 
-C4 = Note("A",4)
+C4 = Note("C",4)
 
 maj_2nd = Interval("M2")
 
@@ -550,9 +550,9 @@ maj_14th = Interval("M7",1)
 
 octave = Interval("P8")
 
-new_note_D4 = C4 + maj2nd #creates Note("D",4)
+new_note_D4 = C4 + maj_2nd #creates Note("D",4)
 
-new_note_D5 = D4 + octave #creates Note("D",5)
+new_note_D5 = new_note_D4 + octave #creates Note("D",5)
 
 new_note_C3 = C4 - octave #creates Note("C",3)
 
@@ -625,6 +625,9 @@ amin = Mode("A","minor")
 
 ### Mode
 `self.mode` is simply the mode name, like "major", "minor."
+
+### Name
+`self.name` is a name combining the root and mode name ("A major")
 
 ## Spelling
 This is the main purpose of the Mode class.  `self.spelling` is a list of Note objects that spell the Mode.  However, for iteration, **iterating over a Mode instance itself** will iterate over its spelling for you, allowing you to treat the Mode itself like a list in iteration.  Also, **indexing the Mode instance** will index the spelling, and the **len()** of the Mode object is the length of its spelling.
@@ -795,6 +798,7 @@ In the most strict definition, a 13 chord contains an entire heptatonic scale wo
 
 ## What's coming in the future:
 Many of these tools I have created in prototype projects of this package, but need to be redone and refined before releasing:
+* Rests
 * Time signatures
 * BPM
 * Concept of measures
@@ -804,6 +808,6 @@ Many of these tools I have created in prototype projects of this package, but ne
 * Clefs
 * Staff position of Note objects based on clef/instrument transposition
 
-*For now, this concludes PyMusician's main tools. This project is in its early stages, and much more is to come, especially in rhythm, composition, and analysis.  Along with new features and tools will come updates and improvements to its current ones. Thank you for reading, and have fun with this.*
+*For now, this concludes PyMusician's main tools. This project is in its early stages, and much more is to come.  This started as a single beginner's Python file that I used when I first started programming in order to practice applying musical concepts I knew well to new programming concepts I was learning, and now it is my main project that I plan to use in tandum with many more of my future projects.  I know there are a few other similar packages out there, but I thought I'd share mine for the public as well.  Thank you for reading, and have fun with this.*
 
 *-Scott Morse*

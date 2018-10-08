@@ -119,10 +119,10 @@ class Mode:
     def __init__(self,root,mode):
 
         if type(root) is Note:
-            self._root = root.capitalize()
+            self._root = root
         else:
             try:
-                self._root = Note(root)
+                self._root = Note(root.capitalize())
             except:
                 raise ValueError("Mode root should be a Note object or note name (str).")
         if mode not in constants.MODES:
