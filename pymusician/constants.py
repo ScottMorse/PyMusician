@@ -93,6 +93,6 @@ FLAT_5_REGEX = r'(b|flat)5'
 
 SHARP_5_REGEX = r'(#|sharp)5'
 
-FLAT_6_REGEX = r'(b|flat)(b|13)'
+FLAT_6_REGEX = r'(b|flat)(6|13)'
 
 SIX_REGEX = r'six|6'

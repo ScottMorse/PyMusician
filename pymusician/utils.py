@@ -566,6 +566,9 @@ def parse_symbol(symbol):
     elif "6" in symbol:
         intervals += " M6"
 
+    if "alt" in symbol:
+        intervals += " m2 m6"
+
     data['quality'] = quality
     data["intervals"] = intervals
 
