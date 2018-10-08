@@ -780,7 +780,19 @@ len(G13) # 6
 ## A note about 13 chords
 In the most strict definition, a 13 chord contains an entire heptatonic scale worth of notes in it, including some kind of 11th/4th.  Some would argue that a dominant 13th chord should automatically then include a #11.  I have ommitted this, since in practice I believe this is not used strictly enough to always be included, though I understand why it is often argued.  In PyMusician, minor 13th chords do contain a natural 11, but any major quality 13 chords do not automatically include 11 or #11, so include it with a '#11' tag in the symbol ("G13#11").
 
+# Concluding Thoughts
 
-*For now, this concludes PyMusician's main tools. This project is in its early stages, and much more is to come, especially in rhythm, composition, and analysis.  Along with new features and tools will come updates and improvements to its current ones. Thank you for reading.*
+## What's coming in the future:
+Many of these tools I have created in prototype projects of this package, but need to be redone and refined before releasing:
+* Time signatures
+* BPM
+* Concept of measures
+* Transposition function
+* Concept of a key, boolean function to determine membership to a key
+* More Chord/Interval tools
+* Clefs
+* Staff position of Note objects based on clef/instrument transposition
+
+*For now, this concludes PyMusician's main tools. This project is in its early stages, and much more is to come, especially in rhythm, composition, and analysis.  Along with new features and tools will come updates and improvements to its current ones. Thank you for reading, and have fun with this.*
 
 *-Scott Morse*
