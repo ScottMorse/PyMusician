@@ -176,8 +176,11 @@ class Chord:
     @property
     def spelling(self):
         spelling = [self.root]
+        intvls = []
         for intvl in self.intervals.split():
-            spelling.append(self.root + Interval(intvl))
+            if intvl not in intvls:
+                spelling.append(self.root + Interval(intvl))
+                intvls.append(intvl)
         return spelling
 
     def __iter__(self):
@@ -185,4 +188,3 @@ class Chord:
 
     def __repr__(self):
         return f"<Chord {self.symbol}>"
-

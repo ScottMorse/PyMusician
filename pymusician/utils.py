@@ -290,8 +290,6 @@ def intvl_from_notes(note_obj1,note_obj2):
     return intvl
 
 def note_plus_intvl(note_obj,intvl_obj):
-    if not isinstance(intvl_obj,pymusician.Interval):
-        raise ValueError("Intervals can only be added to Note objects.")
 
     letter = note_obj.letter + intvl_obj.letter_diff
 
@@ -459,121 +457,116 @@ def parse_symbol(symbol):
 
     symbol = symbol.replace(root,"")
 
-    if not symbol:
+    data["root"] = root
+
+    #triad ifs
+    if re.match(constants.MAJ_TRIAD_REGEX,symbol):
+        quality = "Major"
+        intervals = "M3 P5"
+    elif re.match(constants.MIN_TRIAD_REGEX,symbol):
+        quality = "Minor"
+        intervals = "m3 P5"
+    elif re.search(constants.AUG_TRIAD_REGEX,symbol):
+        quality = "Augmented"
+        intervals = "M3 A5"
+    elif re.match(constants.DIM_TRIAD_REGEX,symbol):
+        quality = "Diminished"
+        intervals = "m3 D5"
+    elif re.search(constants.POWER_CHORD_REGEX,symbol):
+        quality = "5"
+        intervals = "P5"
+    elif re.search(constants.HALF_DIM_REGEX,symbol):
+        quality = "Half diminished"
+        intervals = "m3 D5 m7"
+    elif re.search(constants.SUS_2_REGEX,symbol):
+        quality = "Suspended 2"
+        intervals = "M2 P5"
+    elif re.search(constants.SUS_4_REGEX,symbol):
+        quality = "Suspended 4"
+        intervals = "P4 P5"
+    else:
         quality = "Major"
         intervals = "M3 P5"
 
-    data["root"] = root
-
-    intervals = ""
-
-    if re.match(constants.HALF_REGEX,symbol):
-        quality = "Half diminished"
-        intervals += "m3 d5 m7"
-    
-    elif re.search(constants.AUG_REGEX,symbol):
-        quality = "Augmented"
-        intervals += "M3 A5"
-
-    elif re.search(constants.SUS_REGEX,symbol):
-        quality = "Augmented"
-        intervals += "P4 P5"
-
-    elif re.match(constants.DIM_REGEX,symbol):
-        quality = "Diminished"
-        intervals += "m3 d5"
-    
-    elif re.match(constants.MINOR_REGEX,symbol) and not re.match(constants.MAJOR_REGEX,symbol):
-        quality = "Minor"
-        intervals += "m3 P5"
-
-    elif re.match(constants.POWER_REGEX,symbol):
-        quality = "5"
-        intervals += "P5"
-
-    else:
-        quality = "Major"
-        intervals += "M3 P5"
-    
-    data["quality"] = quality
-
-    #qual = re.match(constants.ALL_QUAL_REGEX,symbol)
-    #if qual:
-    #    symbol = symbol.replace(qual.group(),"")
-
-    if re.search(constants.MAJ_9_REGEX,symbol):
-        intervals += " M7 M2"
-
-    elif re.search(constants.SIX_NINE_REGEX,symbol):
-        intervals += " M6 M2"
-
-    elif re.search(constants.FLAT_6_REGEX,symbol):
-        intervals = intervals.replace("M6","")
-        intervals += " m6"
-
-    elif re.search(constants.SIX_REGEX,symbol):
-        intervals += " M6"
-    
-    elif re.search(constants.TWO_REGEX,symbol):
-        intervals += " M2"
-
-    elif re.search(constants.PLAIN_9_REGEX,symbol):
-        intervals += " m7 M2"
-
-    elif re.search(constants.PLAIN_11_REGEX,symbol):
-        intervals = intervals.replace("M3","")
-        intervals += " m7 M2 P4"
-
-    elif re.search(constants.MAJ_13_REGEX,symbol):
-        intervals += " M7 M2 M6"
-
-    elif re.search(constants.PLAIN_13_REGEX,symbol):
-        intervals += " m7 M2 M6"
-
-    if re.search(constants.FLAT_2_REGEX,symbol):
-        intervals = intervals.replace("M2","")
-        intervals += " m2"
-    
-    if re.search(constants.SHARP_9_REGEX,symbol):
-        intervals += " m3"
-        if("13" in symbol and not "b13" in symbol):
-            intervals += ' M6'
-    
-    if re.search(constants.ADD_4_REGEX,symbol):
-        intervals += " P4"
-    
-    if re.search(constants.SHARP_11_REGEX,symbol):
-        intervals += " A4"
-    
-    if re.search(constants.FLAT_5_REGEX,symbol):
-        intervals = intervals.replace("P5","")
-        intervals += " d5"
-    
-    if re.search(constants.SHARP_5_REGEX,symbol):
-        intervals = intervals.replace("P5","")
-        intervals += " A5"
-    
-    if re.search(constants.MAJ_7_REGEX,symbol):
-        intervals += " M7"
-
-    elif re.search(constants.PLAIN_7_REGEX,symbol):
+    #7
+    if re.search(constants.MAJ_SEVEN_REGEX,symbol):
+        intervals += " M7"    
+    elif "7" in symbol:
         if quality == "Diminished":
-            intervals += " d7"
+            intervals += " D7"
         else:
             intervals += " m7"
 
-    if "13" in symbol and not "b13" in symbol and 'M6' not in intervals:
-        intervals += ' M6'
+    #9
+    if re.search(constants.ADD_NINE_REGEX,symbol):
+        intervals += " M2"
+    elif re.search(constants.MAJ_NINE_CHORD_REGEX,symbol):
+        intervals += " M7 M2"
+    elif re.search(constants.NINE_CHORD_REGEX,symbol):
+        if quality == "Diminished":
+            intervals += " D7 M2"
+        else:
+            if "M7" not in intervals:
+                intervals += " m7"
+            intervals += " M2"
 
-    if "11" in symbol and not "#11" in symbol and 'P4' not in intervals:
+    #11
+    if re.search(constants.MAJ_ELEVEN_REGEX,symbol):
         intervals = intervals.replace("M3","P4")
-        intervals = intervals.replace("m3","P4")
-
-
-
-    if not intervals:
-        raise ValueError("No valid chord symbol found.")
+        intervals += " M7"
+    elif re.search(constants.ELEVEN_REGEX,symbol):
+        if quality == "Minor":
+            if "M7" not in intervals:
+                intervals += " m7"
+            intervals += " M2 P4"
+        else:
+            intervals = intervals.replace("M3","P4").replace("m3","P4")
+            if "M7" not in intervals:
+                if quality == "Diminished":
+                    intervals += " D7"
+                else:
+                    intervals += " m7"
     
+    #13
+    if re.search(constants.MAJ_13_REGEX,symbol):
+        intervals += " M7 M2 M6"
+    elif re.search(constants.THIRTEEN_REGEX,symbol):
+        if "M7" not in intervals:
+            intervals += " m7"
+        if quality == "Minor":
+            intervals += " M2 P4 M6"
+        intervals += " M2 M6"
+
+    #extensions
+    if re.search(constants.FLAT_9_REGEX,symbol):
+        intervals = intervals.replace("M2","m2")
+        intervals += " m2"
+
+    if re.search(constants.SHARP_9_REGEX,symbol):
+        intervals += " A2"
+
+    if re.search(constants.ADD_4_REGEX,symbol):
+        intervals += " P4"
+    
+    if "#11" in symbol:
+        intervals += " A4"
+    
+    if "b5" in symbol:
+        intervals = intervals.replace("P5","D5")
+        intervals += " D5"
+    
+    if "#5" in symbol:
+        intervals = intervals.replace("P5","A5")
+        intervals += " A5"
+    
+    if re.search(constants.FLAT_6_REGEX,symbol):
+        intervals = intervals.replace("M6","m6")
+        intervals += " m6"
+
+    elif "6" in symbol:
+        intervals += " M6"
+
+    data['quality'] = quality
     data["intervals"] = intervals
 
     return data

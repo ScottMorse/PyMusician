@@ -321,7 +321,7 @@ Ebb.pitch_offset # -2
 
 ## Frequency
 
-This property returns a float of the standard frequency for a note in Hz.  This will return None if there is no octave set for an object, because there is no specific pitch for a note without it.  If the global constant <a href="#a4">A4</a> is reassigned a new number (see General Notes at top of this readme), the basis for every frequency will be affected.
+This property returns a float of the standard frequency for a note in Hz.  This will return None if there is no octave set for an object, because there is no specific pitch for a note without it.  If the global constant <a href="#a4">A4</a> is reassigned a new number, the basis for every frequency will be affected.
 
 ```python
 import pymusician
@@ -334,7 +334,7 @@ note_A4.frequency # 440.0
 
 note_A5 = pymusician.Note("A",5)
 
-note_A5.frequency # 880
+note_A5.frequency # 880.0
 
 pymusician.A4 = 442 # reassign global A4
 
@@ -583,7 +583,7 @@ per_4th = Interval.from_notes(F,Bb) # returns Interval('P4')
 The Mode class is a very intuitive and simple class for a musician to deal with.
 
 ## Creating a Mode
-To create a new Mode instance, all one needs is the root and mode name.  The root note can either be a string note name, or a <a href="#the-note-class">Note</a> object.  Read below to find a reference of Mode names.
+To create a new Mode instance, all one needs is the root and mode name.  The root note can either be a string note name, or a <a href="#the-note-class">Note</a> object.  Below is a <a href="#supported-mode-names">reference</a> of Mode names.
 
 ```python
 from pymusician import Note, Mode
@@ -711,9 +711,7 @@ GmM7 = Chord("Gm(maj7)")
 Bsus = Chord("Bsus4")
 ```
 
-This is still in its early stages and has much room to improve. 
-
-If you create a chord and it did not spell in the way you wanted, and you are absolutely sure that it should be different, I apologize.  Let me know, and I will look at the problem.  
+Feel free to let me know of any chord spelling bugs that occur from the symbol parser, if you are sure that the spelling should be different.
 
 Keep in mind that there are many chord symbol practices, and though several options are supported by PyMusician, you may just need to try a slightly different symbol.
 

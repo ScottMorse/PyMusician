@@ -45,52 +45,54 @@ with open(FILE_PATH) as j:
 MODES = loaded[0]
 MODE_LETTER_SPELLINGS = loaded[1]
 
-MAJOR_REGEX = r"maj(or)?|M"
+#triadic
+MAJ_TRIAD_REGEX = r'^maj$|^major$|^M$|$'
 
-MINOR_REGEX = r"m(in(or)?)?|-"
+MIN_TRIAD_REGEX = r'-|m$|m[^a]'
 
-AUG_REGEX = r"[Aa]ug(mented)?|[\+]"
+AUG_TRIAD_REGEX = r'[Aa]ug(mented)?|\+'
 
-DIM_REGEX = r"[Dd]im(inished)?|°|o"
+DIM_TRIAD_REGEX = r'o|°|[Dd]im(inished)?'
 
-SUS_REGEX = r"[Ss]us(pended)?[^2]?"
+POWER_CHORD_REGEX = r'^5|no3'
 
-HALF_REGEX = r"[Hh]alfdim(inished)?|ø|m(in(or)?)?7(\()?b5(\))?"
+HALF_DIM_REGEX = r'ø|[Hh]alf[Dd]im(inished)?'
 
-POWER_REGEX = r"(\()?5|[Nn]o(3|thi)rd(\))"
+SUS_2_REGEX = r'sus(pended)?2'
 
-ALL_QUAL_REGEX = r"m(in(or)?)?|[Aa]ug(mented)?|[+]|[Dd]im(inished)?|°|o|[Hh]alfdim(inished)?|ø|m(in(or)?)?7(\()?b5(\))|(\()?5|[Nn]o(3|thi)rd(\))"
+SUS_4_REGEX = r'sus(pended)?(4)?'
 
-FLAT_2_REGEX = r"(\()(b|flat)[29](\))"
+#seventh
+MAJ_SEVEN_REGEX = r'(M|[Mm]aj(or)?)7'
 
-TWO_REGEX = r"(\()(add?[29]|2)(\))"
+ADD_NINE_REGEX = r'[Aa]dd[92]|^2|[^s]2|/9'
 
-SHARP_9_REGEX = r"(\()?(#|sharp)9(\))?"
+MAJ_NINE_CHORD_REGEX = r'M9|[Mm]aj(or)?9'
 
-ADD_4_REGEX = r"(\()?add4(\))?"
+NINE_CHORD_REGEX = r'^9|[^b#/6]9'
 
-SHARP_11_REGEX = r"(\()?#(11|4)(\))?"
+#eleven
+MAJ_ELEVEN_REGEX = r'(M|[Mm]aj(or)?)11'
 
-FLAT_5_REGEX = r"(\()?(b|flat)5(\))?"
+ELEVEN_REGEX = r'^11|[^#b]11'
 
-SHARP_5_REGEX = r"(\()?#5(\))?"
+#thirteen
+MAJ_13_REGEX = r'(M|[Mm]aj(or)?)13'
 
-FLAT_6_REGEX = r"(\()?(b|flat)(6|13)(\))?"
+THIRTEEN_REGEX = r'^13|[^#b]13'
 
-SIX_REGEX = r"(\()?6(\))?"
+FLAT_9_REGEX = r'b[92]'
 
-SIX_NINE_REGEX = r"(\()?6(/)?9(\))?"
+SHARP_9_REGEX = r'#[92]'
 
-MAJ_7_REGEX = r"(\()?(maj(or)?|M)7(\))?"
+ADD_4_REGEX = r'[Aa]dd(4|11)'
 
-PLAIN_7_REGEX = r"(\()?(dom(inant)?)?7(\))?"
+SHARP_11_REGEX = r'(#|sharp)(4|11)'
 
-MAJ_9_REGEX = r"(\()?(maj(or)?|M)9(\))?"
+FLAT_5_REGEX = r'(b|flat)5'
 
-PLAIN_9_REGEX = r"(\()?9(\))?"
+SHARP_5_REGEX = r'(#|sharp)5'
 
-PLAIN_11_REGEX = r"(\()?11(\))?"
+FLAT_6_REGEX = r'(b|flat)(b|13)'
 
-MAJ_13_REGEX = r"(\()?(maj(or)?|M)13(\))?"
-
-PLAIN_13_REGEX = r"(\))?13(\))?"
+SIX_REGEX = r'six|6'
