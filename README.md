@@ -705,7 +705,11 @@ The Chord class represents chords based on the common lead sheet symbol nomencla
 
 Chord naming and spelling has various differing opinions in practice and is sometimes debated.  In PyMusician, a symbol reflecting what would be commonly seen in "sheet music notation" is used to instantiate a Chord.  PyMusician does the best job that it can to parse the symbol it is given and spell the chord in the most accurate sense that can be derived from the symbol.
 
-Also, keep in mind that chords with very strange and uncommon symbols may not behave as expected, especially if it is a symbol that should never see the light of day on a professional sheet of music ("Abb5(no3)(#9)(add9)13(b5)sus").  On an unrelated note, does anyone know of a name that rhymes with "Gone Sevens?" (not the actor)
+If you are familiar with lead sheet symbols, try simply passing it whatever chord symbol that you are comfortable with.
+
+Keep in mind that chords with very strange and uncommon symbols may not behave as expected, especially if it is a symbol that should never see the light of day on a professional sheet of music ("Abb5(no3)(#9)(add9)13(b5)sus").  On an unrelated note, does anyone know of a name that rhymes with "Gone Sevens?" (not the actor)
+
+This class is in the most infantile stage of all the classes here, and there is much more to come with different ways of creating and analyzing chords than from just lead sheet symbols.
 
 ## Create a Chord
 
@@ -763,6 +767,15 @@ for note in G13.spelling:
 #same as above code
 for note in G13:
     print(note.name)
+
+G13[0] # Note("G")
+G13[1] # Note("B")
+G13[2] # Note("D")
+G13[3] # Note("F")
+G13[4] # Note("A")
+G13[5] # Note("E")
+
+len(G13) # 6
 ```
 
 
