@@ -8,8 +8,25 @@ Quick reference:
 * <a href="#creating-a-basic-interval">Interval flags</a>
 * <a href="#supported-mode-names">Mode names</a>
 
-This is a python package for representing musical structures.  The features of the musictools module have less to do with audio file production/management, and more with analysis and composition.  However, the concepts represented here could be combined with other music/audio related code to make sophisticated musical projects.  The goal of Music Tools is to be versatile and intuitive to a musician-programmer with practice, representing musical concepts in a way musicians will find familiar, and leaving room to use the information in any way the user wishes, rather than creating any interfaces for programs such as sheet music notation directly.
+# **The Goal of PyMusician**
 
+This is a python package for representing musical structures.  Its features have less to do with audio file production/management, and more with analysis and composition.  However, the concepts represented here could be combined with other music/audio related code to make sophisticated musical projects.
+
+PyMusician isn't meant to be a stand-alone interface or notation program, but its purpose is to be able to automate all the music-theory related data that would go into such applications.
+
+## Notes for non-musicians
+
+The concepts in this package will be mostly foreign to anyone that hasn't studied common Western music theory.  The package most likely won't be useful to non-musicians.  However, I will try to give some explanation as to what this package is.  
+
+All the music you hear in every day life has structure to it that can be analyzed with the practice of "music theory."  Even *Mary Had a Little Lamb* and *Twinkle Twinkle Little Star* have definite structures that can be described in the distance of pitch (frequency, represented by note names like "C" and "B flat") and time (represented by the concept of "rhythm") between each note of the song. 
+
+Groups of notes can be analyzed as larger structures, which can be analyzed between each other as even larger structures, all the way up to the analysis of an entire piece of music.
+
+Music theory is much like programming itself, having many abstract concepts, but grounded in concrete data.  It is often called "the codification of music," so it's no wonder it can be translated into Python or any other programming language.  
+
+The definitions and syntax of music theory itself come from an artistic point of view, yet the structures they represent are concrete: specific clusters of frequencies of air vibration (notes) and measurements of time (rhythm, beats per minute).  A musician does not talk about writing 440 Hz in a piece of music.  Instead we use the name "A4."  It is our code.
+
+PyMusician's purpose is to create representations of these structures, from fundamental to complex, as objects of classes, and to allow a two-way street for both the analysis of this kind of data, and the creation of it.
 
 # Getting started
 ## Prerequisites
