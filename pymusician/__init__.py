@@ -150,6 +150,9 @@ class Mode:
     
     def __len__(self):
         return len(self.spelling)
+    
+    def __getitem__(self,key):
+        return self.spelling[key]
 
     def __repr__(self):
         return f"<Mode {self.name}>"

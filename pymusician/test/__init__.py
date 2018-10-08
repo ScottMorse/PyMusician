@@ -147,6 +147,12 @@ class Mode:
 
     def __iter__(self):
         return iter(self.spelling)
+    
+    def __len__(self):
+        return len(self.spelling)
+    
+    def __getitem__(self,key):
+        return self.spelling[key]
 
     def __repr__(self):
         return f"<Mode {self.name}>"
@@ -185,6 +191,12 @@ class Chord:
 
     def __iter__(self):
         return iter(self.spelling)
+    
+    def __len__(self):
+        return len(self.spelling)
+
+    def __getitem__(self,key):
+        return self.spelling[key]
 
     def __repr__(self):
         return f"<Chord {self.symbol}>"

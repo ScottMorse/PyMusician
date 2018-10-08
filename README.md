@@ -278,8 +278,12 @@ E = Note("E")
 E.rhythm = "2.."
 ```
 
-After a rhythm is set, accessing the `self.rhythm` property returns a dictionary of data about the rhythm.
-The `['value']` key returns the length of the rhythm measured in **512th** notes.  `['dots']` returns the number of dots used in the flags.  `['triplet']` returns a Boolean for whether the rhythm is a triplet.  `['num']` returns the number used in the first flag.  Finally, `['flags']` returns the flags string originally used.  `self.rhythm['value']` is perhaps the most useful of this data.
+Once the rhythm flags are set, `self.rhythm` returns an **object** acting like sub-object of the Note.  It has these properties:
+* `rhythm.value` The length of the rhythm measured in **512th notes**
+* `rhythm.flags` The original flags string
+* `rhythm.num` The number from the flags
+* `rhtyhm.dots` The number of dots in the rhythm
+* `rhythm.triplet` True/False if rhythm is a triplet
 
 ```python
 from pymusician import Note
@@ -288,16 +292,17 @@ C = Note("C")
 C.rhythm = "3"
 # a quarter note
 
-C.rhythm['value']
-# returns 128, since a quarter is 128 512th notes long
+C.rhythm.value # 128
 
 C.rhythm = "3t"
-C.rhythm['value']
-# returns 85.3333.... for the length of a quarter triplet
+C.rhythm.value # returns 85.3333... for the length of a quarter triplet
+C.rhythm.triplet # True
+C.rhtyhm.dots # 0
 
 C.rhythm = "3."
-C.rhythm['value']
-# returns 192 for the length of a dotted quarter
+C.rhythm.value # returns 192 for the length of a dotted quarter
+C.rhythm.dots # 1
+C.rhythm.triplet # True
 
 ```
 ## **Other Note class properties and methods**
@@ -622,7 +627,7 @@ amin = Mode("A","minor")
 `self.mode` is simply the mode name, like "major", "minor."
 
 ## Spelling
-This is the main purpose of the Mode class.  `self.spelling` is a list of Note objects that spell the Mode.  However, for iteration, **iterating over a Mode instance itself** will iterate over its spelling for you, allowing you to treat the Mode itself like a list in iteration.
+This is the main purpose of the Mode class.  `self.spelling` is a list of Note objects that spell the Mode.  However, for iteration, **iterating over a Mode instance itself** will iterate over its spelling for you, allowing you to treat the Mode itself like a list in iteration.  Also, **indexing the Mode instance** will index the spelling, and the **len()** of the Mode object is the length of its spelling.
 
 ```python
 from pymusician import Note, Mode
@@ -638,6 +643,10 @@ for note in d_harm_min.spelling:
 #equivalent to the previous lines of code
 for note in d_harm_min:
     print(note.name)
+
+d_harm_min[6] # Note("C#")
+
+len(d_harm_min) # 7
 ```
 
 ## **Supported Mode Names**
@@ -713,26 +722,28 @@ This class is in the most infantile stage of all the classes here, and there is 
 
 ## Create a Chord
 
-To create a Chord, simply pass it a string of a chord symbol.  There are no set-in-stone rules, as PyMusician uses rigorous regular expressions to determine the chord.
+To create a Chord, simply pass it a string of a chord symbol.  There are no set-in-stone rules, as PyMusician uses rigorous regular expressions to determine the chord.  Don't sweat things like parentheses except in cases where it may confuse the root of the chord ("Ab5" and "A(b5)" will be different chords).
 
 ```python
 
 from pymusician import Chord
 
-Amaj = Chord("A")
+Amaj = Chord("A") # A major triad
 
-Gbmin7 = Chord("Gbm7")
+Gbmin7 = Chord("Gbm7") # Gb minor 7
 
-Csmin = Chord("C#-")
+Csmin = Chord("C#-") # C# minor triad
 
-Fb13 = Chord("Fb13")
+Fb13 = Chord("Fb13") # Fb dominant 13
 
-GmM7 = Chord("Gm(maj7)")
+GmM7 = Chord("Gm(maj7)") # G minor (major 7th)
 
-Bsus = Chord("Bsus4")
+Bsus = Chord("Bsus4") # B suspended 4
+
+Eb7b13s9 = Chord("Eb7b13#9") # E dominant, flat 13, sharp 9
 ```
 
-Feel free to let me know of any chord spelling bugs that occur from the symbol parser, if you are sure that the spelling should be different.
+Feel free to let me know of any chord spelling bugs that occur from the symbol parser, if you are sure that the spelling should be different. I have written hundreds of assertion tests to test the spellings of most commonly seen chord symbols, but there may still be some bugs in the cracks.
 
 Keep in mind that there are many chord symbol practices, and though several options are supported by PyMusician, you may just need to try a slightly different symbol.
 
@@ -789,7 +800,7 @@ Many of these tools I have created in prototype projects of this package, but ne
 * Concept of measures
 * Transposition function
 * Concept of a key, boolean function to determine membership to a key
-* More Chord/Interval tools
+* More Chord/Interval tools (including inversions)
 * Clefs
 * Staff position of Note objects based on clef/instrument transposition
 
