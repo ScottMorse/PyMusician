@@ -36,7 +36,7 @@ class Note(_pymusician._Note):
 
     @property
     def rhythm(self):
-        return utils.rhythm_dict(self._rhythm)
+        return utils.rhythm_obj(self._rhythm)
 
     @rhythm.setter
     def rhythm(self,flags):

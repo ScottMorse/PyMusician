@@ -18,7 +18,7 @@ PyMusician isn't meant to be a stand-alone interface or notation program, but it
 
 The concepts in this package will be mostly foreign to anyone that hasn't studied common Western music theory.  The package most likely won't be useful to non-musicians.  However, I will try to give some explanation as to what this package is.  
 
-All the music you hear in every day life has structure to it that can be analyzed with the practice of "music theory."  Even *Mary Had a Little Lamb* and *Twinkle Twinkle Little Star* have definite structures that can be described in the distance of pitch (frequency, represented by note names like "C" and "B flat") and time (represented by the concept of "rhythm") between each note of the song. 
+All the music you hear in daily life has structure to it that can be analyzed with the practice of music theory.  Even *Mary Had a Little Lamb* and *Twinkle Twinkle Little Star* have definite structures that can be described in the distance of pitch (frequency, represented by note names like "C" and "B flat") and time (represented by the concept of "rhythm") between each note of the song. 
 
 Groups of notes can be analyzed as larger structures, which can be analyzed between each other as even larger structures, all the way up to the analysis of an entire piece of music.
 
@@ -44,13 +44,13 @@ Don't forget to make sure your pip version matches the command for Python versio
 If you have not used PyMusician before, it is important to read and learn about each class and function, as many core values and ideas of this code reappear in other sections, especially the properties and methods of the Note class.
 
 ## A4:
-`A4` is a constant available in pymusician that represents the frequency for the note A4 in Hz.  By default, it is set to 440.  It can be set to a different number value simply by reassigning it.
+`A4` is a variable available in pymusician that represents the frequency for the note A4 in Hz.  By default, it is set to 440.  It can be set to a different number value simply by reassigning it.
 
 ```python
 import pymusician
 pymusician.A4 = 442
 ```
-This will globally affect the rest of the code, by affecting any situation where frequency is calculated, such as the <a href="#frequency">frequency property</a> of a Note object.  This is the only value in the main that has global consequences within the functions of pymusician.
+This will globally affect the rest of the code, by affecting any situation where frequency is calculated, such as the <a href="#frequency">frequency property</a> of a Note object.  This is the only value in the main that has global consequences within the code you are writing.
 ```python
 import pymusician
 pymusician.Note("A",4).frequency #440
@@ -60,11 +60,11 @@ pymusician.Note("A",4).frequency #442
 
 # **The Note Class**
 ## The simplest objects:
-An object from the Note class represents a pitched note (support for rests on the way).  The only required argument is for a name.  
+An object from the Note class represents a pitched note (support for rests on the way).  The only required argument is the note name.  
 
 A note name should just be a string of the common name for the note, such as "A","A#", "Bb", etc.  
 
-A generally unlimited number of sharps/flats is technically allowed with accurate affects to the object's pitch-related values, though notes like this is are not generally not encouraged in pymusician or music in general, and may behave strangely in instances of Intervals or Chords.
+A generally unlimited number of sharps/flats is technically allowed with accurate effects to the object's pitch-related values, though notes like this is are not generally not encouraged in PyMusician (or music in general).
 
 Invalid note names will raise a `ValueError`.
 
@@ -89,10 +89,10 @@ Gssss.name # 'G####'
 
 <a href="#pitchletter-reference">Pitch/letter value reference</a>
 
-Two basic attributes of a Note that are given to it are it's 'pitch' and 'letter'.  Both are integers, and both have nothing to do with specificity of octave (a separate property called hard_pitch deals with a value given on octave, read on).
+The two most basic attributes of a Note are its 'pitch' and 'letter'.  Both are integers, and both have nothing to do with specificity of octave (a separate property called hard_pitch deals with a value given on octave, read on).
 
 ## Pitch
-The property `self.pitch` represents a relative value for a Note's pitch.  This starts at **0 for C natural**.  C#/Db then has the pitch 1, and D has 2 (Ebb or C## would also have this pitch), etc.  The range of pitch values is 0 to 11 (11 equivalent to B).
+The property `self.pitch` represents a relative value for a Note's pitch.  This starts at **0 for C natural**.  C#/Db then has the pitch 1, and D has 2 (Ebb or C## would also have this pitch), etc.  The range of pitch values is 0 to 11 (11 equivalent to B).  This is *not* octave-sensitive (see <a href="#hard-pitch">octave</a> and <a href="#hard-pitch">hard pitch</a>).
 
 ```python
 from pymusician import Note
@@ -110,7 +110,7 @@ Note("Dbb").pitch # 0
 
 ## Letter
 
-The property `self.letter` assigns an integer value for a Note's alphabetical letter, which similarly starts at **0 for C natural**.  Differently than the pitch value, any Note using the same letter has the same letter value (C#,C##,Cb,Cbb all have 0).  The range of letter values is 0 to 6 (6 for the letter B).
+The property `self.letter` assigns an integer value for a Note's alphabetical letter, which similarly starts at **0 for C natural**.  Any Note using the same initial letter has the same letter value (C#,C##,Cb,Cbb all have 0).  The range of letter values is 0 to 6 (6 for the letter B).
 
 ```python
 from pymusician import Note
@@ -732,6 +732,8 @@ Feel free to let me know of any chord spelling bugs that occur from the symbol p
 
 Keep in mind that there are many chord symbol practices, and though several options are supported by PyMusician, you may just need to try a slightly different symbol.
 
+Support for slash chords (inversions) is coming soon!
+
 ## Chord Properties
 
 ### Symbol
@@ -748,7 +750,7 @@ Keep in mind that there are many chord symbol practices, and though several opti
 After the chord's root, quality, and extensions are parsed in initialization, `self.intervals` is a string of interval flags (such as used in the <a href="#the-interval-class">Interval</a> class) separated by spaces, such as "M3 P5" for a major triad.
 
 ### **Spelling**
-`self.spelling`, like the <a href="#spelling">Mode</a> property, is a list spelling Note instances that make up the chord, including the root.  Also, like in a Mode instance, iterating over the Chord object itself is the same as iterating over its spelling property.
+`self.spelling`, like the <a href="#spelling">Mode</a> property, is a list spelling Note instances that make up the chord, including the root.  Also, like in a Mode instance, iterating over the Chord object itself is the same as iterating over its spelling property.  You can also index or get the len() of a Chord instance directly to get a specific note from the spelling or the length of the number of notes represented.  Keep in mind that the index of the note you are searching for may not always be predicatable in chords with many extensions, though the root and triad will almost always be the first three indices [root,(third),(fifth)].
 
 ```python
 from pymusician import Note, Chord
@@ -762,6 +764,8 @@ for note in G13.spelling:
 for note in G13:
     print(note.name)
 ```
+
+
 
 *For now, this concludes PyMusician's main tools. This project is in its early stages, and much more is to come, especially in rhythm, composition, and analysis.  Along with new features and tools will come updates and improvements to its current ones. Thank you for reading.*
 

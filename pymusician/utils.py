@@ -18,9 +18,28 @@ def pitch_from_name(name):
                 pitch += 12
     return pitch
 
-def rhythm_dict(flags):
-    if not flags:
-            return None
+class Rhythm:
+
+    def __init__(self, value,dots,triplet,num,flags):
+        self.value = value
+        self.dots = dots
+        self.triplet = triplet
+        self.num = num
+        self.flags = flags
+
+    def __repr__(self):
+        return f"<Rhythm object {self.flags} val:{round(self.value,2)}>"
+
+def rhythm_obj(flags):
+    if flags == None:
+        return None
+    if isinstance(flags,int):
+        flags = str(flags)
+    if not isinstance(flags,str):
+        raise ValueError("Rhythm flags must be a string.")
+    flags = flags.replace(" ","")
+    if not re.match(constants.RHYTHM_REGEX,flags):
+        raise ValueError("Invalid rhythm flags.")
     dots = 0
     triplet = False
 
@@ -49,11 +68,7 @@ def rhythm_dict(flags):
         num = int(flags[0])
         val = constants.RHYTHM_VALUES[num]
 
-    return {
-        'value': val, 'dots':dots,
-        'triplet': triplet, 'num': num,
-        'flags': flags,
-    }
+    return Rhythm(val,dots,triplet,num,flags)
 
 def enharmonic(note_obj,prefer=None,gross=False):
     if prefer:
@@ -308,7 +323,7 @@ def note_plus_intvl(note_obj,intvl_obj):
         new_note = pymusician.Note.from_values(letter,pitch)
 
     if note_obj.rhythm:
-        new_note._rhythm = note_obj.rhythm["flags"]
+        new_note._rhythm = note_obj.rhythm.flags
 
     return new_note
 
@@ -333,7 +348,7 @@ def note_minus_intvl(note_obj,intvl_obj):
         new_note = pymusician.Note.from_values(letter,pitch)
 
     if note_obj.rhythm:
-        new_note._rhythm = note_obj.rhythm["flags"]
+        new_note._rhythm = note_obj.rhythm.flags
 
     return new_note
 
@@ -513,7 +528,7 @@ def parse_symbol(symbol):
     #11
     if re.search(constants.MAJ_ELEVEN_REGEX,symbol):
         intervals = intervals.replace("M3","P4")
-        intervals += " M7"
+        intervals += " M2 M7"
     elif re.search(constants.ELEVEN_REGEX,symbol):
         if quality == "Minor":
             if "M7" not in intervals:
@@ -526,6 +541,7 @@ def parse_symbol(symbol):
                     intervals += " D7"
                 else:
                     intervals += " m7"
+            intervals += " M2"
     
     #13
     if re.search(constants.MAJ_13_REGEX,symbol):
@@ -543,12 +559,13 @@ def parse_symbol(symbol):
         intervals += " m2"
 
     if re.search(constants.SHARP_9_REGEX,symbol):
+        intervals = intervals.replace("M2","A2")
         intervals += " A2"
 
     if re.search(constants.ADD_4_REGEX,symbol):
         intervals += " P4"
     
-    if "#11" in symbol:
+    if "#11" in symbol or "#4" in symbol:
         intervals += " A4"
     
     if "b5" in symbol:

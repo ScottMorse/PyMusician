@@ -13,10 +13,12 @@ class _Note:
                 raise ValueError("Octave value must be None or int.")
         self._octave = octave
         if rhythm:
+            if isinstance(rhythm,int):
+                rhythm = str(rhythm)
             if not isinstance(rhythm,str):
                 raise ValueError("Rhythm value should be given as a string of flags.")
             if not re.match(constants.RHYTHM_REGEX,rhythm):
-                raise ValueError("Invalid rhythm flags. (0-10 followed by dots ('..') and/or t for triplet)")
+                raise ValueError("Invalid rhythm flags.")
         self._rhythm = rhythm
 
 class _Interval:

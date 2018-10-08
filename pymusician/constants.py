@@ -74,7 +74,7 @@ NINE_CHORD_REGEX = r'^9|[^b#/6]9'
 #eleven
 MAJ_ELEVEN_REGEX = r'(M|[Mm]aj(or)?)11'
 
-ELEVEN_REGEX = r'^11|[^#b]11'
+ELEVEN_REGEX = r'^11|[^#bd]11'
 
 #thirteen
 MAJ_13_REGEX = r'(M|[Mm]aj(or)?)13'
@@ -87,12 +87,4 @@ SHARP_9_REGEX = r'#[92]'
 
 ADD_4_REGEX = r'[Aa]dd(4|11)'
 
-SHARP_11_REGEX = r'(#|sharp)(4|11)'
-
-FLAT_5_REGEX = r'(b|flat)5'
-
-SHARP_5_REGEX = r'(#|sharp)5'
-
 FLAT_6_REGEX = r'(b|flat)(6|13)'
-
-SIX_REGEX = r'six|6'

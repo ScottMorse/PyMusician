@@ -37,6 +37,6 @@
     "major blues": [1,0,1,2,1,2],
     "harmonic minor": [1,1,1,1,1,1,1],
     "melodic minor": [1,1,1,1,1,1,1],
-    "augmented": [2,0,2,0,2,1]
+    "augmented": [1,1,2,0,2,1]
   }
 ]
