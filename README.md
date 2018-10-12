@@ -715,7 +715,7 @@ As of now, many common modes are supported, and most users will most likely use 
 
 The Chord class represents chords based on the common lead sheet symbol nomenclature.
 
-Chord naming and spelling has various differing opinions in practice and is sometimes debated.  In PyMusician, a symbol reflecting what would be commonly seen in "sheet music notation" is used to instantiate a Chord.  PyMusician does the best job that it can to parse the symbol it is given and spell the chord in the most accurate sense that can be derived from the symbol.
+Chord naming and spelling has various differing opinions in practice and is sometimes debated.  In PyMusician, a symbol reflecting what would be commonly seen in "lead music notation" is used to instantiate a Chord.  PyMusician does the best job that it can to parse the symbol it is given and spell the chord in the most accurate sense that can be derived from the symbol.
 
 If you are familiar with lead sheet symbols, try simply passing it whatever chord symbol that you are comfortable with.
 

@@ -200,3 +200,52 @@ class Chord:
 
     def __repr__(self):
         return f"<Chord {self.symbol}>"
+
+class Metromone(_pymusician.Metronome):
+
+    def __init__(self,*args):
+        super().__init__(*args)
+    
+    @property
+    def bpm(self):
+        return self._bpm
+
+    @bpm.setter
+    def bpm(self,value):
+        if not isinstance(value,float) and not isinstance(value,int):
+            raise ValueError("Metronome bpm must be a number.")
+        self._bpm = value
+    
+    @property
+    def count(self):
+        return self._count
+
+    @count.setter
+    def count(self,value):
+        if not isinstance(value,int):
+            raise ValueError("Metronome count must be a positive integer.")
+        if value <= 0:
+            raise ValueError("Metronome count must be a positive integer.")
+        self._count = value
+
+    @property
+    def func_args(self):
+        return self._func_args
+
+    @func_args.setter
+    def func_args(self,*args):
+        if type(args[0]) is tuple and len(args) == 1:
+            self._func_args = args[0]
+        else:
+            self._func_args = args
+    
+    def func(self,*args):
+        self._func(*args)
+
+    def run(self):
+        for i in range(self.count):
+            if self._func:
+                self._func(*self.func_args)
+            else:
+                print(f'-Metronome click {i}-')
+            time.sleep(60 / self.bpm)
