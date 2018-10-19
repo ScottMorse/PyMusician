@@ -1,5 +1,5 @@
 from pymusician import constants
-import re
+import threading
 
 class _Note:
 
@@ -35,24 +35,3 @@ class _Interval:
             raise ValueError("Displacement value should be a positive integer or 0(default).")
         self._flags = flags
         self._displace = displace
-
-class Metronome(threading.Thread):
-
-    def __init__(self,bpm,count,func=None,*func_args,**kwargs):
-        super().__init__(**kwargs)
-        if not isinstance(bpm,float) and not isinstance(bpm,int):
-            raise ValueError("Metronome bpm must be a number.")
-        if not isinstance(count,int):
-            raise ValueError("Metronome count must be a positive integer.")
-        if count <= 0:
-            raise ValueError("Metronome count must be a positive integer.")
-        if func:
-            if not callable(func):
-                raise ValueError('func parameter for Metronome must be a callable object.')
-        self._bpm = bpm
-        self._count = count
-        self._func = func
-        self._func_args = func_args
-    
-    def __repr__(self):
-        return f"<Metronome {self.bpm} bpm>"
