@@ -1,5 +1,5 @@
 from pymusician import constants
-import threading
+import re
 
 class _Note:
 

@@ -1,7 +1,11 @@
 # PyMusician by Scott Morse
-## Version 1.0.0-beta
+## Version 1.0.1
 
-Quick reference:
+## Latest in version
+* Fixed error in the Note method .enharmonic() when the Note object has rhythm value
+* Chord and Mode objects can be directly indexed and have a length with len(), referencing their spelling property
+
+## Quick reference:
 * Classes: <a href="#the-note-class">Note</a>, <a href="#the-interval-class">Interval</a>,<a href="#the-mode-class">Mode</a>,<a href="#the-chord-class">Chord</a>
 * <a href="#pitchletter-reference">Pitch/letter values</a>
 * <a href="#rhythm">Rhythm flags</a>
@@ -630,7 +634,7 @@ amin = Mode("A","minor")
 `self.name` is a name combining the root and mode name ("A major")
 
 ## Spelling
-This is the main purpose of the Mode class.  `self.spelling` is a list of Note objects that spell the Mode.  However, for iteration, **iterating over a Mode instance itself** will iterate over its spelling for you, allowing you to treat the Mode itself like a list in iteration.  Also, **indexing the Mode instance** will index the spelling, and the **len()** of the Mode object is the length of its spelling.
+This is the main purpose of the Mode class.  `self.spelling` is a list of Note objects that spell the Mode.  However, you can **iterate over a Mode instance itself** to iterate over its spelling for you, allowing you to treat the Mode itself like a list in iteration.  Also, **indexing the Mode instance** will index the spelling, and the **len()** of the Mode object is the length of its spelling.
 
 ```python
 from pymusician import Note, Mode
@@ -768,7 +772,9 @@ Support for slash chords (inversions) is coming soon!
 After the chord's root, quality, and extensions are parsed in initialization, `self.intervals` is a string of interval flags (such as used in the <a href="#the-interval-class">Interval</a> class) separated by spaces, such as "M3 P5" for a major triad.
 
 ### **Spelling**
-`self.spelling`, like the <a href="#spelling">Mode</a> property, is a list spelling Note instances that make up the chord, including the root.  Also, like in a Mode instance, iterating over the Chord object itself is the same as iterating over its spelling property.  You can also index or get the len() of a Chord instance directly to get a specific note from the spelling or the length of the number of notes represented.  Keep in mind that the index of the note you are searching for may not always be predicatable in chords with many extensions, though the root and triad will almost always be the first three indices [root,(third),(fifth)].
+`self.spelling`, like the <a href="#spelling">Mode</a> property, is a list spelling Note instances that make up the chord, including the root.  Also, like in a Mode instance, iterating over the Chord object itself is the same as iterating over its spelling property.  
+
+You can also index or get the len() of a Chord instance directly to get a specific note from the spelling or the length of the number of notes represented.  Keep in mind that the index of the note you are searching for may not always be predicatable in chords with many extensions, though the root and triad will almost always be the first three indices [root,(third),(fifth)].
 
 ```python
 from pymusician import Note, Chord
@@ -807,6 +813,9 @@ Many of these tools I have created in prototype projects of this package, but ne
 * More Chord/Interval tools (including inversions)
 * Clefs
 * Staff position of Note objects based on clef/instrument transposition
+
+## Known bugs
+* Enharmonic fails on Note objects with rhythm value
 
 *For now, this concludes PyMusician's main tools. This project is in its early stages, and much more is to come.  This started as a single beginner's Python file that I used when I first started programming in order to practice applying musical concepts I knew well to new programming concepts I was learning, and now it is my main project that I plan to use in tandum with many more of my future projects.  I know there are a few other similar packages out there, but I thought I'd share mine for the public as well.  Thank you for reading, and have fun with this.*
 

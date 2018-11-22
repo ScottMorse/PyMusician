@@ -122,7 +122,7 @@ def enharmonic(note_obj,prefer=None,gross=False):
     if note_obj.octave:
         new_note.octave = note_obj.octave
     if note_obj.rhythm:
-        new_note.rhythm = note_obj.rhythm['flags']
+        new_note.rhythm = note_obj.rhythm.flags
     return new_note
 
 def note_name_from_values(letter,pitch):
