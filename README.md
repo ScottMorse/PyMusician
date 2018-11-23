@@ -2,6 +2,7 @@
 ## Version 1.0.1
 
 ## Latest in version
+<a href="#version-history">Version History</a>
 * Fixed error in the Note method .enharmonic() when the Note object has rhythm value
 * Chord and Mode objects can be directly indexed and have a length with len(), referencing their spelling property
 
@@ -814,9 +815,15 @@ Many of these tools I have created in prototype projects of this package, but ne
 * Clefs
 * Staff position of Note objects based on clef/instrument transposition
 
-## Known bugs
-* Enharmonic fails on Note objects with rhythm value
+## Version History
 
+* #### 1.0.1
+    * <small>Fixed error in the Note method .enharmonic() when the Note object has rhythm value
+    * Chord and Mode objects can be directly indexed and have a length with len(), referencing their spelling property</small>
+* #### 1.0.0-b
+    - <small>Released</small>
+
+<br></br>
 *For now, this concludes PyMusician's main tools. This project is in its early stages, and much more is to come.  This started as a single beginner's Python file that I used when I first started programming in order to practice applying musical concepts I knew well to new programming concepts I was learning, and now it is my main project that I plan to use in tandum with many more of my future projects.  I know there are a few other similar packages out there, but I thought I'd share mine for the public as well.  Thank you for reading, and have fun with this.*
 
 *-Scott Morse*
