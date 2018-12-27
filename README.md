@@ -3,7 +3,7 @@
 
 ## Latest in version
 <a href="#version-history">Version History</a>
-* Note class static methods such as `.note_from_values` and `.note_from_frequency` have been updated to allow passing optional rhythm and octave(for just `.note_from_values`) values into them, where they could not be before.
+* Note class static methods `.note_from_values`, `.note_from_hard_pitch` and `.note_from_frequency` have been updated to allow passing optional rhythm and octave(for just `.note_from_values`) values into them, where they could not be before.
 * Fixed bug where the `prefer` parameter for `.note_from_hard_pitch` made no effect on the result.
 * Added code comments to \_\_init\_\_.py and utils.py
 
