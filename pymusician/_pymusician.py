@@ -1,6 +1,7 @@
 from pymusician import constants
 import re
 
+#mainly here to clean up error handling in __init__
 class _Note:
 
     def __init__(self,name,octave=None,rhythm=None,dots=None,triplet=None):

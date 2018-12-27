@@ -1,10 +1,11 @@
 # PyMusician by Scott Morse
-## Version 1.0.1
+## Version 1.0.2
 
 ## Latest in version
 <a href="#version-history">Version History</a>
-* Fixed error in the Note method .enharmonic() when the Note object has rhythm value
-* Chord and Mode objects can be directly indexed and have a length with len(), referencing their spelling property
+* Added code comments to __init__.py and utils.py
+* Note class static methods such as `.note_from_values` and `.note_from_frequency` have been updated to allow passing optional rhythm and octave(for just `.note_from_values`) values into them, where they could not be before.
+* Fixed bug where the `prefer` parameter for `.note_from_hard_pitch` made no effect on the result.
 
 ## Quick reference:
 * Classes: <a href="#the-note-class">Note</a>, <a href="#the-interval-class">Interval</a>,<a href="#the-mode-class">Mode</a>,<a href="#the-chord-class">Chord</a>
@@ -424,11 +425,13 @@ The Note class has adding and subtracting methods, which are used in tandum with
 ## **Static Methods**
 The main purpose of the Note class's static methods is to allow the possibility to create instances of Note objects in different ways.
 
-## Note.from_values(letter,pitch)
+## Note.from_values(letter,pitch,octave=None,rhythm=None)
 
 This method allows for the creation of a Note object from the <a href="#pitchletter-reference">letter and pitch values</a> (both integers) that are normally assigned a note object in normal construction. 
 
 Keep in mind that this method only returns a simple object with no octave or rhythm, though these values can be set to an object after its creation.
+
+Optional octave and rhythm arguments can be supplied.
 
 ```python
 from pymusician import Note
@@ -438,10 +441,10 @@ Cs = Note.from_values(0,1) # C sharp
 B = Note.from_values(6,11) # B natural
 Bb = Note.from_values(6,10) # B flat
 As = Note.from_values(5,10) # A sharp
-A = Note.from_values(5,9) # A natural
+A = Note.from_values(5,9,4,"3t") # A natural, octave 4, quarter triplet
 ```
 
-## Note.from_hard_pitch(hard_pitch,prefer=None)
+## Note.from_hard_pitch(hard_pitch,prefer=None,rhythm=None)
 
 Read earlier about **hard pitch** to understand the value required for this method's first argument.  It should be an integer representing the same hard_pitch that an octave-valued note is assigned.  
 
@@ -461,7 +464,7 @@ Cs0 = Note.from_hard_pitch(1) # C sharp (sharp by default)
 Db0 = Note.from_hard_pitch(1,'b') #prefer set to 'b' returns Db instead of C sharp
 
 ```
-## Note.from_frequency(frequency,prefer=None)
+## Note.from_frequency(frequency,prefer=None,rhythm=None)
 This is a very similar method to <a href="#notefrom_hard_pitchhard_pitchprefernone">`Note.from_hard_pitch`</a>, except taking a Hz value for the note.  The global constant <a href="#a4">A4</a> also will affect this method in the same way it affects any other <a href="#frequency">frequency</a>-related data.  
 
 Since frequency values are usually not whole numbers, this method will round the given Hz to the closest accurate note frequency.  This may prove useful if this code is used alongside audio analysis.
@@ -816,7 +819,10 @@ Many of these tools I have created in prototype projects of this package, but ne
 * Staff position of Note objects based on clef/instrument transposition
 
 ## Version History
-
+* #### 1.0.2
+    * Added code comments to __init__.py and utils.py
+    * Note class static methods such as `.note_from_values` and `.note_from_frequency` have been updated to allow passing optional rhythm and octave(for just `.note_from_values`) values into them, where they could not be before.
+    * Fixed bug where the `prefer` parameter for `.note_from_hard_pitch` made no effect on the result.
 * #### 1.0.1
     * <small>Fixed error in the Note method .enharmonic() when the Note object has rhythm value
     * Chord and Mode objects can be directly indexed and have a length with len(), referencing their spelling property</small>

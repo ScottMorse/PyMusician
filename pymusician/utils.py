@@ -3,8 +3,11 @@ from numpy import log2
 import re
 import pymusician
 
+#TODO refactoring speller functions and possibly rethink how rhythm and interval flags are written/parsed.
+
 ###NOTE CLASS FUNCTIONS
 
+#assigns pitch integer value to a Note based on it's name
 def pitch_from_name(name):
     pitch = constants.NOTE_VALUES[name[0]][1]
     if len(name) > 1:
@@ -12,12 +15,13 @@ def pitch_from_name(name):
             pitch += len(name) - 1
             if pitch > 11:
                 pitch -= 12
-        if name[1] == "b":
+        else:
             pitch -= len(name) - 1
             if pitch < 0:
                 pitch += 12
     return pitch
 
+#Rhythm objects are used as a property of a Note object which has a rhythm value
 class Rhythm:
 
     def __init__(self, value,dots,triplet,num,flags):
@@ -31,18 +35,18 @@ class Rhythm:
         return f"<Rhythm object {self.flags} val:{round(self.value,2)}>"
 
 def rhythm_obj(flags):
+    #flags should be a string, but this can be forgiven if only a valid integer is passed
     if flags == None:
         return None
     if isinstance(flags,int):
         flags = str(flags)
     if not isinstance(flags,str):
-        raise ValueError("Rhythm flags must be a string.")
+        raise ValueError("Invalid rhythm flags.")
     flags = flags.replace(" ","")
     if not re.match(constants.RHYTHM_REGEX,flags):
         raise ValueError("Invalid rhythm flags.")
     dots = 0
     triplet = False
-
     if len(flags) > 1:
         if flags[1] == "0":
             num = 10
@@ -70,6 +74,7 @@ def rhythm_obj(flags):
 
     return Rhythm(val,dots,triplet,num,flags)
 
+#used as a method by the Note class to return a new enharmonic Note object
 def enharmonic(note_obj,prefer=None,gross=False):
     if prefer:
         if prefer not in ("#","b"):
@@ -125,6 +130,8 @@ def enharmonic(note_obj,prefer=None,gross=False):
         new_note.rhythm = note_obj.rhythm.flags
     return new_note
 
+#Used as in a static method by the note class to instantiate a Note from a letter and pitch value
+#This returns only the string name of the note
 def note_name_from_values(letter,pitch):
     if letter not in range(7):
         raise ValueError("Letter argument should be an integer between 0 and 6, 0 for C, 1 for B, etc.")
@@ -143,6 +150,8 @@ def note_name_from_values(letter,pitch):
         return letter_str + "b" * (-1 * pitch_offset)
     return letter_str + "#" * pitch_offset
 
+#Used as a static mehtod by the note class to instantiate a Note from a hard pitch value
+#This returns only the string name of the note
 def note_names_from_hard_pitch(hard_pitch,prefer=None):
     if type(hard_pitch) is not int:
             raise ValueError("Hard pitch argument must be an integer.")
@@ -163,6 +172,8 @@ def note_names_from_hard_pitch(hard_pitch,prefer=None):
             return (note_key + "#",octave)
         index += 1
 
+#Used as a static mehtod by the note class to instantiate a Note from a Hertz value
+#This returns only the string name of the note
 def note_names_from_frequency(Hz,prefer=None):
     if type(Hz) is not int and type(Hz) is not float:
             raise ValueError("Please provide a positive number for the Hz value.")
@@ -170,10 +181,11 @@ def note_names_from_frequency(Hz,prefer=None):
         raise ValueError("Please provide a positive number for the Hz value.")
     if prefer not in ("#","b",None):
         raise ValueError("'prefer' parameter should be set to '#' or 'b'.")
-    return note_names_from_hard_pitch(int(round(12 * (log2(Hz) - log2(pymusician.A4))) + 57),prefer=prefer)
+    return note_names_from_hard_pitch(int(round(12 * (log2(Hz) - log2(pymusician.A4))) + 57),prefer)
 
 ###INTERVAL CLASS FUNCTIONS
 
+#Returns an integer value which describes the distance represented by an Interval
 def intvl_diff(flags,_displace):
     intvl_quality = flags[0]
     adder_dots = len(flags) - 2
@@ -205,6 +217,8 @@ def intvl_diff(flags,_displace):
     
     return diff
 
+#Used to give a musician-friendly full name to an interval from its flags
+#Returns a string name
 def intvl_namer(intvl):
     if intvl._flags[-1] == "1" and intvl._flags[0].lower() == "p" and intvl._displace > 1 and len(intvl._flags) == 2:
         return f"{intvl._displace} octaves"
@@ -234,6 +248,8 @@ def intvl_namer(intvl):
         name += f" plus {intvl._displace} octaves"
     return name
 
+#Used by a static method by the Interval class to determine an interval from two Note objects
+#Directly returns an Interval object
 def intvl_from_notes(note_obj1,note_obj2):
     displace = 0
     pitch_diff = note_obj2.pitch - note_obj1.pitch
@@ -304,6 +320,8 @@ def intvl_from_notes(note_obj1,note_obj2):
     intvl = pymusician.Interval(flags,displace)
     return intvl
 
+#Returns a note object that is a supplied interval up from the supplied note
+#Does not need an octave, but will supply the accurate octave-level of the new note if provided
 def note_plus_intvl(note_obj,intvl_obj):
 
     letter = note_obj.letter + intvl_obj.letter_diff
@@ -327,6 +345,8 @@ def note_plus_intvl(note_obj,intvl_obj):
 
     return new_note
 
+#Returns a note object that is a supplied interval down from the supplied note
+#Does not need an octave, but will supply the accurate octave-level of the new note if provided
 def note_minus_intvl(note_obj,intvl_obj):
     if not isinstance(intvl_obj,pymusician.Interval):
             raise ValueError("Intervals can only be added to Note objects.")
@@ -354,6 +374,7 @@ def note_minus_intvl(note_obj,intvl_obj):
 
 #MODE FUNCTIONS
 
+#returns a tuple of Note objects for the given mode
 def mode_speller(root,mode):
 
     spelling = [root]
@@ -458,6 +479,8 @@ def mode_speller(root,mode):
 
 #CHORD FUNCTIONS
 
+#Takes a chord symbol (a string) and returns a dictionary of info about the chord, including a string of intervals
+#Desperately needs refactoring
 def parse_symbol(symbol):
 
     data = {}
