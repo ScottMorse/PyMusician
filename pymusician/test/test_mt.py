@@ -4,11 +4,11 @@ import pymusician as pm
 class TestNoteClass(unittest.TestCase):
 
     def test_A4(self):
-        self.assertEqual(pm.A4,440)
+        self.assertEqual(pm.A4.getA4(),440)
     
     def test_set_A4(self):
-        pm.A4 = 442
-        self.assertEqual(pm.A4,442)
+        pm.A4.setA4(442)
+        self.assertEqual(pm.A4.getA4(),442)
         self.assertAlmostEqual(pm.Note("A",5).frequency,884)
 
     def test_natural_note(self):
@@ -1415,9 +1415,28 @@ class TestModeClass(unittest.TestCase):
         self.assertEqual(cut.beat_len,256)
         self.assertEqual(six_eight.beat_len,64)
     
-    
+    def test_gets_beat(self):
+        timesig1 = pm.TimeSignature(1,1)
+        timesig2 = pm.TimeSignature(3,2)
+        timesig3 = pm.TimeSignature(4,4)
+        timesig4 = pm.TimeSignature(5,8)
+        timesig5 = pm.TimeSignature(6,16)
+        timesig6 = pm.TimeSignature(8,32)
+        timesig7 = pm.TimeSignature(10,64)
+        timesig8 = pm.TimeSignature(12,128)
+        timesig9 = pm.TimeSignature(8,256)
+        timesig10 = pm.TimeSignature(256,512)
 
-
+        self.assertEqual(timesig1.gets_beat,"whole")
+        self.assertEqual(timesig2.gets_beat,"half")
+        self.assertEqual(timesig3.gets_beat,"quarter")
+        self.assertEqual(timesig4.gets_beat,"8th")
+        self.assertEqual(timesig5.gets_beat,"16th")
+        self.assertEqual(timesig6.gets_beat,"32nd")
+        self.assertEqual(timesig7.gets_beat,"64th")
+        self.assertEqual(timesig8.gets_beat,"128th")
+        self.assertEqual(timesig9.gets_beat,"256th")
+        self.assertEqual(timesig10.gets_beat,"512th")
 
 if __name__ == "__main__":
 

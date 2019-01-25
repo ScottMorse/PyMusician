@@ -27,6 +27,20 @@ TIME_DIVISIONS = [
     1,2,4,8,16,32,64,128,256,512
 ]
 
+RHYTHM_NAMES = {
+    1024: "double whole",
+    512: "whole",
+    256: "half",
+    128: "quarter",
+    64: "8th",
+    32: "16th",
+    16: "32nd",
+    8: "64th",
+    4: "128th",
+    2: "256th",
+    1: "512th"
+}
+
 GROSS_ROOTS = {"B":"Cb","C":"B#","E":"Fb","F":"E#"}
 NON_NATURAL = (1,3,6,8,10)
 

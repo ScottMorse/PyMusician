@@ -181,7 +181,7 @@ def note_names_from_frequency(Hz,prefer=None):
         raise ValueError("Please provide a positive number for the Hz value.")
     if prefer not in ("#","b",None):
         raise ValueError("'prefer' parameter should be set to '#' or 'b'.")
-    return note_names_from_hard_pitch(int(round(12 * (log2(Hz) - log2(pymusician.A4))) + 57),prefer)
+    return note_names_from_hard_pitch(int(round(12 * (log2(Hz) - log2(pymusician.A4.getA4()))) + 57),prefer)
 
 ###INTERVAL CLASS FUNCTIONS
 

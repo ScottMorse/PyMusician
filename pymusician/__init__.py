@@ -3,9 +3,23 @@ from pymusician import constants
 from pymusician import utils
 import re
 
-VERSION = "1.0.2"
+VERSION = "1.0.3"
 
-A4 = 440
+class A4:
+
+    __A4 = 440
+
+    @staticmethod
+    def getA4():
+        return A4.__A4
+
+    @staticmethod
+    def setA4(Hz):
+        if not isinstance(Hz,(int,float)):
+            raise ValueError("A4 must be set to a number.")
+        if Hz <= 0:
+            raise ValueError("A4 must be a number greater than 0.")
+        A4.__A4 = Hz
 
 class Note(_pymusician._Note):
 
@@ -70,7 +84,7 @@ class Note(_pymusician._Note):
         if self.octave == None:
             return None
         offset = self.hard_pitch - 57
-        return A4 * 2**(offset / 12)
+        return A4.getA4() * 2**(offset / 12)
 
     #method which returns a new Note object which is enharmonic to the current one
     #does NOT affect the object in place
@@ -251,6 +265,7 @@ class Chord:
 
 class TimeSignature(_pymusician._TimeSignature):
 
+    #intialized with the two numbers as seen on sheet music: (4,4) for common time, (3,4) for waltz
     def __init__(self,top_number,bottom_number):
         super().__init__(top_number,bottom_number)
 
@@ -261,3 +276,9 @@ class TimeSignature(_pymusician._TimeSignature):
     @property
     def bottom_number(self):
         return self._bottom
+
+    #the length of a single beat in 512th notes
+    @property
+    def beat_len(self):
+        return self._beat_len
+    
