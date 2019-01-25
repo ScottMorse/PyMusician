@@ -1,14 +1,14 @@
 # PyMusician by Scott Morse
-## Version 1.0.2
+## Version 1.1.0
 
 ## Latest in version
 <a href="#version-history">Version History</a>
-* Note class static methods `.note_from_values`, `.note_from_hard_pitch` and `.note_from_frequency` have been updated to allow passing optional rhythm and octave(for just `.note_from_values`) values into them, where they could not be before.
-* Fixed bug where the `prefer` parameter for `.note_from_hard_pitch` made no effect on the result.
-* Added code comments to \_\_init\_\_.py and utils.py
+* TimeSignature class added for representation of basic but highly dynamic time signatures
+* The value of A4 is now protected.
+* Main classes all take named arguments instead of *args now
 
 ## Quick reference:
-* Classes: <a href="#the-note-class">Note</a>, <a href="#the-interval-class">Interval</a>,<a href="#the-mode-class">Mode</a>,<a href="#the-chord-class">Chord</a>
+* Classes: <a href="#the-note-class">Note</a>, <a href="#the-interval-class">Interval</a>,<a href="#the-mode-class">Mode</a>,<a href="#the-chord-class">Chord</a><a href="#the-timesignature-class">Time Signature</a>
 * <a href="#pitchletter-reference">Pitch/letter values</a>
 * <a href="#rhythm">Rhythm flags</a>
 * <a href="#creating-a-basic-interval">Interval flags</a>
@@ -50,18 +50,21 @@ Don't forget to make sure your pip version matches the command for Python versio
 If you have not used PyMusician before, it is important to read and learn about each class and function, as many core values and ideas of this code reappear in other sections, especially the properties and methods of the Note class.
 
 ## A4:
-`A4` is a variable available in pymusician that represents the frequency for the note A4 in Hz.  By default, it is set to 440.  It can be set to a different number value simply by reassigning it.
+The value of A4 by default is 440 Hz, which is currently a common standard.  This value can be changed in the code for PyMusician, and it is the only value that will globally affect the code.  The method for setting it is protected, however.  The following example shows how to set A4 to a new number.  If anything other than a valid positive number (int or float) is given, an error will be raised.
 
 ```python
-import pymusician
-pymusician.A4 = 442
-```
-This will globally affect the rest of the code, by affecting any situation where frequency is calculated, such as the <a href="#frequency">frequency property</a> of a Note object.  This is the only value in the main that has global consequences within the code you are writing.
-```python
-import pymusician
-pymusician.Note("A",4).frequency #440
-pymusician.A4 = 442
-pymusician.Note("A",4).frequency #442
+import pymusician as pm
+
+print( pm.A4.getA4() ) # should print 440
+
+note_A4 = pm.Note("A",4)
+
+print(note_A4.frequency) # should print 440
+
+pm.A4.setA4(442)
+
+print(note_A4.frequency) # should print 442
+
 ```
 
 # **The Note Class**
@@ -804,10 +807,90 @@ len(G13) # 6
 ## A note about 13 chords
 In the most strict definition, a 13 chord contains an entire heptatonic scale worth of notes in it, including some kind of 11th/4th.  Some would argue that a dominant 13th chord should automatically then include a #11.  I have ommitted this, since in practice I believe this is not used strictly enough to always be included, though I understand why it is often argued.  In PyMusician, minor 13th chords do contain a natural 11, but any major quality 13 chords do not automatically include 11 or #11, so include it with a '#11' tag in the symbol ("G13#11").
 
+# **The TimeSignature Class**
+
+The class for time signatures is new with some basic tools for representing time signatures.  It is very straightforward for anyone who is familiar with how time signatures work.
+
+## Creating a time signature
+Simply intialize a TimeSignature by passing the two numbers as would be seen on sheet music as two arguments.  The bottom number must represent a common rhythmic division used: 1, 2, 4, 8, 16, 32, 64, 128, 256, or 512.
+
+```python
+import pymusician as pm
+
+common_time = pm.TimeSignature(4,4)
+waltz_time = pm.TimeSignature(3,4)
+cut_time = pm.TimeSignature(2,2)
+
+```
+
+## **TimeSignature Properties**
+
+## self.top_number and self.bottom_number
+These properties give the original values provided when the object was instantiated.
+```python
+import pymusician as pm
+
+common_time = pm.TimeSignature(4,4)
+waltz_time = pm.TimeSignature(3,4)
+cut_time = pm.TimeSignature(2,2)
+
+common_time.top_number # 4
+waltz_time.top_number # 3
+cut_time.bottom_number # 2
+
+```
+
+## self.gets_beat
+This gives a string name for the rhythm which "gets the beat."  This comes from the bottom number of the signature.
+```python
+import pymusician as pm
+
+common_time = pm.TimeSignature(4,4)
+waltz_time = pm.TimeSignature(3,4)
+cut_time = pm.TimeSignature(2,2)
+
+common_time.gets_beat # "quarter"
+waltz_time.gets_beat # "quarter"
+cut_time.gets_beat # "half"
+
+```
+
+## self.beat_len
+This gives a number representing the rhythmic value (measured in 512th notes) of a single beat of time, given the signature.
+```python
+import pymusician as pm
+
+common_time = pm.TimeSignature(4,4)
+three_eight = pm.TimeSignature(3,8)
+artsy_fartsy_time = pm.TimeSignature(200,512)
+
+common_time.beat_len # 128
+three_eight.beat_len # 64
+artsy_fartsy_time.beat_len # 1
+
+```
+
+## self.measure_len
+This gives a number representing the rhythmic value of an entire measure, measured in 512th notes.
+
+```python
+import pymusician as pm
+
+common_time = pm.TimeSignature(4,4)
+cut_time = pm.TimeSignature(2,2)
+artsy_fartsy_time = pm.TimeSignature(200,512)
+
+common_time.measure_len # 512
+cut_time.measure_len # 512
+artsy_fartsy_time.measure_len # 200
+
+```
+
+
 # Concluding Thoughts
 
 ## What's coming in the future:
-Many of these tools I have created in prototype projects of this package, but need to be redone and refined before releasing:
+Many of these tools **I** have created in prototype projects of this package, but need to be redone and refined before releasing:
 * Rests
 * Time signatures
 * BPM
@@ -819,6 +902,10 @@ Many of these tools I have created in prototype projects of this package, but ne
 * Staff position of Note objects based on clef/instrument transposition
 
 ## Version History
+* #### 1.0.1
+    * TimeSignature class added for representation of basic but highly dynamic time signatures
+    * The value of A4 is now protected.
+    * Main classes all take named arguments instead of *args now
 * #### 1.0.2
     * Added code comments to __init__.py and utils.py
     * Note class static methods such as `.note_from_values` and `.note_from_frequency` have been updated to allow passing optional rhythm and octave(for just `.note_from_values`) values into them, where they could not be before.
