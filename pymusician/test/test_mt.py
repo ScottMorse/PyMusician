@@ -11,6 +11,15 @@ class TestNoteClass(unittest.TestCase):
         self.assertEqual(pm.A4.getA4(),442)
         self.assertAlmostEqual(pm.Note("A",5).frequency,884)
 
+        with self.assertRaises(ValueError):
+            pm.A4.setA4(-1)
+
+        with self.assertRaises(ValueError):
+            pm.A4.setA4(0)
+
+        with self.assertRaises(ValueError):
+            pm.A4.setA4("440")
+
     def test_natural_note(self):
         self.assertEqual(pm.Note("A").name,"A")
         self.assertEqual(pm.Note("b").name,"B")
