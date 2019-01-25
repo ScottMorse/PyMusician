@@ -892,7 +892,6 @@ artsy_fartsy_time.measure_len # 200
 ## What's coming in the future:
 Many of these tools **I** have created in prototype projects of this package, but need to be redone and refined before releasing:
 * Rests
-* Time signatures
 * BPM
 * Concept of measures
 * Transposition function
