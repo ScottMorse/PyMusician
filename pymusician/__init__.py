@@ -3,7 +3,7 @@ from pymusician import constants
 from pymusician import utils
 import re
 
-VERSION = "1.0.3"
+VERSION = "1.1.0"
 
 class A4:
 
@@ -269,16 +269,28 @@ class TimeSignature(_pymusician._TimeSignature):
     def __init__(self,top_number,bottom_number):
         super().__init__(top_number,bottom_number)
 
+    #numeric
     @property
     def top_number(self):
         return self._top
     
+    #numeric
     @property
     def bottom_number(self):
         return self._bottom
 
-    #the length of a single beat in 512th notes
+    #returns string name of the rhythm that gets the beat
+    @property
+    def gets_beat(self):
+        return self._gets_beat
+
+    #the length of a single beat in 512th notes (numeric)
     @property
     def beat_len(self):
         return self._beat_len
+
+    #the total length of a measure in 512th notes (numeric)
+    @property
+    def measure_len(self):
+        return self._measure_len
     

@@ -48,8 +48,12 @@ class _TimeSignature:
             raise ValueError("Bottom time signature number must be a common power of 2: (1,2,4,8,16,32,64,128,256,512)")
         if top_number < 1:
             raise ValueError("Top time signature number must be 1 or greater.")
-            
+
         self._top = top_number
         self._bottom = bottom_number
 
         self._beat_len = constants.RHYTHM_VALUES[int(log2(bottom_number)) + 1]
+
+        self._gets_beat = constants.RHYTHM_NAMES[self._beat_len]
+
+        self._measure_len = self._beat_len * self._top

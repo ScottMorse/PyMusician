@@ -1438,6 +1438,29 @@ class TestModeClass(unittest.TestCase):
         self.assertEqual(timesig9.gets_beat,"256th")
         self.assertEqual(timesig10.gets_beat,"512th")
 
+    def test_measure_len(self):
+        timesig1 = pm.TimeSignature(1,1)
+        timesig2 = pm.TimeSignature(3,2)
+        timesig3 = pm.TimeSignature(4,4)
+        timesig4 = pm.TimeSignature(5,8)
+        timesig5 = pm.TimeSignature(6,16)
+        timesig6 = pm.TimeSignature(8,32)
+        timesig7 = pm.TimeSignature(10,64)
+        timesig8 = pm.TimeSignature(12,128)
+        timesig9 = pm.TimeSignature(8,256)
+        timesig10 = pm.TimeSignature(256,512)
+
+        self.assertEqual(timesig1.measure_len,512)
+        self.assertEqual(timesig2.measure_len,768)
+        self.assertEqual(timesig3.measure_len,512)
+        self.assertEqual(timesig4.measure_len,320)
+        self.assertEqual(timesig5.measure_len,192)
+        self.assertEqual(timesig6.measure_len,128)
+        self.assertEqual(timesig7.measure_len,80)
+        self.assertEqual(timesig8.measure_len,48)
+        self.assertEqual(timesig9.measure_len,16)
+        self.assertEqual(timesig10.measure_len,256)
+
 if __name__ == "__main__":
 
     unittest.main()
