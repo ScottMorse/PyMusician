@@ -8,7 +8,7 @@
 * Main classes all take named arguments instead of *args now
 
 ## Quick reference:
-* Classes: <a href="#the-note-class">Note</a>, <a href="#the-interval-class">Interval</a>,<a href="#the-mode-class">Mode</a>,<a href="#the-chord-class">Chord</a><a href="#the-timesignature-class">Time Signature</a>
+* Classes: <a href="#the-note-class">Note</a>, <a href="#the-interval-class">Interval</a>,<a href="#the-mode-class">Mode</a>,<a href="#the-chord-class">Chord,</a><a href="#the-timesignature-class">Time Signature</a>
 * <a href="#pitchletter-reference">Pitch/letter values</a>
 * <a href="#rhythm">Rhythm flags</a>
 * <a href="#creating-a-basic-interval">Interval flags</a>
