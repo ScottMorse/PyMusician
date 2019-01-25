@@ -901,7 +901,7 @@ Many of these tools **I** have created in prototype projects of this package, bu
 * Staff position of Note objects based on clef/instrument transposition
 
 ## Version History
-* #### 1.0.1
+* #### 1.1.0
     * TimeSignature class added for representation of basic but highly dynamic time signatures
     * The value of A4 is now protected.
     * Main classes all take named arguments instead of *args now
