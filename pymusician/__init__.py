@@ -3,14 +3,28 @@ from pymusician import constants
 from pymusician import utils
 import re
 
-VERSION = "1.0.2"
+VERSION = "1.1.0"
 
-A4 = 440
+class A4:
+
+    __A4 = 440
+
+    @staticmethod
+    def getA4():
+        return A4.__A4
+
+    @staticmethod
+    def setA4(Hz):
+        if not isinstance(Hz,(int,float)):
+            raise ValueError("A4 must be set to a number.")
+        if Hz <= 0:
+            raise ValueError("A4 must be a number greater than 0.")
+        A4.__A4 = Hz
 
 class Note(_pymusician._Note):
 
-    def __init__(self,*args):
-        super().__init__(*args)
+    def __init__(self,name,octave=None,rhythm=None,dots=None,triplet=None):
+        super().__init__(name,octave,rhythm,dots,triplet)
 
     #string (A#, Bb, C, etc.)
     @property
@@ -70,7 +84,7 @@ class Note(_pymusician._Note):
         if self.octave == None:
             return None
         offset = self.hard_pitch - 57
-        return A4 * 2**(offset / 12)
+        return A4.getA4() * 2**(offset / 12)
 
     #method which returns a new Note object which is enharmonic to the current one
     #does NOT affect the object in place
@@ -115,8 +129,8 @@ class Note(_pymusician._Note):
 
 class Interval(_pymusician._Interval):
 
-    def __init__(self,*args):
-        super().__init__(*args)
+    def __init__(self,flags,displace=0):
+        super().__init__(flags,displace)
     
     #int representing the distance in pitch of the interval
     @property
@@ -232,6 +246,10 @@ class Chord:
                 intvls.append(intvl)
         return tuple(spelling)
 
+    @staticmethod
+    def from_notes(*notes, root=None):
+        return utils.chord_from_notes(*notes,root=root)
+
     #Like Mode class, can iterate, get length, and index the spelling on the object
     def __iter__(self):
         return iter(self.spelling)
@@ -244,3 +262,34 @@ class Chord:
 
     def __repr__(self):
         return f"<Chord {self.symbol}>"
+
+class TimeSignature(_pymusician._TimeSignature):
+
+    #intialized with the two numbers as seen on sheet music: (4,4) for common time, (3,4) for waltz
+    def __init__(self,top_number,bottom_number):
+        super().__init__(top_number,bottom_number)
+
+    #numeric
+    @property
+    def top_number(self):
+        return self._top
+    
+    #numeric
+    @property
+    def bottom_number(self):
+        return self._bottom
+
+    #returns string name of the rhythm that gets the beat
+    @property
+    def gets_beat(self):
+        return self._gets_beat
+
+    #the length of a single beat in 512th notes (numeric)
+    @property
+    def beat_len(self):
+        return self._beat_len
+
+    #the total length of a measure in 512th notes (numeric)
+    @property
+    def measure_len(self):
+        return self._measure_len

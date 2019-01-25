@@ -181,7 +181,7 @@ def note_names_from_frequency(Hz,prefer=None):
         raise ValueError("Please provide a positive number for the Hz value.")
     if prefer not in ("#","b",None):
         raise ValueError("'prefer' parameter should be set to '#' or 'b'.")
-    return note_names_from_hard_pitch(int(round(12 * (log2(Hz) - log2(pymusician.A4))) + 57),prefer)
+    return note_names_from_hard_pitch(int(round(12 * (log2(Hz) - log2(pymusician.A4.getA4()))) + 57),prefer)
 
 ###INTERVAL CLASS FUNCTIONS
 
@@ -613,15 +613,38 @@ def parse_symbol(symbol):
     data["intervals"] = intervals
 
     return data
+
+def chord_from_notes(*notes,root=None):
+    notes = list(notes)
+    #root can be provided or by default is first note provided
+
+    if not root:
+        root = notes[0]
+        del notes[0]
+    if isinstance(root,str):
+        try:
+            root = pymusician.Note(root)
+        except:
+            raise ValueError("Invalid root note ")
+    elif not root.__class__.__name__ == "Note":
+        raise ValueError("Invalid note passed to Chord.from_notes")
+
+    symbol = root.name
+    intvls = []
+
+    for i in range(len(notes)):
+        note = notes[i]
+        if isinstance(note,str):
+            try:
+                note = pymusician.Note(note)
+            except:
+                raise ValueError("Invalid note passed to Chord.from_notes")
+        elif not note.__class__.__name__ == "Note":
+            raise ValueError("Invalid note passed to Chord.from_notes")
+        if note.name == root.name:
+            continue
+        intvls.append(pymusician.Interval.from_notes(root,note))
+
     
-
-
-
-
-
-
-
-
-
 
 
