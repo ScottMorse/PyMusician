@@ -1400,6 +1400,24 @@ class TestModeClass(unittest.TestCase):
             pm.TimeSignature(-1,4)
         with self.assertRaises(ValueError):
             pm.TimeSignature(3,513)
+    
+    def test_basic_properties(self):
+        timesig = pm.TimeSignature(4,8)
+        self.assertEqual(timesig.top_number,4)
+        self.assertEqual(timesig.bottom_number,8)
+
+    def test_beat_len(self):
+        common = pm.TimeSignature(4,4)
+        cut = pm.TimeSignature(2,2)
+        six_eight = pm.TimeSignature(6,8)
+
+        self.assertEqual(common.beat_len,128)
+        self.assertEqual(cut.beat_len,256)
+        self.assertEqual(six_eight.beat_len,64)
+    
+    
+
+
 
 if __name__ == "__main__":
 

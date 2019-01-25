@@ -253,3 +253,11 @@ class TimeSignature(_pymusician._TimeSignature):
 
     def __init__(self,top_number,bottom_number):
         super().__init__(top_number,bottom_number)
+
+    @property
+    def top_number(self):
+        return self._top
+    
+    @property
+    def bottom_number(self):
+        return self._bottom
