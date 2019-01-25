@@ -249,7 +249,7 @@ class Chord:
     def __repr__(self):
         return f"<Chord {self.symbol}>"
 
-class TimeSignature(_pymusician._Time_Signature):
+class TimeSignature(_pymusician._TimeSignature):
 
     def __init__(self,top_number,bottom_number):
         super().__init__(top_number,bottom_number)

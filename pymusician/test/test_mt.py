@@ -1358,23 +1358,48 @@ class TestChordClass(unittest.TestCase):
         self.assertEqual(chord8[2].name,"C")
         self.assertEqual(chord8[3].name,"E")
 
-    def test_triads_from_notes(self):
-        chord1 = pm.Chord.from_notes("A","C#","E")
-        chord2 = pm.Chord.from_notes("A","C","E")
-        chord3 = pm.Chord.from_notes(pm.Note("A"),pm.Note("C#"),pm.Note("E"))
-        chord4 = pm.Chord.from_notes(pm.Note("G"),pm.Note("Bb"),pm.Note("Db"))
-        chord5 = pm.Chord.from_notes("Fb","Ab","C")
+    # def test_triads_from_notes(self):
+    #     chord1 = pm.Chord.from_notes("A","C#","E")
+    #     chord2 = pm.Chord.from_notes("A","C","E")
+    #     chord3 = pm.Chord.from_notes(pm.Note("A"),pm.Note("C#"),pm.Note("E"))
+    #     chord4 = pm.Chord.from_notes(pm.Note("G"),pm.Note("Bb"),pm.Note("Db"))
+    #     chord5 = pm.Chord.from_notes("Fb","Ab","C")
 
-        self.assertEqual(chord1.symbol,"A")
-        self.assertEqual(chord1.quality,"major")
-        self.assertEqual(chord2.symbol,"Am")
-        self.assertEqual(chord2.quality,"minor")
-        self.assertEqual(chord3.symbol,"A")
-        self.assertEqual(chord3.quality,"major")
-        self.assertEqual(chord4.symbol,"G°")
-        self.assertEqual(chord4.quality,"diminished")
-        self.assertEqual(chord5.symbol,"Fb+")
-        self.assertEqual(chord5.quality,"augmented")
+    #     self.assertEqual(chord1.symbol,"A")
+    #     self.assertEqual(chord1.quality,"major")
+    #     self.assertEqual(chord2.symbol,"Am")
+    #     self.assertEqual(chord2.quality,"minor")
+    #     self.assertEqual(chord3.symbol,"A")
+    #     self.assertEqual(chord3.quality,"major")
+    #     self.assertEqual(chord4.symbol,"G°")
+    #     self.assertEqual(chord4.quality,"diminished")
+    #     self.assertEqual(chord5.symbol,"Fb+")
+    #     self.assertEqual(chord5.quality,"augmented")
+
+class TestModeClass(unittest.TestCase):
+
+    def test_initialization(self):
+        pm.TimeSignature(1,1)
+        pm.TimeSignature(3,2)
+        pm.TimeSignature(4,4)
+        pm.TimeSignature(5,8)
+        pm.TimeSignature(6,16)
+        pm.TimeSignature(8,32)
+        pm.TimeSignature(10,64)
+        pm.TimeSignature(12,128)
+        pm.TimeSignature(8,256)
+        pm.TimeSignature(256,512)
+
+        with self.assertRaises(ValueError):
+            pm.TimeSignature("1","3")
+        with self.assertRaises(ValueError):
+            pm.TimeSignature(1,3.5)
+        with self.assertRaises(ValueError):
+            pm.TimeSignature(0,4)
+        with self.assertRaises(ValueError):
+            pm.TimeSignature(-1,4)
+        with self.assertRaises(ValueError):
+            pm.TimeSignature(3,513)
 
 if __name__ == "__main__":
 

@@ -45,5 +45,7 @@ class _TimeSignature:
             raise ValueError("Time signature must be intialized via two numbers (top, bottom).")
         if bottom_number not in constants.TIME_DIVISIONS:
             raise ValueError("Bottom time signature number must be a common power of 2: (1,2,4,8,16,32,64,128,256,512)")
+        if top_number < 1:
+            raise ValueError("Top time signature number must be 1 or greater.")
         self._top = top_number
         self._bottom = bottom_number

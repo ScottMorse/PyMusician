@@ -23,6 +23,10 @@ RHYTHM_VALUES = [
     64,32,16,8,4,2,1,
 ]
 
+TIME_DIVISIONS = [
+    1,2,4,8,16,32,64,128,256,512
+]
+
 GROSS_ROOTS = {"B":"Cb","C":"B#","E":"Fb","F":"E#"}
 NON_NATURAL = (1,3,6,8,10)
 
