@@ -36,3 +36,14 @@ class _Interval:
             raise ValueError("Displacement value should be a positive integer or 0(default).")
         self._flags = flags
         self._displace = displace
+
+class _TimeSignature:
+
+    def __init__(self,top_number,bottom_number):
+        if not (isinstance(top_number,(int,float)) and
+                isinstance(bottom_number,int)):
+            raise ValueError("Time signature must be intialized via two numbers (top, bottom).")
+        if bottom_number not in constants.TIME_DIVISIONS:
+            raise ValueError("Bottom time signature number must be a common power of 2: (1,2,4,8,16,32,64,128,256,512)")
+        self._top = top_number
+        self._bottom = bottom_number

@@ -232,6 +232,10 @@ class Chord:
                 intvls.append(intvl)
         return tuple(spelling)
 
+    @staticmethod
+    def from_notes(*notes, root=None):
+        return utils.chord_from_notes(*notes,root=root)
+
     #Like Mode class, can iterate, get length, and index the spelling on the object
     def __iter__(self):
         return iter(self.spelling)
@@ -244,3 +248,8 @@ class Chord:
 
     def __repr__(self):
         return f"<Chord {self.symbol}>"
+
+class TimeSignature(_pymusician._Time_Signature):
+
+    def __init__(self,top_number,bottom_number):
+        super().__init__(top_number,bottom_number)
