@@ -23,8 +23,8 @@ class A4:
 
 class Note(_pymusician._Note):
 
-    def __init__(self,*args):
-        super().__init__(*args)
+    def __init__(self,name,octave=None,rhythm=None,dots=None,triplet=None):
+        super().__init__(name,octave,rhythm,dots,triplet)
 
     #string (A#, Bb, C, etc.)
     @property
@@ -129,8 +129,8 @@ class Note(_pymusician._Note):
 
 class Interval(_pymusician._Interval):
 
-    def __init__(self,*args):
-        super().__init__(*args)
+    def __init__(self,flags,displace=0):
+        super().__init__(flags,displace)
     
     #int representing the distance in pitch of the interval
     @property
