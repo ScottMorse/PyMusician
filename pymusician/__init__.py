@@ -293,4 +293,3 @@ class TimeSignature(_pymusician._TimeSignature):
     @property
     def measure_len(self):
         return self._measure_len
-    
