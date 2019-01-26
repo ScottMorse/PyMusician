@@ -1,5 +1,5 @@
 from pymusician import _pymusician, constants, utils
-from pymusician._modules import _note
+from pymusician._modules import _note, _interval, _mode, _chord, _timesignature
 
 VERSION = "1.1.1"
 
@@ -124,7 +124,7 @@ class Note(_note._Note):
     def __sub__(self,intvl_obj):
         return _note.note_minus_intvl(self,intvl_obj)
 
-class Interval(_pymusician._Interval):
+class Interval(_interval._Interval):
 
     def __init__(self,flags,displace=0):
         super().__init__(flags,displace)
@@ -132,24 +132,22 @@ class Interval(_pymusician._Interval):
     #int representing the distance in pitch of the interval
     @property
     def diff(self):
-        return utils.intvl_diff(self._flags,self._displace)
+        return self._diff
     
     #int representing the distance in letter of the interval
     @property
     def letter_diff(self):
-        return int(self._flags[-1]) - 1
+        return self._letter_diff
 
     #string representing a musician-friendly interval name
     @property
     def name(self):
-        return utils.intvl_namer(self)
+        return self._name
     
     #instantiates an interval from the distance between two Note objects (octave or no octave considered)
     @staticmethod
     def from_notes(note_obj1,note_obj2):
-        if type(note_obj1) is not Note or type(note_obj2) is not Note:
-            raise ValueError("Invalid Note object passed.")
-        return utils.intvl_from_notes(note_obj1,note_obj2)
+        return _interval.intvl_from_notes(note_obj1,note_obj2)
 
     def __repr__(self):
         return f'<Interval {self.name}>'
