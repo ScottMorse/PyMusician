@@ -1,8 +1,10 @@
-# PyMusician by Scott Morse
-## Version 1.1.0
+# PyMusician <small><small><small><small>by Scott Morse</small></small></small></small>
+## Version 1.1.1
 
-## Latest in version
-<a href="#version-history">Version History</a>
+## Latest in version:&nbsp;&nbsp;<small>(<a href="#version-history">Version History</a>)</small>
+&nbsp;&nbsp;&nbsp;&nbsp;*January 26,2019*
+* **1.1.1** Non-breaking project restructure. New module structure, separated tests, and some more efficient class properties.  One uncaught unfinished Chord function removed.
+
 * TimeSignature class added for representation of basic but highly dynamic time signatures
 * The value of A4 is now protected.
 * Main classes all take named arguments instead of *args now
@@ -901,18 +903,20 @@ Many of these tools **I** have created in prototype projects of this package, bu
 * Staff position of Note objects based on clef/instrument transposition
 
 ## Version History
-* #### 1.1.0
+* #### 1.1.1&nbsp;&nbsp;&nbsp;&nbsp;<small>*January 26,2019*</small>
+    * Non-breaking project restructure. New module structure, separated tests, and some more efficient class properties.  One uncaught unfinished Chord function removed.
+* #### 1.1.0&nbsp;&nbsp;&nbsp;&nbsp;<small>*January 25,2019*</small>
     * TimeSignature class added for representation of basic but highly dynamic time signatures
     * The value of A4 is now protected.
     * Main classes all take named arguments instead of *args now
-* #### 1.0.2
-    * Added code comments to __init__.py and utils.py
+* #### 1.0.2&nbsp;&nbsp;&nbsp;&nbsp;<small>*December 27,2018*</small>
+    * Added code comments to __init__.py and utils.py(deprecated)
     * Note class static methods such as `.note_from_values` and `.note_from_frequency` have been updated to allow passing optional rhythm and octave(for just `.note_from_values`) values into them, where they could not be before.
     * Fixed bug where the `prefer` parameter for `.note_from_hard_pitch` made no effect on the result.
-* #### 1.0.1
+* #### 1.0.1&nbsp;&nbsp;&nbsp;&nbsp;<small>*November 22, 2018*</small>
     * <small>Fixed error in the Note method .enharmonic() when the Note object has rhythm value
     * Chord and Mode objects can be directly indexed and have a length with len(), referencing their spelling property</small>
-* #### 1.0.0-b
+* #### 1.0.0-b&nbsp;&nbsp;&nbsp;&nbsp;<small>*October 8, 2018*</small>
     - <small>Released</small>
 
 <br></br>
