@@ -1,5 +1,5 @@
 from pymusician import _pymusician, constants, utils
-from pymusician._modules import _note, _interval, _mode, _chord, _timesignature
+from pymusician._modules import _note
 
 VERSION = "1.1.1"
 
@@ -118,11 +118,11 @@ class Note(_note._Note):
 
     #Allows the addition of a Note object plus an Interval object to return a new Note
     def __add__(self,intvl_obj):
-        return _note.note_plus_intvl(self,intvl_obj)
+        return utils.note_plus_intvl(self,intvl_obj)
 
     #Allows the subtraction of a Note object minus an Interval object to return a new Note
     def __sub__(self,intvl_obj):
-        return _note.note_minus_intvl(self,intvl_obj)
+        return utils.note_minus_intvl(self,intvl_obj)
 
 class Interval(_pymusician._Interval):
 
