@@ -1,9 +1,6 @@
-from pymusician import _pymusician
-from pymusician import constants
-from pymusician import utils
-import re
+from pymusician import _pymusician, constants, utils
 
-VERSION = "1.1.0"
+VERSION = "1.1.1"
 
 class A4:
 
@@ -157,21 +154,11 @@ class Interval(_pymusician._Interval):
     def __repr__(self):
         return f'<Interval {self.name}>'
 
-class Mode:
+class Mode(_pymusician._Mode):
 
     #can be initialized with a string or Note object root
     def __init__(self,root,mode):
-
-        if type(root) is Note:
-            self._root = root
-        else:
-            try:
-                self._root = Note(root.capitalize())
-            except:
-                raise ValueError("Mode root should be a Note object or note name (str).")
-        if mode not in constants.MODES:
-            raise KeyError("Mode not found.  View the modes json to see/add modes.")
-        self._mode = mode
+        super().__init__(root,mode)
 
     #A Note object
     @property
@@ -186,12 +173,12 @@ class Mode:
     #string, full root + mode name
     @property
     def name(self):
-        return self.root.name + " " + self.mode
+        return self._name
     
     #A tuple of Note objects
     @property
     def spelling(self):
-        return utils.mode_speller(self.root,self.mode)
+        return self._spelling
 
     #Iterating a Mode iterates over the spelling
     def __iter__(self):
@@ -208,12 +195,11 @@ class Mode:
     def __repr__(self):
         return f"<Mode {self.name}>"
 
-class Chord:
+class Chord(_pymusician._Chord):
 
     #Initialized with a string chord symbol
     def __init__(self,symbol):
-        self._symbol = symbol
-        self._data = utils.parse_symbol(symbol)
+        super().__init__(symbol)
     
     #The original symbol
     @property
@@ -223,28 +209,22 @@ class Chord:
     #A Note object
     @property
     def root(self):
-        return Note(self._data["root"])
+        return self._root
 
     #The quality name string
     @property
     def quality(self):
-        return self._data["quality"]
+        return self._quality
 
     #The string of intervals used
     @property
     def intervals(self):
-        return self._data["intervals"]
+        return self._intervals
 
     #Similar to the Mode class, a tuple of Note objects
     @property
     def spelling(self):
-        spelling = [self.root]
-        intvls = []
-        for intvl in self.intervals.split():
-            if intvl not in intvls:
-                spelling.append(self.root + Interval(intvl))
-                intvls.append(intvl)
-        return tuple(spelling)
+        return self._spelling
 
     @staticmethod
     def from_notes(*notes, root=None):

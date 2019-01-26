@@ -1,7 +1,7 @@
+import pymusician
 from pymusician import constants
 from numpy import log2
 import re
-import pymusician
 
 #TODO refactoring speller functions and possibly rethink how rhythm and interval flags are written/parsed.
 
