@@ -1,4 +1,5 @@
 from pymusician import _pymusician, constants, utils
+from pymusician._modules import _note
 
 VERSION = "1.1.1"
 

@@ -24,4 +24,5 @@ setup(name="pymusician",
       python_requires='>3.6',
       test_suite='nose.collector',
       tests_require=['nose'],
-      zip_safe=False)
+      zip_safe=False
+)
