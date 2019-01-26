@@ -1,4 +1,3 @@
-from pymusician import _pymusician, constants, utils
 from pymusician._modules import _note, _interval, _mode, _chord, _timesignature
 
 VERSION = "1.1.1"
@@ -152,7 +151,7 @@ class Interval(_interval._Interval):
     def __repr__(self):
         return f'<Interval {self.name}>'
 
-class Mode(_pymusician._Mode):
+class Mode(_mode._Mode):
 
     #can be initialized with a string or Note object root
     def __init__(self,root,mode):
@@ -193,7 +192,7 @@ class Mode(_pymusician._Mode):
     def __repr__(self):
         return f"<Mode {self.name}>"
 
-class Chord(_pymusician._Chord):
+class Chord(_chord._Chord):
 
     #Initialized with a string chord symbol
     def __init__(self,symbol):
@@ -224,9 +223,10 @@ class Chord(_pymusician._Chord):
     def spelling(self):
         return self._spelling
 
-    @staticmethod
-    def from_notes(*notes, root=None):
-        return utils.chord_from_notes(*notes,root=root)
+    #!TODO
+    # @staticmethod
+    # def from_notes(*notes, root=None):
+    #     return _chord.chord_from_notes(*notes,root=root)
 
     #Like Mode class, can iterate, get length, and index the spelling on the object
     def __iter__(self):
@@ -241,7 +241,7 @@ class Chord(_pymusician._Chord):
     def __repr__(self):
         return f"<Chord {self.symbol}>"
 
-class TimeSignature(_pymusician._TimeSignature):
+class TimeSignature(_timesignature._TimeSignature):
 
     #intialized with the two numbers as seen on sheet music: (4,4) for common time, (3,4) for waltz
     def __init__(self,top_number,bottom_number):
