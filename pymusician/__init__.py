@@ -1,9 +1,6 @@
-from pymusician import _pymusician
-from pymusician import constants
-from pymusician import utils
-import re
+from pymusician._modules import _note, _interval, _mode, _chord, _timesignature
 
-VERSION = "1.1.0"
+VERSION = "1.1.1"
 
 class A4:
 
@@ -21,7 +18,7 @@ class A4:
             raise ValueError("A4 must be a number greater than 0.")
         A4.__A4 = Hz
 
-class Note(_pymusician._Note):
+class Note(_note._Note):
 
     def __init__(self,name,octave=None,rhythm=None,dots=None,triplet=None):
         super().__init__(name,octave,rhythm,dots,triplet)
@@ -34,12 +31,12 @@ class Note(_pymusician._Note):
     #int in range 0-6
     @property
     def letter(self):
-        return constants.NOTE_VALUES[self.name[0]][0]
+        return self._letter
     
     #int in range 0-11
     @property
     def pitch(self):
-        return utils.pitch_from_name(self.name)
+        return self._pitch
     
     #int representing Scientific Pitch Notation-style octave
     @property
@@ -56,20 +53,19 @@ class Note(_pymusician._Note):
     #A Rhythm object created from the flags of the rhythm or None if no rhythm is provided
     @property
     def rhythm(self):
-        return utils.rhythm_obj(self._rhythm)
+        return self._rhythm
 
     #Allows the rhythm to be assigned to the Note directly after instantiation
     @rhythm.setter
     def rhythm(self,flags):
-        self._rhythm = flags
+        if not flags:
+            self._rhythm = None
+        self._rhythm = _note.Rhythm(flags)
     
     #int representing how many half steps (positive, negative or 0) a note's pitch is from the natural note
     @property
     def pitch_offset(self):
-        pitch_offset = len(self.name) - 1
-        if "b" in self.name:
-            pitch_offset *= -1
-        return pitch_offset
+        return self._pitch_offset
     
     #int representing the pitch of a Note which has an octave value, starting at 0 for C0
     @property
@@ -87,47 +83,47 @@ class Note(_pymusician._Note):
         return A4.getA4() * 2**(offset / 12)
 
     #method which returns a new Note object which is enharmonic to the current one
-    #does NOT affect the object in place
     #prefer can be set to '#' or 'b' to force preference of sign
     #gross set to True treats B#, Cb, E#, and Fb as being as fair game as any other commmon note
     def enharmonic(self,prefer=None,gross=False):
-        return utils.enharmonic(self,prefer,gross)
+        return _note.enharmonic(self,prefer,gross)
     
     #Instantiates a Note object from letter and pitch value
     #Optional octave and rhythm
     #prefer set to '#' or 'b' forces accidental
     @staticmethod
     def from_values(letter,pitch,octave=None,rhythm=None):
-        return Note(utils.note_name_from_values(letter,pitch),octave,rhythm)
+        return Note(_note.note_name_from_values(letter,pitch),octave,rhythm)
     
     #Instantiates a Note object from letter and pitch value
     #Optional rhythm
     #prefer set to '#' or 'b' forces accidental
     @staticmethod
     def from_hard_pitch(hard_pitch,prefer=None,rhythm=None):
-        return Note(*utils.note_names_from_hard_pitch(hard_pitch,prefer),rhythm)
+        return Note(*_note.note_names_from_hard_pitch(hard_pitch,prefer),rhythm)
 
     #Instantiates a Note object from letter and pitch value
     #Optional rhythm
     #prefer set to '#' or 'b' forces accidental
     @staticmethod
     def from_frequency(Hz,prefer=None,rhythm=None):
-        return Note(*utils.note_names_from_frequency(Hz,prefer),rhythm)
+        return Note(*_note.note_names_from_frequency(Hz,prefer),rhythm)
 
     def __repr__(self):
-        rep = f'<Note {self.name}{str(self.octave if self.octave != None else "")}'\
-        f'{":" + self._rhythm if self._rhythm else ""}>'
-        return rep
+        rep = f'<Note {self.name}{str(self.octave if self.octave != None else "")}'
+        if self.rhythm:
+            rep += f'{":" + self.rhythm.flags}'
+        return rep + '>'
 
     #Allows the addition of a Note object plus an Interval object to return a new Note
     def __add__(self,intvl_obj):
-        return utils.note_plus_intvl(self,intvl_obj)
+        return _note.note_plus_intvl(self,intvl_obj)
 
     #Allows the subtraction of a Note object minus an Interval object to return a new Note
     def __sub__(self,intvl_obj):
-        return utils.note_minus_intvl(self,intvl_obj)
+        return _note.note_minus_intvl(self,intvl_obj)
 
-class Interval(_pymusician._Interval):
+class Interval(_interval._Interval):
 
     def __init__(self,flags,displace=0):
         super().__init__(flags,displace)
@@ -135,43 +131,31 @@ class Interval(_pymusician._Interval):
     #int representing the distance in pitch of the interval
     @property
     def diff(self):
-        return utils.intvl_diff(self._flags,self._displace)
+        return self._diff
     
     #int representing the distance in letter of the interval
     @property
     def letter_diff(self):
-        return int(self._flags[-1]) - 1
+        return self._letter_diff
 
     #string representing a musician-friendly interval name
     @property
     def name(self):
-        return utils.intvl_namer(self)
+        return self._name
     
     #instantiates an interval from the distance between two Note objects (octave or no octave considered)
     @staticmethod
     def from_notes(note_obj1,note_obj2):
-        if type(note_obj1) is not Note or type(note_obj2) is not Note:
-            raise ValueError("Invalid Note object passed.")
-        return utils.intvl_from_notes(note_obj1,note_obj2)
+        return _interval.intvl_from_notes(note_obj1,note_obj2)
 
     def __repr__(self):
         return f'<Interval {self.name}>'
 
-class Mode:
+class Mode(_mode._Mode):
 
     #can be initialized with a string or Note object root
     def __init__(self,root,mode):
-
-        if type(root) is Note:
-            self._root = root
-        else:
-            try:
-                self._root = Note(root.capitalize())
-            except:
-                raise ValueError("Mode root should be a Note object or note name (str).")
-        if mode not in constants.MODES:
-            raise KeyError("Mode not found.  View the modes json to see/add modes.")
-        self._mode = mode
+        super().__init__(root,mode)
 
     #A Note object
     @property
@@ -186,12 +170,12 @@ class Mode:
     #string, full root + mode name
     @property
     def name(self):
-        return self.root.name + " " + self.mode
+        return self._name
     
     #A tuple of Note objects
     @property
     def spelling(self):
-        return utils.mode_speller(self.root,self.mode)
+        return self._spelling
 
     #Iterating a Mode iterates over the spelling
     def __iter__(self):
@@ -208,12 +192,11 @@ class Mode:
     def __repr__(self):
         return f"<Mode {self.name}>"
 
-class Chord:
+class Chord(_chord._Chord):
 
     #Initialized with a string chord symbol
     def __init__(self,symbol):
-        self._symbol = symbol
-        self._data = utils.parse_symbol(symbol)
+        super().__init__(symbol)
     
     #The original symbol
     @property
@@ -223,32 +206,27 @@ class Chord:
     #A Note object
     @property
     def root(self):
-        return Note(self._data["root"])
+        return self._root
 
     #The quality name string
     @property
     def quality(self):
-        return self._data["quality"]
+        return self._quality
 
     #The string of intervals used
     @property
     def intervals(self):
-        return self._data["intervals"]
+        return self._intervals
 
     #Similar to the Mode class, a tuple of Note objects
     @property
     def spelling(self):
-        spelling = [self.root]
-        intvls = []
-        for intvl in self.intervals.split():
-            if intvl not in intvls:
-                spelling.append(self.root + Interval(intvl))
-                intvls.append(intvl)
-        return tuple(spelling)
+        return self._spelling
 
-    @staticmethod
-    def from_notes(*notes, root=None):
-        return utils.chord_from_notes(*notes,root=root)
+    #!TODO
+    # @staticmethod
+    # def from_notes(*notes, root=None):
+    #     return _chord.chord_from_notes(*notes,root=root)
 
     #Like Mode class, can iterate, get length, and index the spelling on the object
     def __iter__(self):
@@ -263,7 +241,7 @@ class Chord:
     def __repr__(self):
         return f"<Chord {self.symbol}>"
 
-class TimeSignature(_pymusician._TimeSignature):
+class TimeSignature(_timesignature._TimeSignature):
 
     #intialized with the two numbers as seen on sheet music: (4,4) for common time, (3,4) for waltz
     def __init__(self,top_number,bottom_number):

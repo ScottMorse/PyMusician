@@ -1,8 +1,10 @@
-# PyMusician by Scott Morse
-## Version 1.1.0
+# PyMusician 1.1.1
+Author: Scott Morse
 
-## Latest in version
-<a href="#version-history">Version History</a>
+## Latest in version:&nbsp;&nbsp;<small>(<a href="#version-history">Version History</a>)</small>
+&nbsp;&nbsp;&nbsp;&nbsp;*January 26,2019*
+* **1.1.1** Non-breaking project restructure. New module structure, separated tests, and some more efficient class properties.  One uncaught unfinished Chord function removed.
+
 * TimeSignature class added for representation of basic but highly dynamic time signatures
 * The value of A4 is now protected.
 * Main classes all take named arguments instead of *args now
@@ -13,6 +15,17 @@
 * <a href="#rhythm">Rhythm flags</a>
 * <a href="#creating-a-basic-interval">Interval flags</a>
 * <a href="#supported-mode-names">Mode names</a>
+
+# Getting started
+## Prerequisites
+You need an installation of Python 3.6 or higher.  To make use of this package, you should have a strong grasp of Python's object-oriented programming and a strong grasp on common Western music theory.
+## Installation
+PyMusician is now part of the Python Package Index.  It's name is `pymusician` for installation/importing.  It's easy to install
+PyMusician with a simple `pip` command from your terminal:
+
+```
+$ pip install pymusician
+```
 
 # **The Goal of PyMusician**
 
@@ -33,18 +46,6 @@ Music theory is much like programming itself, having many abstract concepts, but
 The definitions and syntax of music theory itself come from an artistic point of view, yet the structures they represent are concrete: specific clusters of frequencies of air vibration (notes) and measurements of time (rhythm, beats per minute).  A musician does not talk about writing 440 Hz in a piece of music.  Instead we use the name "A4."  It is our code.
 
 PyMusician's purpose is to create representations of these structures, from fundamental to complex, as objects of classes, and to allow a two-way street for both the analysis of this kind of data, and the creation of it.
-
-# Getting started
-## Prerequisites
-You need an installation of Python 3.6 or higher.  To make use of this package, you should have a strong grasp of Python's object-oriented programming and a strong grasp on common Western music theory.
-## Installation
-PyMusician is now part of the PyPI community of python packages.  It's name is 'pymusician' for installation/importing.  It's easy to install
-PyMusician with a simple pip command from your terminal:
-
-```
-$ pip install pymusician
-```
-Don't forget to make sure your pip version matches the command for Python version you are using.  (You may need to use a command like `pip3`, `pip3.7`, etc.)
 
 # **General Concepts:**
 If you have not used PyMusician before, it is important to read and learn about each class and function, as many core values and ideas of this code reappear in other sections, especially the properties and methods of the Note class.
@@ -901,21 +902,20 @@ Many of these tools **I** have created in prototype projects of this package, bu
 * Staff position of Note objects based on clef/instrument transposition
 
 ## Version History
-* #### 1.1.0
+* #### 1.1.1&nbsp;&nbsp;&nbsp;&nbsp;<small>*January 26,2019*</small>
+    * Non-breaking project restructure. New module structure, separated tests, and some more efficient class properties.  One uncaught unfinished Chord function removed.
+* #### 1.1.0&nbsp;&nbsp;&nbsp;&nbsp;<small>*January 25,2019*</small>
     * TimeSignature class added for representation of basic but highly dynamic time signatures
     * The value of A4 is now protected.
     * Main classes all take named arguments instead of *args now
-* #### 1.0.2
-    * Added code comments to __init__.py and utils.py
+* #### 1.0.2&nbsp;&nbsp;&nbsp;&nbsp;<small>*December 27,2018*</small>
+    * Added code comments to __init__.py and utils.py(deprecated)
     * Note class static methods such as `.note_from_values` and `.note_from_frequency` have been updated to allow passing optional rhythm and octave(for just `.note_from_values`) values into them, where they could not be before.
     * Fixed bug where the `prefer` parameter for `.note_from_hard_pitch` made no effect on the result.
-* #### 1.0.1
+* #### 1.0.1&nbsp;&nbsp;&nbsp;&nbsp;<small>*November 22, 2018*</small>
     * <small>Fixed error in the Note method .enharmonic() when the Note object has rhythm value
     * Chord and Mode objects can be directly indexed and have a length with len(), referencing their spelling property</small>
-* #### 1.0.0-b
+* #### 1.0.0-b&nbsp;&nbsp;&nbsp;&nbsp;<small>*October 8, 2018*</small>
     - <small>Released</small>
 
 <br></br>
-*For now, this concludes PyMusician's main tools. This project is in its early stages, and much more is to come.  This started as a single beginner's Python file that I used when I first started programming in order to practice applying musical concepts I knew well to new programming concepts I was learning, and now it is my main project that I plan to use in tandum with many more of my future projects.  I know there are a few other similar packages out there, but I thought I'd share mine for the public as well.  Thank you for reading, and have fun with this.*
-
-*-Scott Morse*
