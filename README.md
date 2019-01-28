@@ -356,19 +356,17 @@ Ebb.pitch_offset # -2
 This property returns a float of the standard frequency for a note in Hz.  This will return None if there is no octave set for an object, because there is no specific pitch for a note without it.  If the global constant <a href="#a4">A4</a> is reassigned a new number, the basis for every frequency will be affected.
 
 ```python
-import pymusician
+import pymusician as pm
 
-pymusician.A4 
-
-note_A4 = pymusician.Note("A",4)
+note_A4 = pm.Note("A",4)
 
 note_A4.frequency # 440.0
 
-note_A5 = pymusician.Note("A",5)
+note_A5 = pm.Note("A",5)
 
 note_A5.frequency # 880.0
 
-pymusician.A4 = 442 # reassign global A4
+pm.A4.setA4(442) # reassign A4
 
 note_A4.frequency # 442.0
 
