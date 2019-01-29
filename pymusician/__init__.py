@@ -271,3 +271,6 @@ class TimeSignature(_timesignature._TimeSignature):
     @property
     def measure_len(self):
         return self._measure_len
+    
+    def __repr__(self):
+        return f'<TimeSignature {self.top_number}/{self.bottom_number}>'
