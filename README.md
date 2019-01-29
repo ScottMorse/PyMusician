@@ -1,5 +1,5 @@
 # Official Documentation Site is Up!
-# <a href="http://www.pymusician.com" target="_blank">www.pymusician.com</a>
+# <a href="http://www.pymusician.com" target="_blank">https://www.pymusician.com</a>
 
 # PyMusician 1.1.1
 Author: Scott Morse
