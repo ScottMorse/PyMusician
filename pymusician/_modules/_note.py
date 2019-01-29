@@ -248,7 +248,6 @@ def note_plus_intvl(note_obj,intvl_obj):
         new_note = Note.from_values(letter,pitch)
 
     if note_obj.rhythm:
-        print(note_obj.rhythm)
         new_note.rhythm = note_obj.rhythm.flags
 
     return new_note
@@ -278,7 +277,6 @@ def note_minus_intvl(note_obj,intvl_obj):
         new_note = Note.from_values(letter,pitch)
 
     if note_obj.rhythm:
-        print(note_obj.rhythm)
         new_note.rhythm = note_obj.rhythm.flags
 
     return new_note
