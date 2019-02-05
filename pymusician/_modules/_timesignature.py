@@ -41,7 +41,7 @@ class _TimeSignature:
 # COMPARISON FUNCTIONS
 
 def timesignatures_eq(timesignature1,timesignature2):
-    pass
+    return timesignature1.measure_len == timesignature2.measure_len
 
 def timesignatures_ne(timesignature1,timesignature2):
-    pass
+    return timesignature1.measure_len != timesignature2.measure_len

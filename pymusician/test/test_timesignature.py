@@ -86,6 +86,17 @@ class TestTimeSignatureClass(unittest.TestCase):
         self.assertEqual(timesig9.measure_len,16)
         self.assertEqual(timesig10.measure_len,256)
     
+    def test_timesignature_comparisons(self):
+        common = pm.TimeSignature(4,4)
+        cut = pm.TimeSignature(2,2)
+        dumb = pm.TimeSignature(1,1)
+        waltz = pm.TimeSignature(3,4)
+
+        self.assertEqual(common,cut)
+        self.assertEqual(common,dumb)
+        self.assertEqual(cut,dumb)
+        self.assertNotEqual(common,waltz)
+    
 if __name__ == "__main__":
 
     unittest.main()
