@@ -213,6 +213,27 @@ class TestIntervalClass(unittest.TestCase):
         self.assertEqual((G5 - intvl20).name, "Ab")
         self.assertEqual((G5 - intvl20).octave, 1)
 
+    def test_intvl_comparisons(self):
+        maj2 = pm.Interval("M2")
+        doub_aug_un = pm.Interval("A.1")
+        min2 = pm.Interval("m2")
+        min9 = pm.Interval("m2",1)
+        maj9 = pm.Interval("M2",1)
+
+        self.assertEqual(maj2,doub_aug_un)
+        self.assertNotEqual(maj2,min2)
+        self.assertGreater(maj2,min2)
+        self.assertGreaterEqual(maj2,min2)
+        self.assertGreaterEqual(maj2,doub_aug_un)
+        self.assertLessEqual(maj2,doub_aug_un)
+        self.assertLessEqual(min2,maj2)
+
+        self.assertGreater(min9,min2)
+        self.assertGreaterEqual(min9,min2)
+        self.assertLess(maj2,min9)
+        self.assertGreater(min9,maj2)
+
+
 if __name__ == "__main__":
 
     unittest.main()

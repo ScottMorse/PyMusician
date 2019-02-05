@@ -171,19 +171,19 @@ def intvl_from_notes(note_obj1,note_obj2):
 # COMPARISON FUNCTIONS
 
 def intervals_eq(interval1,interval2):
-    pass
+    return interval1.diff == interval2.diff
 
 def intervals_ne(interval1,interval2):
-    pass
+    return interval1.diff != interval2.diff
 
 def intervals_gt(interval1,interval2):
-    pass
+    return interval1.diff > interval2.diff
 
 def intervals_lt(interval1,interval2):
-    pass
+    return interval1.diff < interval2.diff
 
 def intervals_ge(interval1,interval2):
-    pass
+    return interval1.diff >= interval2.diff
 
 def intervals_le(interval1,interval2):
-    pass
+    return interval1.diff <= interval2.diff
