@@ -75,6 +75,8 @@ class _Mode:
             for item in pitch_spelling:
                 if not isinstance(item,int):
                     raise ValueError("Mode pitch_spelling must be a list or tuple of integers.")
+                if item < 0 or item > 11:
+                    raise ValueError("Mode pitch_spelling values must be between 0 and 11")
 
             if letter_spelling:
                 if not isinstance(letter_spelling,(list,tuple)):
@@ -84,6 +86,8 @@ class _Mode:
                 for item in letter_spelling:
                     if not isinstance(item,int):
                         raise ValueError("Mode letter_spelling must be a list or tuple of integers.")
+                    if item < 0 or item > 6:
+                        raise ValueError("Mode letter_spelling values must be between 0 and 6")
         
         self._mode = mode_quality
         self._name = self.root.name + " " + mode_quality

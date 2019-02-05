@@ -10,6 +10,15 @@ class TestModeClass(unittest.TestCase):
         pm.Mode("C","major pentatonic")
         pm.Mode("D##","melodic minor")
         pm.Mode("Gb","locrian")
+
+        with self.assertRaises(ValueError):
+            pm.Mode("H","major")
+        with self.assertRaises(ValueError):
+            pm.Mode("Az","major")
+        with self.assertRaises(ValueError):
+            pm.Mode("G","stupid")
+        with self.assertRaises(ValueError):
+            pm.Mode("A","majory")
     
     def test_mode_spelling(self):
 
@@ -91,6 +100,21 @@ class TestModeClass(unittest.TestCase):
         self.assertEqual(Fbblues.spelling[4].name,"Cb")
         self.assertEqual(Fbblues.spelling[5].name,"Ebb")
     
+    def test_custom_modes(self):
+
+        with self.assertRaises(ValueError):
+            pm.Mode("A","something",["Hi",1,2,3,4,5,6])
+        with self.assertRaises(ValueError):
+            pm.Mode("A","something",[1,1,1,1,1],[1,1,1,1,1,1])
+        with self.assertRaises(ValueError):
+            pm.Mode("A","something",[1,2,3,4,1],[1,2,2])
+        with self.assertRaises(ValueError):
+            pm.Mode("A","something",[1,2,3,4,5,6,12])
+        with self.assertRaises(ValueError):
+            pm.Mode("A","something",[1,2,3,4,5,6,7],[1,2,3,4,5,6,7])
+
+        
+
 if __name__ == "__main__":
 
     unittest.main()

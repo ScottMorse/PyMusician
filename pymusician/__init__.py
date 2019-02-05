@@ -154,8 +154,8 @@ class Interval(_interval._Interval):
 class Mode(_mode._Mode):
 
     #can be initialized with a string or Note object root
-    def __init__(self,root,mode):
-        super().__init__(root,mode)
+    def __init__(self,root,mode_quality,pitch_spelling=None,letter_spelling=None):
+        super().__init__(root,mode_quality,pitch_spelling,letter_spelling)
 
     #A Note object
     @property
