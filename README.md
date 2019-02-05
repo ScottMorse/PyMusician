@@ -5,12 +5,10 @@
 Author: Scott Morse
 
 ## Latest in version:&nbsp;&nbsp;<small>(<a href="#version-history">Version History</a>)</small>
-&nbsp;&nbsp;&nbsp;&nbsp;*January 26,2019*
-* **1.1.1** Non-breaking project restructure. New module structure, separated tests, and some more efficient class properties.  One uncaught unfinished Chord function removed.
+&nbsp;&nbsp;&nbsp;&nbsp;*MAKE THE CORRECT DATE*
 
-* TimeSignature class added for representation of basic but highly dynamic time signatures
-* The value of A4 is now protected.
-* Main classes all take named arguments instead of *args now
+* Modes spelling algorithm refactored
+* Support for custom modes with new optional parameters for Mode instances (see docs)
 
 # Getting started
 ## Prerequisites
