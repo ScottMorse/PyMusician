@@ -5,7 +5,7 @@ def readme():
         return f.read()
 
 setup(name="pymusician",
-      version="1.1.1",
+      version="1.2.0",
       description="A python package for music composition and analysis.",
       long_description="""
       Read the README here:

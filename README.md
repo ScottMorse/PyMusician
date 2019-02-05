@@ -1,7 +1,7 @@
 # Official Documentation Site is Up!
 # <a href="http://www.pymusician.com" target="_blank">www.pymusician.com</a>
 
-# PyMusician 1.1.1
+# PyMusician 1.2.0
 Author: Scott Morse
 
 ## Latest in version:&nbsp;&nbsp;<small>(<a href="#version-history">Version History</a>)</small>

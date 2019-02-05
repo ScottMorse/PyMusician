@@ -1,6 +1,6 @@
 from pymusician._modules import _note, _interval, _mode, _chord, _timesignature
 
-VERSION = "1.1.1"
+VERSION = "1.2.0"
 
 class A4:
 
