@@ -154,6 +154,23 @@ class TestModeClass(unittest.TestCase):
         self.assertEqual(custom_mode5[3].name,"Bb")
         self.assertEqual(custom_mode5[4].name,"C##")
 
+    def test_mode_comparisons(self):
+        
+        mode1 = pm.Mode("F#","major")
+        mode2 = pm.Mode("Gb","major")
+        mode3 = pm.Mode("Gb","major pentatonic")
+        mode4 = pm.Mode("Eb","minor pentatonic")
+        mode5 = pm.Mode("Eb","blues")
+        mode6 = pm.Mode("F#","ionian")
+
+        self.assertEqual(mode1,mode2)
+        self.assertEqual(mode1,mode6)
+        self.assertNotEqual(mode1,mode3)
+        self.assertNotEqual(mode2,mode3)
+        self.assertNotEqual(mode3,mode4)
+        self.assertNotEqual(mode4,mode5)
+
+
 if __name__ == "__main__":
 
     unittest.main()

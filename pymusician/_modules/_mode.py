@@ -167,7 +167,13 @@ class _Mode:
 # COMPARISON FUNCTIONS
 
 def modes_eq(mode1,mode2):
-    pass
+    try:
+        for i in range(len(mode1)):
+            if mode1[i] != mode2[i]:
+                return False
+    except IndexError:
+        return False
+    return True
 
 def modes_ne(mode1,mode2):
-    pass
+    return not (mode1 == mode2)
