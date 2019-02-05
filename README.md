@@ -9,6 +9,7 @@ Author: Scott Morse
 
 * Modes spelling algorithm refactored
 * Support for custom modes with new optional parameters for Mode instances (see docs)
+* Notes can be compared with all comparison operators
 
 # Getting started
 ## Prerequisites
