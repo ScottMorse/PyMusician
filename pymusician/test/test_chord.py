@@ -716,6 +716,19 @@ class TestChordClass(unittest.TestCase):
     #     self.assertEqual(chord5.symbol,"Fb+")
     #     self.assertEqual(chord5.quality,"augmented")
 
+    def test_chord_comparisons(self):
+        chord1 = pm.Chord("Bb")
+        chord2 = pm.Chord("A#")
+        chord3 = pm.Chord("Bbm")
+        chord4 = pm.Chord("Bbmaj7")
+        chord5 = pm.Chord("Bbmaj")
+
+        self.assertEqual(chord1,chord2)
+        self.assertEqual(chord1,chord5)
+        self.assertNotEqual(chord1,chord3)
+        self.assertNotEqual(chord4,chord5)
+        self.assertNotEqual(chord1,chord4)
+
 if __name__ == "__main__":
 
     unittest.main()

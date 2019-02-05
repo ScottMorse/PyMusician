@@ -204,7 +204,7 @@ def parse_symbol(symbol):
 
 #! TODO
 def chord_from_notes(*notes,root=None):
-    from pymusician import Note
+    from pymusician import Note, Interval
 
     notes = list(notes)
     #root can be provided or by default is first note provided
@@ -239,7 +239,22 @@ def chord_from_notes(*notes,root=None):
 # COMPARISON FUNCTIONS
 
 def chords_eq(chord1,chord2):
-    pass
+    if len(chord1) != len(chord2):
+        return False
+        
+    spelling1 = list(chord1.spelling)
+    spelling2 = list(chord2.spelling)
+
+    spelling1.sort()
+    spelling2.sort()
+
+    try:
+        for i in range(len(spelling1)):
+            if spelling1[i] != spelling2[i]:
+                return False
+    except IndexError:
+        return False
+    return True
 
 def chords_ne(chord1,chord2):
-    pass
+    return not (chord1 == chord2)
