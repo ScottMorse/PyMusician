@@ -1,4 +1,4 @@
-import _timesignature
+from pymusician.staff import _timesignature
 
 class TimeSignature(_timesignature._TimeSignature):
 

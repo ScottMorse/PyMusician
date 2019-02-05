@@ -1,4 +1,4 @@
-from pymusician._modules import _note, _interval, _mode, _chord, _timesignature
+from pymusician._modules import _note, _interval, _mode, _chord
 
 import sys
 if sys.version_info[0] < 3 or sys.version_info[0] == 3 and sys.version_info[1] < 6:
