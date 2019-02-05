@@ -1,6 +1,9 @@
 import re
 from numpy import log2
 
+import sys
+print(sys.version_info[1])
+
 NOTE_REGEX = r'^[A-Ga-g]([#]*$|[b]*$)'
 NOTE_VALUES = {
     "C": (0,0), "D": (1,2),
