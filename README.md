@@ -9,7 +9,8 @@ Author: Scott Morse
 
 * Modes spelling algorithm refactored
 * Support for custom modes with new optional parameters for Mode instances (see docs)
-* Notes can be compared with all comparison operators
+* Notes and intervals can be compared with all comparison operators
+* Modes, chords, and time signatures can be compared with `==` and `!=`
 
 # Getting started
 ## Prerequisites
