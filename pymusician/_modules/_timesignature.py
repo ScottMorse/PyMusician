@@ -37,3 +37,11 @@ class _TimeSignature:
         self._gets_beat = RHYTHM_NAMES[self._beat_len]
 
         self._measure_len = self._beat_len * self._top
+
+# COMPARISON FUNCTIONS
+
+def timesignatures_eq(timesignature1,timesignature2):
+    pass
+
+def timesignatures_ne(timesignature1,timesignature2):
+    pass

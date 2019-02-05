@@ -235,3 +235,11 @@ def chord_from_notes(*notes,root=None):
         if note.name == root.name:
             continue
         intvls.append(Interval.from_notes(root,note))
+
+# COMPARISON FUNCTIONS
+
+def chords_eq(chord1,chord2):
+    pass
+
+def chords_ne(chord1,chord2):
+    pass

@@ -127,6 +127,20 @@ class Note(_note._Note):
     def __sub__(self,intvl_obj):
         return _note.note_minus_intvl(self,intvl_obj)
 
+    #All comparisons
+    def __eq__(self,other):
+        return _note.notes_eq(self,other)
+    def __ne__(self,other):
+        return _note.notes_ne(self,other)
+    def __gt__(self, other):
+        return _note.notes_gt(self,other)
+    def __lt__(self, other):
+        return _note.notes_lt(self,other)
+    def __ge__(self, other):
+        return _note.notes_ge(self,other)
+    def __le__(self, other):
+        return _note.notes_le(self,other)
+
 class Interval(_interval._Interval):
 
     def __init__(self,flags,displace=0):
@@ -154,6 +168,20 @@ class Interval(_interval._Interval):
 
     def __repr__(self):
         return f'<Interval {self.name}>'
+    
+    #All comparisons
+    def __eq__(self,other):
+        return _interval.intervals_eq(self,other)
+    def __ne__(self,other):
+        return _interval.intervals_ne(self,other)
+    def __gt__(self, other):
+        return _interval.intervals_gt(self,other)
+    def __lt__(self, other):
+        return _interval.intervals_lt(self,other)
+    def __ge__(self, other):
+        return _interval.intervals_ge(self,other)
+    def __le__(self, other):
+        return _interval.intervals_le(self,other)
 
 class Mode(_mode._Mode):
 
@@ -195,6 +223,12 @@ class Mode(_mode._Mode):
 
     def __repr__(self):
         return f"<Mode {self.name}>"
+
+    #All comparisons
+    def __eq__(self,other):
+        return _mode.modes_eq(self,other)
+    def __ne__(self,other):
+        return _mode.modes_ne(self,other)
 
 class Chord(_chord._Chord):
 
@@ -244,6 +278,12 @@ class Chord(_chord._Chord):
 
     def __repr__(self):
         return f"<Chord {self.symbol}>"
+    
+    #All comparisons
+    def __eq__(self,other):
+        return _chord.chords_eq(self,other)
+    def __ne__(self,other):
+        return _chord.chords_ne(self,other)
 
 class TimeSignature(_timesignature._TimeSignature):
 
@@ -278,3 +318,9 @@ class TimeSignature(_timesignature._TimeSignature):
     
     def __repr__(self):
         return f'<TimeSignature {self.top_number}/{self.bottom_number}>'
+    
+    #All comparisons
+    def __eq__(self,other):
+        return _timesignature.timesignatures_eq(self,other)
+    def __ne__(self,other):
+        return _timesignature.timesignatures_ne(self,other)

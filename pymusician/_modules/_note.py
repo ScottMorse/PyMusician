@@ -280,3 +280,23 @@ def note_minus_intvl(note_obj,intvl_obj):
         new_note.rhythm = note_obj.rhythm.flags
 
     return new_note
+
+# COMPARISON FUNCTIONS
+
+def notes_eq(note1,note2):
+    pass
+
+def notes_ne(note1,note2):
+    pass
+
+def notes_gt(note1,note2):
+    pass
+
+def notes_lt(note1,note2):
+    pass
+
+def notes_ge(note1,note2):
+    pass
+
+def notes_le(note1,note2):
+    pass

@@ -163,3 +163,11 @@ class _Mode:
             n += 1
 
         self._spelling = tuple(spelling)
+
+# COMPARISON FUNCTIONS
+
+def modes_eq(mode1,mode2):
+    pass
+
+def modes_ne(mode1,mode2):
+    pass
