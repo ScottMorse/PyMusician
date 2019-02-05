@@ -97,6 +97,13 @@ class Rhythm:
     def __repr__(self):
         return f"<Rhythm object {self.flags} val:{round(self.value,2)}>"
 
+    def __eq__(self,other):
+        if other == None:
+            return False
+        if self.flags == other.flags:
+            return True
+        return False
+
 #assigns pitch integer value to a Note based on it's name
 def pitch_from_name(name):
     pitch = NOTE_VALUES[name[0]][1]
@@ -284,19 +291,29 @@ def note_minus_intvl(note_obj,intvl_obj):
 # COMPARISON FUNCTIONS
 
 def notes_eq(note1,note2):
-    pass
+    if note1.pitch == note2.pitch and note1.octave == note2.octave and note1.rhythm == note2.rhythm:
+        return True
+    return False
 
 def notes_ne(note1,note2):
-    pass
+    return not (note1 == note2)
 
 def notes_gt(note1,note2):
-    pass
+    if not note1.octave is None and not note2.octave is None:
+        return note1.hard_pitch > note2.hard_pitch
+    return False
 
 def notes_lt(note1,note2):
-    pass
+    if not note1.octave is None and not note2.octave is None:
+        return note1.hard_pitch < note2.hard_pitch
+    return False
 
 def notes_ge(note1,note2):
-    pass
+    if not note1.octave is None and not note2.octave is None:
+        return note1.hard_pitch >= note2.hard_pitch
+    return False
 
 def notes_le(note1,note2):
-    pass
+    if not note1.octave is None and not note2.octave is None:
+        return note1.hard_pitch <= note2.hard_pitch
+    return False

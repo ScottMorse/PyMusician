@@ -46,20 +46,26 @@ class TestNoteClass(unittest.TestCase):
         pm.Note("B##")
         pm.Note("Bb")
         pm.Note("Bbb")
-        pm.Note("A#")
-        pm.Note("A#")
-        pm.Note("A#")
-        pm.Note("A#")
-        pm.Note("A#")
-        pm.Note("A#")
-        pm.Note("A#")
-        pm.Note("A#")
-        pm.Note("A#")
-        pm.Note("A#")
-        pm.Note("A#")
-        pm.Note("Bbb")
-        pm.Note("G##")
+        pm.Note("C#")
+        pm.Note("Cb")
+        pm.Note("C##")
+        pm.Note("Cbb")
+        pm.Note("D#")
+        pm.Note("Db")
+        pm.Note("D##")
+        pm.Note("Dbb")
+        pm.Note("E#")
+        pm.Note("Eb")
+        pm.Note("E##")
+        pm.Note("Ebb")
+        pm.Note("F#")
         pm.Note("Fb")
+        pm.Note("F##")
+        pm.Note("Fbb")
+        pm.Note("G#")
+        pm.Note("Gb")
+        pm.Note("G##")
+        pm.Note("Gbb")
         with self.assertRaises(ValueError):
             pm.Note('Ab#')
         with self.assertRaises(ValueError):
@@ -367,6 +373,38 @@ class TestNoteClass(unittest.TestCase):
         self.assertEqual(repr(pm.Note("Gbb",3,"4")),'<Note Gbb3:4>')
         self.assertEqual(repr(pm.Note("F#",0,"3.t")),'<Note F#0:3.t>')
         self.assertEqual(repr(pm.Note("B#",3,"5.")),'<Note B#3:5.>')
+
+    def test_note_comparisons(self):
+        C0 = pm.Note("C",0)
+        C0_2 = pm.Note.from_hard_pitch(0)
+        C1 = pm.Note("C",1)
+        B3 = pm.Note("B",3)
+
+        As = pm.Note("A#")
+        As2 = pm.Note("A#")
+
+        Ab = pm.Note("Ab",None,"3t")
+        Ab2 = pm.Note("Ab",None,"3.")
+
+        C = pm.Note("C")
+
+        self.assertEqual(C0,C0_2)
+        self.assertNotEqual(C0,C1)
+        self.assertGreater(C1,C0)
+        self.assertLess(C0,C1)
+        self.assertGreaterEqual(C0,C0_2)
+        self.assertGreaterEqual(C1,C0)
+        self.assertLessEqual(C0,C0_2)
+        self.assertLessEqual(C0,C1)
+
+        self.assertEqual(As,As2)
+        self.assertNotEqual(As,Ab)
+        self.assertNotEqual(Ab,Ab2)
+
+        self.assertNotEqual(C,C0)
+
+        self.assertGreater(B3,C0)
+
 
 if __name__ == "__main__":
 
