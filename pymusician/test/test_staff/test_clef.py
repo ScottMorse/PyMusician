@@ -28,15 +28,25 @@ class TestClefClass(unittest.TestCase):
         neutral = staff.Clef("neutral")
 
         self.assertEqual(treble.C4_position,-1)
+        self.assertEqual(treble.clef_type,"G")
         self.assertEqual(subtreble.C4_position,-1)
+        self.assertEqual(subtreble.clef_type,"G8vb")
         self.assertEqual(bass.C4_position,10)
+        self.assertEqual(bass.clef_type,"F")
         self.assertEqual(soprano.C4_position,1)
+        self.assertEqual(soprano.clef_type,"C")
         self.assertEqual(mezzosoprano.C4_position,3)
+        self.assertEqual(mezzosoprano.clef_type,"C")
         self.assertEqual(alto.C4_position,5)
+        self.assertEqual(alto.clef_type,"C")
         self.assertEqual(tenor.C4_position,7)
+        self.assertEqual(tenor.clef_type,"C")
         self.assertEqual(baritone.C4_position,9)
+        self.assertEqual(baritone.clef_type,"C")
         self.assertEqual(frenchviolin.C4_position,-3)
+        self.assertEqual(frenchviolin.clef_type,"G")
         self.assertEqual(neutral.C4_position,None)
+        self.assertEqual(neutral.clef_type,"Neutral")
 
     def test_custom_clefs(self):
 
