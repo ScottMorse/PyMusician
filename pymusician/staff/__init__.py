@@ -1,4 +1,4 @@
-from pymusician.staff import _timesignature
+from pymusician.staff import _timesignature, _tempo, _clef
 
 class TimeSignature(_timesignature._TimeSignature):
 
@@ -39,3 +39,46 @@ class TimeSignature(_timesignature._TimeSignature):
         return _timesignature.timesignatures_eq(self,other)
     def __ne__(self,other):
         return _timesignature.timesignatures_ne(self,other)
+
+class Tempo(_tempo._Tempo):
+
+    def __init__(self,bpm):
+        super().__init__(bpm)
+    
+    @property
+    def bpm(self):
+        return self._bpm
+    
+    @bpm.setter
+    def bpm(self,bpm):
+        if not isinstance(bpm,(int,float)):
+            raise ValueError("Tempo bpm value must be a number.")
+        if bpm <= 0:
+            raise ValueError("Tempo bpm must be positive.")
+        self._bpm = bpm
+        self._spb = 60 / bpm
+        
+    # seconds per beat
+    @property
+    def spb(self):
+        return self._spb
+    
+class Clef(_clef._Clef):
+
+    def __init__(self, clef_name, C4_position=None, clef_type=None):
+        return super().__init__(clef_name, C4_position=C4_position, clef_type=clef_type)
+    
+    # string ("treble","bass","soprano",etc.)
+    @property
+    def clef_name(self):
+        return self._clef_name
+    
+    # string ("F","G","C",etc.)
+    @property
+    def clef_type(self):
+        return self._clef_type
+    
+    # int representing where C4 is, 0 being the position just below the staff bottom line
+    @property
+    def C4_position(self):
+        return self._C4_position
