@@ -1,7 +1,7 @@
 from pymusician._modules import _note, _interval, _mode, _chord
 
 import sys
-if sys.version_info[0] < 3 or sys.version_info[0] == 3 and sys.version_info[1] < 6:
+if sys.version_info[0] < 3 or (sys.version_info[0] == 3 and sys.version_info[1] < 6):
     raise Exception("PyMusician is supported for Python 3.6>.\npymusician27 is also available for 2.7")
 
 VERSION = "1.2.0"
