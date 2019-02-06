@@ -1,4 +1,4 @@
-from pymusician.notate import _timesignature, _tempo, _clef
+from pymusician.notate import _timesignature, _tempo, _clef, _staff
 
 class TimeSignature(_timesignature._TimeSignature):
 
@@ -82,3 +82,23 @@ class Clef(_clef._Clef):
     @property
     def C4_position(self):
         return self._C4_position
+
+class Staff(_staff._Staff):
+
+    def __init__(self, key_sig='C', time_sig=TimeSignature(4, 4), starting_measures=1, bpm=60):
+        return super().__init__(key_sig, time_sig, starting_measures, bpm)
+
+    # A pymusician major Mode instance representing the key signature
+    @property
+    def key_mode(self):
+        return self._key_mode
+    
+    # The root note given ('C', 'Bb', etc.)
+    @property
+    def key_sig(self):
+        return self._key_sig
+
+    # A TimeSignature instance
+    @property
+    def time_sig(self):
+        return self._time_sig
