@@ -1,31 +1,31 @@
 import unittest
-from pymusician import staff
+from pymusician import notate
 
 class TestClefClass(unittest.TestCase):
 
     def test_initialization(self):
 
-        staff.Clef("treble")
-        staff.Clef("soprano")
-        staff.Clef("suboctave treble")
+        notate.Clef("treble")
+        notate.Clef("soprano")
+        notate.Clef("suboctave treble")
 
         with self.assertRaises(ValueError):
-            staff.Clef("trebly")
+            notate.Clef("trebly")
         with self.assertRaises(ValueError):
-            staff.Clef(1)
+            notate.Clef(1)
     
     def test_C4_position(self):
 
-        treble = staff.Clef("treble")
-        subtreble = staff.Clef("suboctave treble")
-        bass = staff.Clef("bass")
-        soprano = staff.Clef("soprano")
-        mezzosoprano = staff.Clef("mezzo-soprano")
-        alto = staff.Clef("alto")
-        tenor = staff.Clef("tenor")
-        baritone = staff.Clef("baritone")
-        frenchviolin = staff.Clef("french violin")
-        neutral = staff.Clef("neutral")
+        treble = notate.Clef("treble")
+        subtreble = notate.Clef("suboctave treble")
+        bass = notate.Clef("bass")
+        soprano = notate.Clef("soprano")
+        mezzosoprano = notate.Clef("mezzo-soprano")
+        alto = notate.Clef("alto")
+        tenor = notate.Clef("tenor")
+        baritone = notate.Clef("baritone")
+        frenchviolin = notate.Clef("french violin")
+        neutral = notate.Clef("neutral")
 
         self.assertEqual(treble.C4_position,-1)
         self.assertEqual(treble.clef_type,"G")
@@ -50,18 +50,18 @@ class TestClefClass(unittest.TestCase):
 
     def test_custom_clefs(self):
 
-        custom1 = staff.Clef("poopoo",0,"G")
+        custom1 = notate.Clef("poopoo",0,"G")
         
         self.assertEqual(custom1.clef_name,"poopoo")
         self.assertEqual(custom1.C4_position,0)
         self.assertEqual(custom1.clef_type,"G")
 
         with self.assertRaises(ValueError):
-            staff.Clef(12,2,"C")
+            notate.Clef(12,2,"C")
         with self.assertRaises(ValueError):
-            staff.Clef("hoookay","2","C")
+            notate.Clef("hoookay","2","C")
         with self.assertRaises(ValueError):
-            staff.Clef("okey dokey",2,4)
+            notate.Clef("okey dokey",2,4)
 
 if __name__ == "__main__":
 

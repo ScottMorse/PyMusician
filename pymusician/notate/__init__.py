@@ -1,4 +1,4 @@
-from pymusician.staff import _timesignature, _tempo, _clef
+from pymusician.notate import _timesignature, _tempo, _clef
 
 class TimeSignature(_timesignature._TimeSignature):
 

@@ -1,24 +1,24 @@
 import unittest
-from pymusician import staff
+from pymusician import notate
 
 class TestTempoClass(unittest.TestCase):
 
     def test_initialization(self):
 
-        staff.Tempo(60)
-        staff.Tempo(1)
-        staff.Tempo(100.5)
+        notate.Tempo(60)
+        notate.Tempo(1)
+        notate.Tempo(100.5)
 
         with self.assertRaises(ValueError):
-            staff.Tempo(0)
+            notate.Tempo(0)
         with self.assertRaises(ValueError):
-            staff.Tempo(-1)
+            notate.Tempo(-1)
         with self.assertRaises(ValueError):
-            staff.Tempo("1")
+            notate.Tempo("1")
 
     def test_bpm_setter(self):
 
-        tempo = staff.Tempo(60)
+        tempo = notate.Tempo(60)
 
         self.assertEqual(tempo.spb,1)
 
