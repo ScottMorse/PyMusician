@@ -16,6 +16,7 @@ class TestStaffClass(unittest.TestCase):
             Staff(time_sig=TimeSignature(-1,2))
         with self.assertRaises(ValueError):
             Staff(starting_measures=-1)
+        
 
 if __name__ == "__main__":
 
