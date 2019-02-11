@@ -96,6 +96,10 @@ class Measure:
     def space_left(self):
         return self._space_left
 
+    @property
+    def measure_len(self):
+        return self._measure_len
+
     # list of Note objects
     @property
     def notes(self):
