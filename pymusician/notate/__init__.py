@@ -102,3 +102,31 @@ class Staff(_staff._Staff):
     @property
     def time_sig(self):
         return self._time_sig
+
+    @property
+    def measures(self):
+        return self._measures
+
+    # Add empty measure to end
+    def append_measure(self):
+        self._append_measure()
+    
+    # Insert empty measure at index
+    def insert_measure_before(self,index):
+        self._insert_measure_before(index)
+    
+    # Delete measure at index
+    def delete_measure_at(self,index):
+        self._delete_measure_at(index)
+    
+    # Add note to end, creates new measure if no room
+    def append_note(self,note):
+        self._append_note(note)
+
+    # Clear measures between two indices, inclusive
+    def clear_selected_measures(self,index1,index2):
+        self._clear_selected_measures(index1,index2)
+    
+    # Delete selected measures between two indices, inclusive
+    def delete_selected_measures(self,index1,index2):
+        self._delete_selected_measures(index1,index2)

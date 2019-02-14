@@ -32,6 +32,8 @@ class TestStaffClass(unittest.TestCase):
         self.assertEqual(len(staff2.measures),1)
         self.assertEqual(staff2.measures[0].measure_len,64 * 3)
 
+    
+
 if __name__ == "__main__":
 
     unittest.main()

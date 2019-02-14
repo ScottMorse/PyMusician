@@ -55,19 +55,47 @@ class _Staff:
     def tempo(self):
         return self._tempo
 
-    def append_measure(self):
+    def _append_measure(self):
         self._measures.append(Measure())
     
-    def insert_measure_before(self,index):
+    def _insert_measure_before(self,index):
         self._measures.insert(index,Measure())
     
-    def delete_measure_at(self,index):
+    def _delete_measure_at(self,index):
         try:
             del self._measures[index]
         except IndexError:
             raise IndexError("No measure at such index.")
-    
 
+    def _append_note(self,note):
+        if note.__class__.__name__ not in ("Note","Rest"):
+            raise ValueError("Only can add Note or Rest instances to a measure.")
+        if not note.rhythm:
+            raise ValueError("Note must have a rhythm value.") 
+        if not self._measures:
+            self.append_measure()
+        try:
+            self._measures[len(self._measures) - 1].append_note(note)
+        except Exception:
+            try:
+                self.append_measure
+                self._measures[len(self._measures) - 1].append_note(note)
+            except Exception:
+                raise ValueError("Rhythm too large for time signature.")
+    
+    def _clear_selected_measures(self,index1,index2):
+        for i in range(index1,index2 + 1):
+            try:
+                self._measures[i].clear_notes()
+            except IndexError:
+                raise IndexError('Invalid measure selection.')
+
+    def _delete_selected_measures(self,index1,index2):
+        for i in range(index1,index2 + 1):
+            try:
+                del self._measures[i]
+            except IndexError:
+                raise IndexError('Invalid measure selection.')
 class Measure:
 
     def __init__(self,measure_len):
