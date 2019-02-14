@@ -1,5 +1,5 @@
 import unittest
-from pymusician import Mode
+from pymusician import Mode, Note
 from pymusician.notate import TimeSignature, Staff
 
 class TestStaffClass(unittest.TestCase):
@@ -32,7 +32,29 @@ class TestStaffClass(unittest.TestCase):
         self.assertEqual(len(staff2.measures),1)
         self.assertEqual(staff2.measures[0].measure_len,64 * 3)
 
-    
+
+
+    def test_append_measure(self):
+        staff = Staff(starting_measures=10)
+        staff.measures[9].append_note(Note("A",0,"3"))
+
+        self.assertEqual(staff.measures[9].notes[0].name,"A")
+
+        staff.append_measure()
+        
+        self.assertEqual(staff.measures[9].notes[0].name,"A")
+        self.assertEqual(len(staff.measures),11)
+        self.assertFalse(staff.measures[9].is_empty)
+
+
+    def test_insert_measure(self):
+        staff = Staff(starting_measures=2)
+        staff.measures[0].append_note(Note('A',4,"3"))
+        staff.insert_measure_before(0)
+
+        self.assertEqual(len(staff.measures),3)
+        self.assertTrue(staff.measures[0].is_empty)
+        self.assertEqual(staff.measures[1].notes[0].name,"A") 
 
 if __name__ == "__main__":
 

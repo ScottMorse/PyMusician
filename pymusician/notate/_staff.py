@@ -56,10 +56,10 @@ class _Staff:
         return self._tempo
 
     def _append_measure(self):
-        self._measures.append(Measure())
+        self._measures.append(Measure(self._time_sig.measure_len))
     
     def _insert_measure_before(self,index):
-        self._measures.insert(index,Measure())
+        self._measures.insert(index,Measure(self._time_sig.measure_len))
     
     def _delete_measure_at(self,index):
         try:
@@ -73,7 +73,7 @@ class _Staff:
         if not note.rhythm:
             raise ValueError("Note must have a rhythm value.") 
         if not self._measures:
-            self.append_measure()
+            self.append_measure(self._time_sig.measure_len)
         try:
             self._measures[len(self._measures) - 1].append_note(note)
         except Exception:
