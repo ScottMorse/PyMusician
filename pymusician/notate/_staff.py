@@ -74,14 +74,18 @@ class _Staff:
             raise ValueError("Note must have a rhythm value.") 
         if not self._measures:
             self.append_measure(self._time_sig.measure_len)
-        try:
-            self._measures[len(self._measures) - 1].append_note(note)
-        except Exception:
+        for measure in self._measures:
             try:
-                self.append_measure
+                measure.append_note(note)
+                break
+            except Exception:
+                pass
+        else:
+            try:
+                self._append_measure()
                 self._measures[len(self._measures) - 1].append_note(note)
             except Exception:
-                raise ValueError("Rhythm too large for time signature.")
+                raise Exception('Note too large for time signature.')
     
     def _clear_selected_measures(self,index1,index2):
         for i in range(index1,index2 + 1):

@@ -56,6 +56,39 @@ class TestStaffClass(unittest.TestCase):
         self.assertTrue(staff.measures[0].is_empty)
         self.assertEqual(staff.measures[1].notes[0].name,"A") 
 
+    def test_delete_measure(self):
+        staff = Staff(starting_measures=10)
+        staff.append_note(Note("A",0,"1"))
+
+        self.assertEqual(staff.measures[0].notes[0].name,'A')
+        self.assertTrue(staff.measures[0].is_full)
+
+        staff.delete_measure_at(0)
+        
+        self.assertTrue(staff.measures[0].is_empty)
+
+        staff.delete_measure_at(2)
+
+        self.assertEqual(len(staff.measures),8)
+
+        with self.assertRaises(Exception):
+            staff.delete_measure_at(8)
+
+    def test_appending_error(self):
+        staff = Staff(starting_measures=1)
+
+        staff.append_note(Note("A",4,"1"))
+        staff.append_note(Note("A",5,"1"))
+      
+        self.assertEqual(staff.measures[0].notes[0].octave,4)
+        self.assertTrue(staff.measures[0].is_full)
+
+        self.assertEqual(staff.measures[1].notes[0].octave,5)
+
+        with self.assertRaises(Exception):
+            staff.append_note(Note("A",4,"1."))
+
+
 if __name__ == "__main__":
 
     unittest.main()
