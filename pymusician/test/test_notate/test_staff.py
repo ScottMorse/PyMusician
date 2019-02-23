@@ -16,7 +16,7 @@ class TestStaffClass(unittest.TestCase):
             Staff(time_sig=TimeSignature(-1,2))
         with self.assertRaises(ValueError):
             Staff(starting_measures=-1)
-        
+            
     def test_starting_measures(self):
         staff = Staff(starting_measures=10)
 
@@ -88,6 +88,49 @@ class TestStaffClass(unittest.TestCase):
         with self.assertRaises(Exception):
             staff.append_note(Note("A",4,"1."))
 
+        staff34 = Staff(time_sig=TimeSignature(3,4))
+
+        staff34.append_note(Note("A",4,"2."))
+        staff34.append_note(Note("A",4,"2"))
+        staff34.append_note(Note("A",4,"3"))
+        staff34.append_note(Note("A",4,"4"))
+
+        self.assertEqual(len(staff34.measures),3)
+        self.assertTrue(staff34.measures[0].is_full)
+        self.assertTrue(staff34.measures[1].is_full)
+        self.assertFalse(staff34.measures[2].is_empty)
+        self.assertFalse(staff34.measures[2].is_full)
+
+        with self.assertRaises(Exception):
+            staff34.append_note(Note("A",4,"1"))
+
+    def test_clear_measures(self):
+        staff34 = Staff(time_sig=TimeSignature(3,4))
+
+        staff34.append_note(Note("A",4,"2."))
+        staff34.append_note(Note("A",4,"2"))
+        staff34.append_note(Note("A",4,"3"))
+        staff34.append_note(Note("A",4,"4"))
+
+        staff34.clear_selected_measures(0,2)
+
+        self.assertTrue(staff34.measures[0].is_empty)
+        self.assertTrue(staff34.measures[1].is_empty)
+
+    def test_delete_measures(self):
+        staff = Staff(starting_measures=4)
+
+        staff.measures[len(staff.measures) - 1].append_note(Note('A',4,'1'))
+
+        staff.delete_measure_at(0)
+
+        self.assertEqual(len(staff.measures),3)
+        self.assertEqual(staff.measures[len(staff.measures) - 1].notes[0].name,'A')
+
+        staff.delete_selected_measures(0,2)
+
+        self.assertEqual(len(staff.measures),1)
+        self.assertEqual(len(staff.measures[0].notes),1)
 
 if __name__ == "__main__":
 

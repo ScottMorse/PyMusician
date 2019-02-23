@@ -123,10 +123,10 @@ class Staff(_staff._Staff):
     def append_note(self,note):
         self._append_note(note)
 
-    # Clear measures between two indices, inclusive
-    def clear_selected_measures(self,index1,index2):
-        self._clear_selected_measures(index1,index2)
+    # Clear measures between two indices, end exclusive
+    def clear_selected_measures(self,start,end):
+        self._clear_selected_measures(start,end)
     
-    # Delete selected measures between two indices, inclusive
-    def delete_selected_measures(self,index1,index2):
-        self._delete_selected_measures(index1,index2)
+    # Delete selected measures between two indices, end exclusive
+    def delete_selected_measures(self,start,end):
+        self._delete_selected_measures(start,end)

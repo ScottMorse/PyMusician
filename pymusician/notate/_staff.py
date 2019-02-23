@@ -87,19 +87,20 @@ class _Staff:
             except Exception:
                 raise Exception('Note too large for time signature.')
     
-    def _clear_selected_measures(self,index1,index2):
-        for i in range(index1,index2 + 1):
+    def _clear_selected_measures(self,start,end):
+        for i in range(start,end):
             try:
                 self._measures[i].clear_notes()
             except IndexError:
                 raise IndexError('Invalid measure selection.')
 
-    def _delete_selected_measures(self,index1,index2):
-        for i in range(index1,index2 + 1):
+    def _delete_selected_measures(self,start,end):
+        for i in range(start,end):
             try:
-                del self._measures[i]
+                del self._measures[start]
             except IndexError:
                 raise IndexError('Invalid measure selection.')
+
 class Measure:
 
     def __init__(self,measure_len):
@@ -169,3 +170,5 @@ class Measure:
             
     def clear_notes(self):
         self._notes = []
+        self._space_filled = 0
+        self._space_left = self._measure_len
