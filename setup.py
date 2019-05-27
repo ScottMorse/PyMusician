@@ -1,11 +1,8 @@
-from setuptools import setup, find_packages
-
-def readme():
-    with open('README.md') as f:
-        return f.read()
+from setuptools import setup
+# , find_packages
 
 setup(name="pymusician",
-      version="1.1.1",
+      version="2.0.0",
       description="A python package for music composition and analysis.",
       long_description="""
       Read the README here:
@@ -18,9 +15,9 @@ setup(name="pymusician",
       license="Apache",
       packages=["pymusician"],
       include_package_data=True,
-      install_requires=[
-          'numpy',
-      ],
+    #   install_requires=[
+    #       'numpy',
+    #   ],
       python_requires='>3.6',
       test_suite='nose.collector',
       tests_require=['nose'],
